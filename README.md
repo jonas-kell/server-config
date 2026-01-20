@@ -5,7 +5,7 @@ Management scripts for my personal servers and kubernetes setup.
 ## What is deployed
 
 - Ionos
-    - VPS 4 4 120
+    - [VPS 4 4 120](./ionos/Ionosconfig.md)
         - Ubuntu 24.04
         - `root@ionosserver.kellehorreur.de`
 - Local
