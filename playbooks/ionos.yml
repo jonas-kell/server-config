@@ -1,0 +1,4 @@
+---
+- hosts: ionos1
+  roles:
+      - nginx_stream

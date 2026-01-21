@@ -1,0 +1,10 @@
+# HomeAssistant
+server {
+    listen     8123;
+
+    # dns entry is ipv4 and ipv6, ipv4 address is this server itself, but if ipv6 enabled, this is preferred and sent on 
+    resolver [2001:4860:4860::8888] valid=300s; 
+    set $urlha ha.kellehorreur.de:8123;
+
+    proxy_pass $urlha;
+}

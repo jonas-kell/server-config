@@ -5,7 +5,7 @@ Management scripts for my personal servers and kubernetes setup.
 ## What is deployed
 
 - Ionos
-    - [VPS 4 4 120](./ionos/Ionosconfig.md)
+    - [VPS 4 4 120](./Ionosconfig.md)
         - Ubuntu 24.04
         - `root@ionosserver.kellehorreur.de`
 - Local
@@ -23,3 +23,16 @@ Management scripts for my personal servers and kubernetes setup.
     - My Clound EX2 Ultra
         - 4TB HDD
         - `http://storageserver.kellehorreur.de`
+
+## Usage
+
+```cmd
+# Ping servers
+ansible ionos -m ping
+ansible local -m ping
+# or
+ansible all -m ping
+
+# Run the deploying/configuring playbook
+ansible-playbook playbooks/main.yml
+```
