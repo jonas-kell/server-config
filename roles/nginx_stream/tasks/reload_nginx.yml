@@ -1,6 +1,6 @@
 - name: Test nginx configuration
   ansible.builtin.command: nginx -t
-  register: nginx_test
+  register: nginx_stream_config_test
   ignore_errors: true
   changed_when: false
 
@@ -8,9 +8,9 @@
   ansible.builtin.service:
       name: nginx
       state: reloaded
-  when: nginx_test.rc == 0
+  when: nginx_stream_config_test.rc == 0
 
 - name: Warn if nginx configuration is invalid
   ansible.builtin.debug:
       msg: "Nginx configuration test failed. Not reloading."
-  when: nginx_test.rc != 0
+  when: nginx_stream_config_test.rc != 0

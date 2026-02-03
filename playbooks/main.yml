@@ -1,2 +1,3 @@
 ---
-- import_playbook: ionos.yml
+- name: Central installation entrypoint
+  import_playbook: ionos.yml

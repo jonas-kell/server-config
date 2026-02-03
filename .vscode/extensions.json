@@ -1,0 +1,8 @@
+{
+    "recommendations": [
+        "redhat.ansible",
+        "esbenp.prettier-vscode",
+        "DavidAnson.vscode-markdownlint",
+        "redhat.vscode-yaml"
+    ]
+}
