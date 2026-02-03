@@ -7,3 +7,9 @@ LEW NAT traversal and High performance
 - Firewall Rules
   - Edit so that the TCP Ports that are free are
   - `22, 80, 443, 8123`
+
+## How to generate an API token
+
+Seems to be for a different API? cloud vs OTHER cloud
+
+Go to [API keys manager](https://developer.hosting.ionos.de/keys)

@@ -1,0 +1,24 @@
+---
+- name: Test
+  hosts: localhost
+  connection: local
+  gather_facts: false
+
+  # generate these: see ./Ionosconfig.md
+  vars:
+      token: ""
+
+  # https://docs.ionos.com/ansible/
+  # This seems to be only for ionos-cloud
+  # cloudpanal.ionos.de IS NOT ionos cloud.... Obviously... not
+
+  tasks:
+      - name: TEST entrypoint
+        ionoscloudsdk.ionoscloud.firewall_rule_info:
+            datacenter: "AnsibleAutoTestCompute"
+            server: "AnsibleAutoTestCompute"
+            nic: "AnsibleAutoTestCompute"
+            firewall_rule: SSH
+            port_range_start: 22
+            port_range_end: 23
+            state: update
