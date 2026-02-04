@@ -63,6 +63,44 @@
       mode: "0644"
   notify: Reload nginx
 
+- name: Deploy Https Cloud Proxy config
+  ansible.builtin.template:
+      src: proxy-cloud.conf.j2
+      dest: /etc/nginx/sites-available/cloud-ssl-proxy.conf
+      owner: root
+      group: root
+      mode: "0644"
+  notify: Reload nginx
+
+- name: Enable Https Cloud Proxy config
+  ansible.builtin.file:
+      src: /etc/nginx/sites-available/cloud-ssl-proxy.conf
+      dest: /etc/nginx/sites-enabled/cloud-ssl-proxy.conf
+      state: link
+      owner: root
+      group: root
+      mode: "0644"
+  notify: Reload nginx
+
+- name: Deploy Https HA Proxy config
+  ansible.builtin.template:
+      src: proxy-ha.conf.j2
+      dest: /etc/nginx/sites-available/ha-ssl-proxy.conf
+      owner: root
+      group: root
+      mode: "0644"
+  notify: Reload nginx
+
+- name: Enable Https HA Proxy config
+  ansible.builtin.file:
+      src: /etc/nginx/sites-available/ha-ssl-proxy.conf
+      dest: /etc/nginx/sites-enabled/ha-ssl-proxy.conf
+      state: link
+      owner: root
+      group: root
+      mode: "0644"
+  notify: Reload nginx
+
 # SSL certs
 
 - name: Place SSL certs

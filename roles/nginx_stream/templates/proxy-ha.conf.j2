@@ -1,0 +1,26 @@
+server {
+    # Listen for incoming HTTPS connections
+    listen 443 ssl;
+
+    server_name ha.kellehorreur.de;
+
+    # Use the specified certificate for TLS
+    ssl_certificate     /etc/ionoshttps/kellehorreur.de/fullchain.pem;
+    ssl_certificate_key /etc/ionoshttps/kellehorreur.de/privkey.pem;
+
+    # TLS settings
+    ssl_protocols TLSv1.2 TLSv1.3;
+    ssl_prefer_server_ciphers on;
+
+    resolver [2001:4860:4860::8888] valid=300s;
+    set $urlbe ha.kellehorreur.de:8123;
+
+    # Proxy based on the hostname
+    location / {
+        proxy_pass https://$urlbe;
+        proxy_ssl_certificate /etc/ionoshttps/kellehorreur.de/fullchain.pem;  # Reencrypt with the same certifi>
+        proxy_ssl_certificate_key /etc/ionoshttps/kellehorreur.de/privkey.pem;
+        proxy_ssl_protocols TLSv1.2 TLSv1.3;
+        proxy_ssl_server_name on;  # Pass the hostname for SNI
+    }
+}

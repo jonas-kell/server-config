@@ -1,0 +1,64 @@
+server {
+    # Listen for incoming HTTPS connections
+    listen 443 ssl;
+
+    server_name cloud.kellehorreur.de;
+
+    # Use the specified certificate for TLS
+    ssl_certificate     /etc/ionoshttps/kellehorreur.de/fullchain.pem;
+    ssl_certificate_key /etc/ionoshttps/kellehorreur.de/privkey.pem;
+
+    # TLS settings
+    ssl_protocols TLSv1.2 TLSv1.3;
+    ssl_prefer_server_ciphers on;
+
+    # Prevent nginx HTTP Server Detection
+    server_tokens off;
+
+    # HSTS settings
+    # WARNING: Only add the preload option once you read about
+    # the consequences in https://hstspreload.org/. This option
+    # will add the domain to a hardcoded list that is shipped
+    # in all major browsers and getting removed from this list
+    # could take several months.
+    add_header Strict-Transport-Security "max-age=15768000; includeSubDomains; preload" always;
+
+    # set max upload size and increase upload timeout:
+    client_max_body_size 512M;
+    client_body_timeout 300s;
+    fastcgi_buffers 64 4K;
+
+    # Enable gzip but do not remove ETag headers
+    gzip on;
+    gzip_vary on;
+    gzip_comp_level 4;
+    gzip_min_length 256;
+    gzip_proxied expired no-cache no-store private no_last_modified no_etag auth;
+    gzip_types application/atom+xml text/javascript application/javascript application/json application/>
+
+    # The settings allows you to optimize the HTTP2 bandwidth.
+    # See https://blog.cloudflare.com/delivering-http-2-upload-speed-improvements/
+    # for tuning hints
+    client_body_buffer_size 512k;
+    
+    # HTTP response headers borrowed from Nextcloud `.htaccess`
+    add_header Referrer-Policy                   "no-referrer"       always;
+    add_header X-Content-Type-Options            "nosniff"           always;
+    add_header X-Frame-Options                   "SAMEORIGIN"        always;
+    add_header X-Permitted-Cross-Domain-Policies "none"              always;
+    add_header X-Robots-Tag                      "noindex, nofollow" always;
+    add_header X-XSS-Protection                  "1; mode=block"     always;
+
+    # resolve backend url
+    resolver [2001:4860:4860::8888] valid=300s;
+    set $urlbecld cloud.kellehorreur.de:443;
+
+    # Proxy based on the hostname
+    location / {
+        proxy_pass https://$urlbecld;
+        proxy_ssl_certificate /etc/ionoshttps/kellehorreur.de/fullchain.pem;  # Reencrypt with the same certifi>
+        proxy_ssl_certificate_key /etc/ionoshttps/kellehorreur.de/privkey.pem;
+        proxy_ssl_protocols TLSv1.2 TLSv1.3;
+        proxy_ssl_server_name on;  # Pass the hostname for SNI
+    }
+}
