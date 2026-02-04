@@ -43,7 +43,16 @@ ansible all -m ping
 # Install dependencies
 ansible-galaxy collection install -r collections/requirements.yml -p ./collections --force
 ansible-galaxy install -r roles/requirements.yml --force
+```
 
-# Run the deploying/configuring playbook
+Run the deploying/configuring playbook
+
+```cmd
 ansible-playbook playbooks/main.yml
+```
+
+Update remote servers
+
+```cmd
+ansible-playbook playbooks/upgrade.yml
 ```
