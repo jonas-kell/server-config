@@ -41,8 +41,8 @@ ansible local -m ping
 ansible all -m ping
 
 # Install dependencies
-ansible-galaxy collection install -r collections/requirements.yml -p ./collections
-ansible-galaxy install -r roles/requirements.yml
+ansible-galaxy collection install -r collections/requirements.yml -p ./collections --force
+ansible-galaxy install -r roles/requirements.yml --force
 
 # Run the deploying/configuring playbook
 ansible-playbook playbooks/main.yml

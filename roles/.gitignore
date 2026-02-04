@@ -1,5 +1,9 @@
 *
 
+!firewall_stream
+!firewall_stream/**
 !nginx_stream
+!nginx_stream/**
+
 !requirements.yml
 !.gitignore

@@ -1,0 +1,50 @@
+---
+- name: Install ufw
+  ansible.builtin.package:
+      name:
+          - ufw
+      state: present
+      update_cache: true
+      cache_valid_time: 1800
+
+- name: Enable UFW with default deny policy
+  community.general.ufw:
+      state: enabled
+      policy: deny
+
+- name: Deny all inbound IPv6 traffic
+  community.general.ufw:
+      rule: deny
+      direction: in
+      to_ip: "::"
+
+- name: Allow SSH (tcp/22)
+  community.general.ufw:
+      rule: allow
+      proto: tcp
+      port: "22"
+
+- name: Allow HTTP (tcp/80)
+  community.general.ufw:
+      rule: allow
+      proto: tcp
+      port: "80"
+
+- name: Allow HTTPS (tcp/443)
+  community.general.ufw:
+      rule: allow
+      proto: tcp
+      port: "443"
+
+- name: Allow tcp port 8123
+  community.general.ufw:
+      rule: allow
+      proto: tcp
+      port: "8123"
+# ---
+
+# - name: Allow udp port 8123
+#   community.general.ufw:
+#       rule: allow
+#       proto: udp
+#       port: "8123"

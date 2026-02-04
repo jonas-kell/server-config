@@ -2,4 +2,5 @@
 - name: Streaming Server (IPv4 to IPv6)
   hosts: ionos1
   roles:
+      - firewall_stream
       - nginx_stream

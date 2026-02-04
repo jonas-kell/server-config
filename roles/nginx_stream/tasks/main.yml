@@ -1,6 +1,6 @@
 ---
 - name: Install nginx and stream module
-  ansible.builtin.apt:
+  ansible.builtin.package:
       name:
           - nginx
           - libnginx-mod-stream
