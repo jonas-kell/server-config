@@ -6,6 +6,7 @@
           - libnginx-mod-stream
       state: present
       update_cache: true
+      cache_valid_time: 1800
 
 - name: Ansible controlled nginx.conf
   ansible.builtin.template:
@@ -14,6 +15,12 @@
       owner: root
       group: root
       mode: "0644"
+  notify: Reload nginx
+
+- name: Remove default Nginx site
+  ansible.builtin.file:
+      path: /etc/nginx/sites-enabled/default
+      state: absent
   notify: Reload nginx
 
 - name: Ensure stream config directory exists

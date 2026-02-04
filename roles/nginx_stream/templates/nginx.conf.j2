@@ -53,6 +53,18 @@ http {
         # gzip_types text/plain text/css application/json application/javascript text/xml application/xml application/xml+rss text/javascript;
 
         ##
+        # Redirect all http traffic
+        ##
+
+        server {
+            listen 80;
+            listen [::]:80;
+
+            server_name _;
+            return 301 https://$host$request_uri;
+        }
+
+        ##
         # Virtual Host Configs
         ##
 
