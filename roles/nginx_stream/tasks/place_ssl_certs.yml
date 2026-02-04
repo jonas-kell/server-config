@@ -31,9 +31,9 @@
   loop_control:
       label: "{{ item.name }}"
   no_log: true
-  register: ssl_cert_copy
+  register: nginx_stream_ssl_cert_copy
 
 - name: Expose cert change state
   ansible.builtin.set_fact:
       ssl_certs_changed: true
-  when: ssl_cert_copy is changed
+  when: nginx_stream_ssl_cert_copy is changed

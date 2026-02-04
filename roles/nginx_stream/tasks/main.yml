@@ -116,5 +116,5 @@
 
 - name: Trigger reload if certs changed
   ansible.builtin.command: /bin/true
-  changed_when: ssl_cert_copy is changed
+  changed_when: nginx_stream_ssl_cert_copy is changed
   notify: Reload nginx
