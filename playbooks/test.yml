@@ -1,0 +1,32 @@
+---
+- name: Using ubiquiti.unifi_api.network with this API
+  hosts: localhost
+  gather_facts: false
+  vars:
+      # Replace with your site ID - Can be left empty for UDM as it seems (only onw site or something like that)
+      site_id: ""
+      # Replace with your console IP (LAN)
+      console_ip: "192.168.2.1"
+  vars_files:
+      - "{{ playbook_dir }}/../secrets/ubiquiti_api_token.yml"
+
+  module_defaults:
+      group/ubiquiti.unifi_api.common:
+          base_url: "https://{{ console_ip }}"
+
+          # Generate: https://unifi.ui.com/ > Network > Settings > Control Plane > Integrations
+          # Put into /secrets/ubiquiti_api_token.yml
+          token: "{{ lookup('vars', 'ubiquiti_api_token') }}"
+
+  tasks:
+      - name: Get application info
+        ubiquiti.unifi_api.network:
+            path: "/v1/info"
+            method: GET
+        register: info
+        tags:
+            - skip_ansible_lint # TODO linting error, as base_url is set via defaults but linting does not realize that
+
+      - name: DBG
+        ansible.builtin.debug:
+            var: info.data
