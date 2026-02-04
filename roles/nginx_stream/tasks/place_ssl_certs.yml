@@ -1,0 +1,39 @@
+---
+- name: Validate SSL vars
+  ansible.builtin.assert:
+      that:
+          - ssl_cert_src_dir is defined
+          - ssl_cert_dest_dir is defined
+          - ssl_cert_files is defined
+          - ssl_cert_files | length > 0
+      fail_msg: >
+          Required variables:
+          ssl_cert_src_dir, ssl_cert_dest_dir, ssl_cert_files
+
+- name: Ensure SSL cert directory exists
+  ansible.builtin.file:
+      path: "{{ ssl_cert_dest_dir }}"
+      state: directory
+      owner: "{{ ssl_cert_owner | default('root') }}"
+      group: "{{ ssl_cert_group | default('root') }}"
+      mode: "0755"
+
+- name: Copy SSL certificate files
+  ansible.builtin.copy:
+      src: "{{ ssl_cert_src_dir }}/{{ item.name }}"
+      dest: "{{ ssl_cert_dest_dir }}/{{ item.name }}"
+      owner: "{{ ssl_cert_owner | default('root') }}"
+      group: "{{ ssl_cert_group | default('root') }}"
+      mode: "{{ item.mode }}"
+      force: true
+      backup: true
+  loop: "{{ ssl_cert_files }}"
+  loop_control:
+      label: "{{ item.name }}"
+  no_log: true
+  register: ssl_cert_copy
+
+- name: Expose cert change state
+  ansible.builtin.set_fact:
+      ssl_certs_changed: true
+  when: ssl_cert_copy is changed

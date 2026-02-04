@@ -23,6 +23,8 @@
       state: absent
   notify: Reload nginx
 
+# Stream configs
+
 - name: Ensure stream config directory exists
   ansible.builtin.file:
       path: /etc/nginx/stream-conf.d
@@ -38,4 +40,43 @@
       owner: root
       group: root
       mode: "0644"
+  notify: Reload nginx
+
+# Http(s) configs
+
+- name: Deploy Https Default config
+  ansible.builtin.template:
+      src: default.conf.j2
+      dest: /etc/nginx/sites-available/zzzz-default-ssl-proxy.conf
+      owner: root
+      group: root
+      mode: "0644"
+  notify: Reload nginx
+
+- name: Enable Https Default config
+  ansible.builtin.file:
+      src: /etc/nginx/sites-available/zzzz-default-ssl-proxy.conf
+      dest: /etc/nginx/sites-enabled/zzzz-default-ssl-proxy.conf
+      state: link
+      owner: root
+      group: root
+      mode: "0644"
+  notify: Reload nginx
+
+# SSL certs
+
+- name: Place SSL certs
+  ansible.builtin.include_tasks: "{{ role_path }}/tasks/place_ssl_certs.yml"
+  vars:
+      ssl_cert_src_dir: "{{ playbook_dir }}/../secrets"
+      ssl_cert_dest_dir: /etc/ionoshttps/kellehorreur.de/
+      ssl_cert_files:
+          - name: privkey.pem
+            mode: "0600"
+          - name: fullchain.pem
+            mode: "0644"
+
+- name: Trigger reload if certs changed
+  ansible.builtin.command: /bin/true
+  changed_when: ssl_cert_copy is changed
   notify: Reload nginx

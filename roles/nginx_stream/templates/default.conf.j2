@@ -1,0 +1,18 @@
+server {
+    # Listen for incoming HTTPS connections
+    listen 443 ssl;
+
+    server_name *.kellehorreur.de;
+
+    # Use the specified certificate for TLS
+    ssl_certificate     /etc/ionoshttps/kellehorreur.de/fullchain.pem;
+    ssl_certificate_key /etc/ionoshttps/kellehorreur.de/privkey.pem;
+
+    # TLS settings
+    ssl_protocols TLSv1.2 TLSv1.3;
+    ssl_prefer_server_ciphers on;
+
+    location / {
+        return 404;
+    }
+}
