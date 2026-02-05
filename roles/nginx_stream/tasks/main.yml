@@ -54,7 +54,7 @@
   ansible.builtin.file:
       src: /etc/nginx/stream-conf-available.d/homeassistant.conf
       dest: /etc/nginx/stream-conf-enabled.d/homeassistant.conf
-      state: link
+      state: "{{ nginx_stream_ha_stream_enabled | bool | ternary('link', 'absent') }}"
       owner: root
       group: root
       mode: "0644"
@@ -75,7 +75,7 @@
   ansible.builtin.file:
       src: /etc/nginx/sites-available/zzzz-default-ssl-proxy.conf
       dest: /etc/nginx/sites-enabled/zzzz-default-ssl-proxy.conf
-      state: link
+      state: "{{ nginx_stream_default_https_enabled | bool | ternary('link', 'absent') }}"
       owner: root
       group: root
       mode: "0644"
@@ -94,7 +94,7 @@
   ansible.builtin.file:
       src: /etc/nginx/sites-available/cloud-ssl-proxy.conf
       dest: /etc/nginx/sites-enabled/cloud-ssl-proxy.conf
-      state: link
+      state: "{{ nginx_stream_cloud_https_enabled | bool | ternary('link', 'absent') }}"
       owner: root
       group: root
       mode: "0644"
@@ -113,7 +113,7 @@
   ansible.builtin.file:
       src: /etc/nginx/sites-available/ha-ssl-proxy.conf
       dest: /etc/nginx/sites-enabled/ha-ssl-proxy.conf
-      state: link
+      state: "{{ nginx_stream_ha_https_enabled | bool | ternary('link', 'absent') }}"
       owner: root
       group: root
       mode: "0644"

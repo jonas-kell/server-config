@@ -1,0 +1,16 @@
+---
+argument_specs:
+    main:
+        options:
+            nginx_stream_ha_stream_enabled:
+                type: bool
+                required: true
+            nginx_stream_ha_https_enabled:
+                type: bool
+                required: true
+            nginx_stream_cloud_https_enabled:
+                type: bool
+                required: true
+            nginx_stream_default_https_enabled:
+                type: bool
+                required: true

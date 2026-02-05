@@ -3,4 +3,9 @@
   hosts: ionos1
   roles:
       - firewall_stream
-      - nginx_stream
+      - role: nginx_stream
+        vars:
+            nginx_stream_ha_stream_enabled: true
+            nginx_stream_ha_https_enabled: true
+            nginx_stream_cloud_https_enabled: true
+            nginx_stream_default_https_enabled: true
