@@ -1,0 +1,46 @@
+---
+- name: Validate Unifi interaction vars
+  ansible.builtin.assert:
+      that:
+          - unifi_firewall_writing_unifi_token is defined
+      fail_msg: >
+          Required variables:
+          unifi_firewall_writing_unifi_token
+
+- name: Get site info
+  ubiquiti.unifi_api.network:
+      path: "/v1/sites"
+      method: GET
+      base_url: "{{ unifi_firewall_writing_base_url }}"
+      token: "{{ unifi_firewall_writing_unifi_token }}"
+  register: unifi_firewall_writing_site_info
+
+- name: Print site info
+  ansible.builtin.debug:
+      var: unifi_firewall_writing_site_info.data
+
+- name: Extract the id with json_query
+  ansible.builtin.set_fact:
+      unifi_firewall_writing_site_id: >-
+          {{ unifi_firewall_writing_site_info.data |
+          community.general.json_query('data[?internalReference==`default`].id') |
+          first }}
+
+- name: Print site id
+  ansible.builtin.debug:
+      var: unifi_firewall_writing_site_id
+
+- name: Get ip-list-info
+  ubiquiti.unifi_api.network:
+      path: "/v1/sites/{{ unifi_firewall_writing_site_id }}/traffic-matching-lists"
+      method: GET
+      base_url: "{{ unifi_firewall_writing_base_url }}"
+      token: "{{ unifi_firewall_writing_unifi_token }}"
+  register: unifi_firewall_writing_ip_list_info
+
+- name: Print ip-list-info
+  ansible.builtin.debug:
+      var: unifi_firewall_writing_ip_list_info.data
+# ---
+
+# https://developer.ui.com/network/v10.0.162/updatetrafficmatchinglist

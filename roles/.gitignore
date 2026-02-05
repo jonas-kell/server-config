@@ -4,6 +4,8 @@
 !firewall_stream/**
 !nginx_stream
 !nginx_stream/**
+!unifi_firewall_writing
+!unifi_firewall_writing/**
 
 !requirements.yml
 !.gitignore

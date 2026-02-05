@@ -1,0 +1,12 @@
+---
+argument_specs:
+    main:
+        options:
+            unifi_firewall_writing_unifi_token:
+                type: str
+                required: true
+                description: "Generate: https://unifi.ui.com/ > Network > Settings > Control Plane > Integrations"
+            unifi_firewall_writing_console_ip:
+                type: str
+                required: false
+                description: "Your console IP (LAN)"

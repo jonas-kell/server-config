@@ -5,45 +5,11 @@
   vars:
       # Replace with your console IP (LAN)
       console_ip: "192.168.2.1"
+      token: "{{ lookup('vars', 'ubiquiti_api_token') }}"
   vars_files:
       - "{{ playbook_dir }}/../secrets/ubiquiti_api_token.yml"
-
-  module_defaults:
-      group/ubiquiti.unifi_api.common:
-          base_url: "https://{{ console_ip }}"
-
-          # Generate: https://unifi.ui.com/ > Network > Settings > Control Plane > Integrations
-          # Put into /secrets/ubiquiti_api_token.yml
-          token: "{{ lookup('vars', 'ubiquiti_api_token') }}"
-
-  tasks:
-      - name: Get site info
-        ubiquiti.unifi_api.network:
-            path: "/v1/sites"
-            method: GET
-        register: site_info
-        tags:
-            - skip_ansible_lint # TODO linting error, as base_url is set via defaults but linting does not realize that
-
-      - name: Print site info
-        ansible.builtin.debug:
-            var: site_info.data
-
-      - name: Extract the id with json_query
-        ansible.builtin.set_fact:
-            site_id: "{{ site_info.data | community.general.json_query('data[?internalReference==`default`].id') | first }}"
-
-      - name: Get ip-list-info
-        ubiquiti.unifi_api.network:
-            path: "/v1/sites/{{ site_id }}/traffic-matching-lists"
-            method: GET
-        register: ip_list_info
-        tags:
-            - skip_ansible_lint
-
-      - name: Print ip-list-info
-        ansible.builtin.debug:
-            var: ip_list_info.data
-# ---
-
-# https://developer.ui.com/network/v10.0.162/updatetrafficmatchinglist
+  roles:
+      - role: unifi_firewall_writing
+        vars:
+            unifi_firewall_writing_unifi_token: "{{ token }}"
+            unifi_firewall_writing_console_ip: "{{ console_ip }}"

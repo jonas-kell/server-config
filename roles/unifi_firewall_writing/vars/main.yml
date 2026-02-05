@@ -1,0 +1,1 @@
+unifi_firewall_writing_base_url: "https://{{ unifi_firewall_writing_console_ip }}"
