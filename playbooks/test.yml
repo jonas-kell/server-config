@@ -6,10 +6,40 @@
       # Replace with your console IP (LAN)
       console_ip: "192.168.2.1"
       token: "{{ lookup('vars', 'ubiquiti_api_token') }}"
+
+      # Print debug setting
+      print_debug: true
   vars_files:
       - "{{ playbook_dir }}/../secrets/ubiquiti_api_token.yml"
-  roles:
-      - role: unifi_firewall_writing
+
+  tasks:
+      - name: Gather facts from remote host
+        ansible.builtin.setup:
+        delegate_to: piserver
+        delegate_facts: true
+        register: piserver_gathered_data
+
+      - name: Debug-print the gathered facts about the piserver
+        when: print_debug
+        ansible.builtin.debug:
+            var: piserver_gathered_data
+
+      - name: Extract the IPV6 address
+        ansible.builtin.set_fact:
+            piserver_ipv6: >-
+                {{ piserver_gathered_data.ansible_facts.ansible_all_ipv6_addresses
+                | ansible.utils.ipv6('2000::/3')
+                | list
+                | first }}
+
+      - name: Debug-print the gathered IPV6 address
+        when: print_debug
+        ansible.builtin.debug:
+            var: piserver_ipv6
+
+      - name: Run executing role
+        ansible.builtin.include_role:
+            name: unifi_firewall_writing
         vars:
             unifi_firewall_writing_unifi_token: "{{ token }}"
             unifi_firewall_writing_console_ip: "{{ console_ip }}"

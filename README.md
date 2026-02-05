@@ -31,6 +31,12 @@ pip3 install ansible
 pip3 install ansible-lint
 pip3 install httpx urllib3 # unifi api dependencies
 pip3 install jmespath # necessary for use of json_filter
+
+# Install dependencies
+curl -L -o ./collections/downloads/ubiquiti-unifi_api-latest.tar.gz https://apidoc-cdn.ui.com/ansible-module/ubiquiti-unifi_api-latest.tar.gz
+ansible-galaxy collection install ./collections/downloads/ubiquiti-unifi_api-latest.tar.gz -p ./collections --force
+ansible-galaxy collection install -r collections/requirements.yml -p ./collections --force
+ansible-galaxy install -r roles/requirements.yml --force
 ```
 
 ## Usage
@@ -41,12 +47,6 @@ ansible ionos -m ping
 ansible local -m ping
 # or
 ansible all -m ping
-
-# Install dependencies
-curl -L -o ./collections/downloads/ubiquiti-unifi_api-latest.tar.gz https://apidoc-cdn.ui.com/ansible-module/ubiquiti-unifi_api-latest.tar.gz
-ansible-galaxy collection install ./collections/downloads/ubiquiti-unifi_api-latest.tar.gz -p ./collections --force
-ansible-galaxy collection install -r collections/requirements.yml -p ./collections --force
-ansible-galaxy install -r roles/requirements.yml --force
 ```
 
 Run the deploying/configuring playbook
