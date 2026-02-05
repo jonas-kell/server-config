@@ -58,3 +58,7 @@
                   replacement_ip: "{{ piserver_ipv6 }}"
                 - name: "Home Assistant PI"
                   replacement_ip: "{{ haserver_ipv6 }}"
+# ---
+
+# Lists can be found at: https://unifi.ui.com/ > Network > Settings > Overview > Network Lists
+# They can be used at: https://unifi.ui.com/ > Network > Settings > Policy Engine
