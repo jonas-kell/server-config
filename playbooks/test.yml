@@ -43,3 +43,7 @@
         vars:
             unifi_firewall_writing_unifi_token: "{{ token }}"
             unifi_firewall_writing_console_ip: "{{ console_ip }}"
+            unifi_firewall_writing_print_debug: "{{ print_debug }}"
+            unifi_firewall_writing_replacement_dict:
+                - name: "Cloud Server PI"
+                  replacement_ip: "{{ piserver_ipv6 }}"

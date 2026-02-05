@@ -10,3 +10,17 @@ argument_specs:
                 type: str
                 required: false
                 description: "Your console IP (LAN)"
+            unifi_firewall_writing_print_debug:
+                type: bool
+                required: false
+            unifi_firewall_writing_replacement_dict:
+                type: list
+                elements: dict
+                options:
+                    name:
+                        type: str
+                        required: true
+                    replacement_ip:
+                        type: str
+                        required: true
+                default: []

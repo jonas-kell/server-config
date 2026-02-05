@@ -16,6 +16,7 @@
   register: unifi_firewall_writing_site_info
 
 - name: Print site info
+  when: unifi_firewall_writing_print_debug
   ansible.builtin.debug:
       var: unifi_firewall_writing_site_info.data
 
@@ -27,6 +28,7 @@
           first }}
 
 - name: Print site id
+  when: unifi_firewall_writing_print_debug
   ansible.builtin.debug:
       var: unifi_firewall_writing_site_id
 
@@ -39,8 +41,52 @@
   register: unifi_firewall_writing_ip_list_info
 
 - name: Print ip-list-info
+  when: unifi_firewall_writing_print_debug
   ansible.builtin.debug:
       var: unifi_firewall_writing_ip_list_info.data
+
+- name: Query data from result and match to input
+  ansible.builtin.set_fact:
+      unifi_firewall_writing_firewall_tasks: >-
+          {{
+            unifi_firewall_writing_firewall_tasks | default([])
+            + [
+                item | combine({
+                  'id': (
+                    unifi_firewall_writing_ip_list_info.data.data
+                    | selectattr('name', 'equalto', item.name)
+                    | map(attribute='id')
+                    | first
+                  )
+                })
+              ]
+          }}
+  loop: "{{ unifi_firewall_writing_replacement_dict }}"
+  loop_control:
+      loop_var: item
+
+- name: Print update task list
+  when: unifi_firewall_writing_print_debug
+  ansible.builtin.debug:
+      var: unifi_firewall_writing_firewall_tasks
+
+# ! This is not properly idempotent (because unifi did not implement this properly)! Not sure if this changed!
+- name: Update Traffic Matching List
+  ubiquiti.unifi_api.network:
+      base_url: "{{ unifi_firewall_writing_base_url }}"
+      token: "{{ unifi_firewall_writing_unifi_token }}"
+      path: "/v1/sites/{{ unifi_firewall_writing_site_id }}/traffic-matching-lists/{{ item.id }}"
+      method: PUT
+      body:
+          type: "IPV6_ADDRESSES"
+          name: "{{ item.name }}"
+          items:
+              - type: IP_ADDRESS
+                value: "{{ item.replacement_ip }}"
+  loop: "{{ unifi_firewall_writing_firewall_tasks }}"
+  loop_control:
+      loop_var: item
 # ---
+# Lists can be found at: https://unifi.ui.com/ > Network > Settings > Overview > Network Lists
 
 # https://developer.ui.com/network/v10.0.162/updatetrafficmatchinglist
