@@ -60,3 +60,9 @@ Update remote servers
 ```cmd
 ansible-playbook playbooks/upgrade.yml
 ```
+
+Set ipv6-firewalls on unifi devices
+
+```cmd
+ansible-playbook playbooks/unifi_ipv6_firewall_config.yml
+```
