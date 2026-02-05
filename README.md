@@ -31,6 +31,7 @@ pip3 install ansible
 pip3 install ansible-lint
 pip3 install httpx urllib3 # unifi api dependencies
 pip3 install jmespath # necessary for use of json_filter
+pip3 install dnspython # necessary for use of dig module
 
 # Install dependencies
 curl -L -o ./collections/downloads/ubiquiti-unifi_api-latest.tar.gz https://apidoc-cdn.ui.com/ansible-module/ubiquiti-unifi_api-latest.tar.gz

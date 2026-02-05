@@ -8,11 +8,20 @@
       token: "{{ lookup('vars', 'ubiquiti_api_token') }}"
 
       # Print debug setting
-      print_debug: true
+      print_debug: false
   vars_files:
       - "{{ playbook_dir }}/../secrets/ubiquiti_api_token.yml"
 
   tasks:
+      - name: Gather ip of the Homeassistant instance from DNS
+        ansible.builtin.set_fact:
+            haserver_ipv6: "{{ lookup('ansible.builtin.dig', 'ha.kellehorreur.de', 'qtype=AAAA', wantlist=True) | first }}"
+
+      - name: Debug-print the ipv6 of the Homeassistant instance
+        when: print_debug
+        ansible.builtin.debug:
+            var: haserver_ipv6
+
       - name: Gather facts from remote host
         ansible.builtin.setup:
         delegate_to: piserver
@@ -47,3 +56,5 @@
             unifi_firewall_writing_replacement_dict:
                 - name: "Cloud Server PI"
                   replacement_ip: "{{ piserver_ipv6 }}"
+                - name: "Home Assistant PI"
+                  replacement_ip: "{{ haserver_ipv6 }}"
