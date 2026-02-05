@@ -27,7 +27,15 @@
 
 - name: Ensure stream config directory exists
   ansible.builtin.file:
-      path: /etc/nginx/stream-conf.d
+      path: /etc/nginx/stream-conf-available.d
+      state: directory
+      owner: root
+      group: root
+      mode: "0755"
+
+- name: Ensure stream config enabled directory exists
+  ansible.builtin.file:
+      path: /etc/nginx/stream-conf-enabled.d
       state: directory
       owner: root
       group: root
@@ -36,7 +44,17 @@
 - name: Deploy HomeAssistant stream config
   ansible.builtin.template:
       src: stream-homeassistant.conf.j2
-      dest: /etc/nginx/stream-conf.d/homeassistant.conf
+      dest: /etc/nginx/stream-conf-available.d/homeassistant.conf
+      owner: root
+      group: root
+      mode: "0644"
+  notify: Reload nginx
+
+- name: Enable HomeAssistant stream config
+  ansible.builtin.file:
+      src: /etc/nginx/stream-conf-available.d/homeassistant.conf
+      dest: /etc/nginx/stream-conf-enabled.d/homeassistant.conf
+      state: link
       owner: root
       group: root
       mode: "0644"
