@@ -11,7 +11,7 @@ Management scripts for my personal servers and kubernetes setup.
 - Local
   - Raspberry Pi 4B, 8GB
     - 64 GB SD card
-    - TODO choose os for kuberentes server
+    - TODO choose os for kubernetes server
     - `pi@piserver.kellehorreur.de`
     - `https://cloud.kellehorreur.de`
   - Raspberry Pi 4B, 4GB
