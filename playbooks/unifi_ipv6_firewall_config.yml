@@ -11,8 +11,22 @@
       print_debug: false
   vars_files:
       - "{{ playbook_dir }}/../secrets/ubiquiti_api_token.yml"
+      - "{{ playbook_dir }}/../secrets/ionos_dns_api.yml"
 
   tasks:
+      - name: Write the DNS settings to Ionos DNS
+        custom.dns.ionosdns:
+            prefix: "{{ ionos_api_prefix }}"
+            key: "{{ ionos_api_key }}"
+            zone_domain: "kellehorreur.de"
+            domain: "ha.kellehorreur.de"
+            target_ipv6_address: "2606:50c0:8001:0:0:0:0:153"
+            log_http_traffic: true
+
+      - name: Abort debug
+        ansible.builtin.fail:
+            msg: "Debug fail"
+
       - name: Gather ip of the Homeassistant instance from DNS
         ansible.builtin.set_fact:
             haserver_ipv6: "{{ lookup('ansible.builtin.dig', 'ha.kellehorreur.de', 'qtype=AAAA', wantlist=True) | first }}"
@@ -46,7 +60,7 @@
         ansible.builtin.debug:
             var: piserver_ipv6
 
-      - name: Run executing role
+      - name: Run write to unifi role
         ansible.builtin.include_role:
             name: unifi_firewall_writing
         vars:
