@@ -2,7 +2,8 @@
 
 from ansible.module_utils.basic import AnsibleModule
 import aiohttp
-from typing import Literal, Optional, Dict
+import asyncio
+from typing import Literal, Optional, Dict, List
 
 
 DOCUMENTATION = r"""
@@ -36,6 +37,10 @@ options:
     description: "API timeout in seconds"
     type: int
     default: 10 
+  entry_ttl:
+    description: "TTL parameter to set on the entry (in s)"
+    type: int
+    default: 300
   log_http_traffic:
     description: "Whether to log the http traffic and details"
     type: bool
@@ -63,49 +68,19 @@ result:
 """
 
 
-def main():
-    module = AnsibleModule(
-        argument_spec=dict(
-            prefix=dict(type="str", required=True),
-            key=dict(type="str", required=True),
-            zone_domain=dict(type="str", required=True),
-            domain=dict(type="str", required=True),
-            target_ipv6_address=dict(type="str", required=True),
-            timeout=dict(type="int", default=10),
-            log_http_traffic=dict(type="bool", default=False),
-        ),
-        supports_check_mode=True,
-    )
+class APIInteractor:
+    _logs: List[str]
 
-    params = module.params
-
-    api_prefix = params["prefix"]
-    api_key = params["key"]
-    zone_domain = params["zone_domain"]
-    domain = params["domain"]
-    target_ipv6_address = params["target_ipv6_address"]
-    timout = params["timeout"]
-    log_http_traffic = params["log_http_traffic"]
-
-    # module.fail_json(msg="count must be >= 0")
-
-    old_ip = "temp"
-    new_ip = "temp"
-
-    module.exit_json(changed=True, old_ip=old_ip, new_ip=new_ip)
-
-
-if __name__ == "__main__":
-    main()
-
-
-class DNSUpdater:
     def __init__(self, log_http_errors: bool, timeout: int) -> None:
         self._log_http_errors = log_http_errors
         self._timeout = timeout
+        self._logs = []
 
-    async def update_ipv6_address_entry(self) -> bool:
-        return False
+    def log_print(self, line: str):
+        self._logs.append(line)
+
+    def get_logs(self) -> List[str]:
+        return self._logs
 
     async def request(
         self,
@@ -133,13 +108,13 @@ class DNSUpdater:
 
         except Exception as ex:
             if self._log_http_errors:
-                print(
+                self.log_print(
                     f"Could not connect to DNS update API because of  {type(ex).__name__}, {str(ex.args)}"
                 )
             return False, {}
 
         if status_code != 200 and status_code != 201:
-            print(
+            self.log_print(
                 f"Could connect to DNS update API but returned status code {status_code} {json}"
             )
             return False, {}
@@ -147,27 +122,34 @@ class DNSUpdater:
         return True, json
 
 
-class IonosDNSUpdater(DNSUpdater):
-    _domain: str
+class IonosDNSUpdater(APIInteractor):
     _zone_domain: str
+    _domain: str
     _encryption: str
     _prefix: str
     _auth_header_key: str
     _auth_header: str
     _zone_id: Optional[str]
     _record_id: Optional[str]
-    _attempt_update: bool
+    _can_attempt_update: bool
     _time_to_live: int
 
-    def __init__(self, domain: str, log_http_errors: bool, timeout: int) -> None:
+    def __init__(
+        self,
+        zone_domain: str,
+        domain: str,
+        prefix: str,
+        encryption: str,
+        log_http_errors: bool,
+        timeout: int,
+        time_to_live: int,
+    ) -> None:
         super().__init__(log_http_errors, timeout)
 
-        self._domain = domain
         self._zone_domain = zone_domain
-        self._dns_sensor = dns_sensor
-        self._local_sensor = local_sensor
-        self._encryption = encryption
+        self._domain = domain
         self._prefix = prefix
+        self._encryption = encryption
         self._time_to_live = time_to_live
 
         self._auth_header_key = "X-API-Key"
@@ -175,15 +157,19 @@ class IonosDNSUpdater(DNSUpdater):
 
         self._zone_id = None
         self._record_id = None
-        self._attempt_update = (
+        self._can_attempt_update = (
             self._zone_domain != "" and self._encryption != "" and self._prefix != ""
         )
-        if self._attempt_update:
+
+    async def async_init(self) -> bool:
+        if self._can_attempt_update:
             await self.initialize_ids()
+            return True
         else:
-            _LOGGER.warning(
-                f"Some of the Update-required properties are not set. Therefore dns updater integration only provides the sensors in read mode."
+            self.log_print(
+                "Some of the Update-required properties are not set. Therefore dns updater can not do stuff"
             )
+            return False
 
     async def initialize_ids(self) -> None:
         # INIT the zone and record id
@@ -201,7 +187,7 @@ class IonosDNSUpdater(DNSUpdater):
                         self._zone_id = result_zone_obj["id"]
 
                 if self._zone_id is None:
-                    print(
+                    self.log_print(
                         f"Did not find the zone id to the zone_domain value {self._zone_domain}"
                     )
                 else:
@@ -220,49 +206,92 @@ class IonosDNSUpdater(DNSUpdater):
                                 self._record_id = result_record_obj["id"]
                                 got_all = True
         except Exception as ex:
-            print(f"Parsing exception {type(ex).__name__}, {str(ex.args)}")
+            self.log_print(f"Parsing exception {type(ex).__name__}, {str(ex.args)}")
 
         if not got_all:
-            print(f"DNS updater initialization never found all necessary ids")
+            self.log_print(f"DNS updater initialization never found all necessary ids")
 
-    async def update_ipv6_address_entry(self) -> bool:
-        _LOGGER.info(f"Checking for necessary update of ipv6 address")
-
-        if not self._attempt_update:
+    async def update_ipv6_address_entry(self, new_ip: str) -> bool:
+        if not self._can_attempt_update:
             return False
         if self._zone_id is None or self._record_id is None:
-            _LOGGER.error(
+            self.log_print(
                 f"Tried to update, but either _zone_id or _record_id are none..."
             )
+            return False
 
-        local_address = IPv6Address(self._local_sensor.native_value)
-        dns_address = IPv6Address(self._dns_sensor.native_value)
-        local_address_short = str(local_address.compressed)
-        dns_address_short = str(dns_address.compressed)
-
-        if local_address_short != dns_address_short:
-            # differs, should be updated
-            _LOGGER.info(
-                f"Attempting update of DNS entry on IONOS API from {dns_address_short} -> {local_address_short}"
+        status, _ = await self.request(
+            f"https://api.hosting.ionos.com/dns/v1/zones/{self._zone_id}/records/{self._record_id}",
+            "PUT",
+            {
+                self._auth_header_key: self._auth_header,
+                "Content-Type": "application/json",
+            },
+            f'{{"disabled": false, "content": "{new_ip}", "ttl": {self._time_to_live}, "prio": 0}}',
+        )
+        if status:
+            self.log_print(
+                f"Used the IONOS DNS API to set the AAAA entry for {self._domain} to {new_ip}"
             )
-            status, _ = await self.request(
-                f"https://api.hosting.ionos.com/dns/v1/zones/{self._zone_id}/records/{self._record_id}",
-                "PUT",
-                {
-                    self._auth_header_key: self._auth_header,
-                    "Content-Type": "application/json",
-                },
-                f'{{"disabled": false, "content": "{local_address_short}", "ttl": {self._time_to_live}, "prio": 0}}',
-            )
-            if status:
-                _LOGGER.info(
-                    f"Used the IONOS DNS API to set the AAAA entry for {self._domain} to {local_address_short}"
-                )
 
-                # update the sensor value
-                self._dns_sensor._previous_native_value = self._dns_sensor._native_value
-                self._dns_sensor._native_value = local_address_short
+        return status
 
-            return status
-        _LOGGER.info(f"Adresses are both {dns_address_short} no update necessary")
-        return False
+
+async def main():
+    module = AnsibleModule(
+        argument_spec=dict(
+            prefix=dict(type="str", required=True),
+            key=dict(type="str", required=True),
+            zone_domain=dict(type="str", required=True),
+            domain=dict(type="str", required=True),
+            target_ipv6_address=dict(type="str", required=True),
+            timeout=dict(type="int", default=10),
+            entry_ttl=dict(type="int", default=300),
+            log_http_traffic=dict(type="bool", default=False),
+        ),
+        supports_check_mode=True,
+    )
+
+    params = module.params
+
+    api_prefix = params["prefix"]
+    api_key = params["key"]
+    zone_domain = params["zone_domain"]
+    domain = params["domain"]
+    target_ipv6_address = params["target_ipv6_address"]
+    entry_ttl = params["entry_ttl"]
+    timeout = params["timeout"]
+    log_http_traffic = params["log_http_traffic"]
+
+    old_ip = "temp"
+    new_ip = "temp"
+
+    ionos_api_interactor = IonosDNSUpdater(
+        zone_domain=zone_domain,
+        domain=domain,
+        encryption=api_key,
+        prefix=api_prefix,
+        log_http_errors=log_http_traffic,
+        time_to_live=entry_ttl,
+        timeout=timeout,
+    )
+
+    init_state = await ionos_api_interactor.async_init()
+    if not init_state:
+        module.fail_json(
+            msg="Could not initialize Ionos API interactor",
+            logs=ionos_api_interactor.get_logs(),
+        )
+
+    id_init_state = await ionos_api_interactor.initialize_ids()
+    if not id_init_state:
+        module.fail_json(
+            msg="Could not gather Ionos API ids",
+            logs=ionos_api_interactor.get_logs(),
+        )
+
+    module.exit_json(changed=True, old_ip=old_ip, new_ip=new_ip)
+
+
+if __name__ == "__main__":
+    asyncio.run(main())
