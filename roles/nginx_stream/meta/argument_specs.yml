@@ -14,3 +14,12 @@ argument_specs:
             nginx_stream_default_https_enabled:
                 type: bool
                 required: true
+            nginx_stream_certs_path:
+                type: str
+                required: true
+            nginx_stream_cloud_domain:
+                type: str
+                required: true
+            nginx_stream_ha_domain:
+                type: str
+                required: true

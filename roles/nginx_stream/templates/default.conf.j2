@@ -5,8 +5,8 @@ server {
     server_name *.kellehorreur.de;
 
     # Use the specified certificate for TLS
-    ssl_certificate     /etc/ionoshttps/kellehorreur.de/fullchain.pem;
-    ssl_certificate_key /etc/ionoshttps/kellehorreur.de/privkey.pem;
+    ssl_certificate     {{ nginx_stream_certs_path }}fullchain.pem;
+    ssl_certificate_key {{ nginx_stream_certs_path }}privkey.pem;
 
     # TLS settings
     ssl_protocols TLSv1.2 TLSv1.3;

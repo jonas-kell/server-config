@@ -125,7 +125,7 @@
   ansible.builtin.include_tasks: "{{ role_path }}/tasks/place_ssl_certs.yml"
   vars:
       ssl_cert_src_dir: "{{ playbook_dir }}/../secrets"
-      ssl_cert_dest_dir: /etc/ionoshttps/kellehorreur.de/
+      ssl_cert_dest_dir: "{{ nginx_stream_certs_path }}"
       ssl_cert_files:
           - name: privkey.pem
             mode: "0600"

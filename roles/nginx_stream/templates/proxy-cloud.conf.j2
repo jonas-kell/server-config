@@ -2,11 +2,11 @@ server {
     # Listen for incoming HTTPS connections
     listen 443 ssl;
 
-    server_name cloud.kellehorreur.de;
+    server_name {{ nginx_stream_cloud_domain }};
 
     # Use the specified certificate for TLS
-    ssl_certificate     /etc/ionoshttps/kellehorreur.de/fullchain.pem;
-    ssl_certificate_key /etc/ionoshttps/kellehorreur.de/privkey.pem;
+    ssl_certificate     {{ nginx_stream_certs_path }}fullchain.pem;
+    ssl_certificate_key {{ nginx_stream_certs_path }}privkey.pem;
 
     # TLS settings
     ssl_protocols TLSv1.2 TLSv1.3;
@@ -51,13 +51,13 @@ server {
 
     # resolve backend url
     resolver [2001:4860:4860::8888] valid=300s;
-    set $urlbecld cloud.kellehorreur.de:443;
+    set $urlbecld {{ nginx_stream_cloud_domain }}:443;
 
     # Proxy based on the hostname
     location / {
         proxy_pass https://$urlbecld;
-        proxy_ssl_certificate /etc/ionoshttps/kellehorreur.de/fullchain.pem;  # Reencrypt with the same certifi>
-        proxy_ssl_certificate_key /etc/ionoshttps/kellehorreur.de/privkey.pem;
+        proxy_ssl_certificate {{ nginx_stream_certs_path }}fullchain.pem;  # Reencrypt with the same certificate
+        proxy_ssl_certificate_key {{ nginx_stream_certs_path }}privkey.pem;
         proxy_ssl_protocols TLSv1.2 TLSv1.3;
         proxy_ssl_server_name on;  # Pass the hostname for SNI
     }
