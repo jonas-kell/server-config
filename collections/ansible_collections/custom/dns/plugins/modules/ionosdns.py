@@ -3,7 +3,7 @@
 from ansible.module_utils.basic import AnsibleModule
 import aiohttp
 import asyncio
-from typing import Literal, Optional, Dict, List
+from typing import Literal, Optional, Dict, List, Tuple
 
 
 DOCUMENTATION = r"""
@@ -211,12 +211,45 @@ class IonosDNSUpdater(APIInteractor):
         if not got_all:
             self.log_print(f"DNS updater initialization never found all necessary ids")
 
-    async def update_ipv6_address_entry(self, new_ip: str) -> bool:
+        return got_all
+
+    async def get_ipv6_address_entry(self) -> Tuple[bool, str | None]:
         if not self._can_attempt_update:
-            return False
+            self.log_print("API interactor not properly initialized")
+            return (False, None)
+
         if self._zone_id is None or self._record_id is None:
             self.log_print(
-                f"Tried to update, but either _zone_id or _record_id are none..."
+                "Called request function, but either _zone_id or _record_id are None ..."
+            )
+            return (False, None)
+
+        status, result = await self.request(
+            f"https://api.hosting.ionos.com/dns/v1/zones/{self._zone_id}/records/{self._record_id}",
+            "GET",
+            {
+                self._auth_header_key: self._auth_header,
+                "Content-Type": "application/json",
+            },
+            None,
+        )
+        if status:
+            self.log_print(
+                f"Used the IONOS DNS API to get the AAAA entry for {self._domain}: {result}"
+            )
+            return (status, result.get("content"))
+
+        self.log_print("API did not return success, when getting AAAA entry")
+        return (False, None)
+
+    async def update_ipv6_address_entry(self, new_ip: str) -> bool:
+        if not self._can_attempt_update:
+            self.log_print("API interactor not properly initialized")
+            return False
+
+        if self._zone_id is None or self._record_id is None:
+            self.log_print(
+                "Called update function, but either _zone_id or _record_id are None ..."
             )
             return False
 
@@ -263,9 +296,6 @@ async def main():
     timeout = params["timeout"]
     log_http_traffic = params["log_http_traffic"]
 
-    old_ip = "temp"
-    new_ip = "temp"
-
     ionos_api_interactor = IonosDNSUpdater(
         zone_domain=zone_domain,
         domain=domain,
@@ -290,7 +320,54 @@ async def main():
             logs=ionos_api_interactor.get_logs(),
         )
 
-    module.exit_json(changed=True, old_ip=old_ip, new_ip=new_ip)
+    (before_update_state, before_update_ip) = (
+        await ionos_api_interactor.get_ipv6_address_entry()
+    )
+    if not before_update_state:
+        module.fail_json(
+            msg="Could not read from Ionos API",
+            logs=ionos_api_interactor.get_logs(),
+        )
+
+    if before_update_ip == target_ipv6_address:
+        module.exit_json(
+            changed=False,
+            old_ip=before_update_ip,
+            new_ip=target_ipv6_address,
+            logs=ionos_api_interactor.get_logs(),
+        )
+
+    update_state = await ionos_api_interactor.update_ipv6_address_entry(
+        new_ip=target_ipv6_address
+    )
+    if not update_state:
+        module.fail_json(
+            msg="Could not write to Ionos API",
+            logs=ionos_api_interactor.get_logs(),
+        )
+
+    (after_update_state, after_update_ip) = (
+        await ionos_api_interactor.get_ipv6_address_entry()
+    )
+    if not after_update_state:
+        module.fail_json(
+            msg="Could not read from Ionos API (after update)",
+            logs=ionos_api_interactor.get_logs(),
+        )
+
+    if after_update_ip == target_ipv6_address:
+        module.exit_json(
+            changed=True,
+            old_ip=before_update_ip,
+            new_ip=after_update_ip,
+            logs=ionos_api_interactor.get_logs(),
+        )
+
+    module.fail_json(
+        changed=True,  # assume something was wrecked
+        msg="The change was not applied correctly as it seemes",
+        logs=ionos_api_interactor.get_logs(),
+    )
 
 
 if __name__ == "__main__":

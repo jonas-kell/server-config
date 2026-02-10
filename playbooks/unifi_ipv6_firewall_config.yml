@@ -8,31 +8,12 @@
       token: "{{ lookup('vars', 'ubiquiti_api_token') }}"
 
       # Print debug setting
-      print_debug: true
+      print_debug: false
   vars_files:
       - "{{ playbook_dir }}/../secrets/ubiquiti_api_token.yml"
       - "{{ playbook_dir }}/../secrets/ionos_dns_api.yml"
 
   tasks:
-      - name: Write the DNS settings to Ionos DNS
-        custom.dns.ionosdns:
-            prefix: "{{ ionos_api_prefix }}"
-            key: "{{ ionos_api_key }}"
-            zone_domain: "kellehorreur.de"
-            domain: "ha.kellehorreur.de"
-            target_ipv6_address: "2606:50c0:8001:0:0:0:0:153"
-            log_http_traffic: true
-        register: ionosapi_results
-
-      - name: Debug-print the output of the Ionos DNS API call
-        when: print_debug
-        ansible.builtin.debug:
-            var: ionosapi_results
-
-      - name: Abort debug # ! TODO remove
-        ansible.builtin.fail:
-            msg: "Debug fail"
-
       - name: Gather ip of the Homeassistant instance from DNS
         ansible.builtin.set_fact:
             haserver_ipv6: "{{ lookup('ansible.builtin.dig', 'ha.kellehorreur.de', 'qtype=AAAA', wantlist=True) | first }}"
@@ -78,6 +59,21 @@
                   replacement_ip: "{{ piserver_ipv6 }}"
                 - name: "Home Assistant PI"
                   replacement_ip: "{{ haserver_ipv6 }}"
+
+      - name: Write the DNS settings to Ionos DNS
+        custom.dns.ionosdns:
+            prefix: "{{ ionos_api_prefix }}"
+            key: "{{ ionos_api_key }}"
+            zone_domain: "kellehorreur.de"
+            domain: "cloud.kellehorreur.de"
+            target_ipv6_address: "{{ piserver_ipv6 }}"
+            log_http_traffic: true
+        register: ionosapi_results
+
+      - name: Debug-print the output of the Ionos DNS API call
+        when: print_debug
+        ansible.builtin.debug:
+            var: ionosapi_results
 # ---
 
 # Lists can be found at: https://unifi.ui.com/ > Network > Settings > Overview > Network Lists
