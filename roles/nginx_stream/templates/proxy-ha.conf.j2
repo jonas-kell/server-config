@@ -13,7 +13,7 @@ server {
     ssl_prefer_server_ciphers on;
 
     resolver [2001:4860:4860::8888] valid=300s;
-    set $urlbe {{ nginx_stream_ha_domain }}:8123;
+    set $urlbe {{ nginx_stream_ha_domain }}:{{ nginx_stream_ha_port }};
 
     # Proxy based on the hostname
     location / {

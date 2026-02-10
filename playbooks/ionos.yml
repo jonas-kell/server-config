@@ -1,8 +1,12 @@
 ---
 - name: Streaming Server (IPv4 to IPv6)
+  vars:
+      ha_port: 8123
   hosts: ionos1
   roles:
-      - firewall_stream
+      - role: firewall_stream
+        vars:
+            firewall_stream_ha_port: "{{ ha_port }}"
       - role: nginx_stream
         vars:
             nginx_stream_ha_stream_enabled: true
@@ -12,3 +16,4 @@
             nginx_stream_certs_path: "/etc/ionoshttps/kellehorreur.de/"
             nginx_stream_cloud_domain: "cloud.kellehorreur.de"
             nginx_stream_ha_domain: "ha.kellehorreur.de"
+            nginx_stream_ha_port: "{{ ha_port }}"

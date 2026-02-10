@@ -36,15 +36,15 @@
       proto: tcp
       port: "443"
 
-- name: Allow tcp port 8123
+- name: Allow tcp port for HomeAssistant
   community.general.ufw:
       rule: allow
       proto: tcp
-      port: "8123"
+      port: "{{ firewall_stream_ha_port | default('8123') }}"
 # ---
 
-# - name: Allow udp port 8123
+# - name: Allow udp port xxxx
 #   community.general.ufw:
 #       rule: allow
 #       proto: udp
-#       port: "8123"
+#       port: "xxxx"

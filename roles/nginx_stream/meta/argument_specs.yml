@@ -23,3 +23,6 @@ argument_specs:
             nginx_stream_ha_domain:
                 type: str
                 required: true
+            nginx_stream_ha_port:
+                type: int
+                required: true

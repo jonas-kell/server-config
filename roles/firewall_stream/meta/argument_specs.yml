@@ -1,0 +1,7 @@
+---
+argument_specs:
+    main:
+        options:
+            firewall_stream_ha_port:
+                type: int
+                required: true
