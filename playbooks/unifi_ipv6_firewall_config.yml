@@ -19,7 +19,6 @@
             haserver_ipv6: "{{ lookup('ansible.builtin.dig', 'ha.kellehorreur.de', 'qtype=AAAA', wantlist=True) | first }}"
 
       - name: Debug-print the ipv6 of the Homeassistant instance
-        when: print_debug
         ansible.builtin.debug:
             var: haserver_ipv6
 
@@ -43,7 +42,6 @@
                 | first }}
 
       - name: Debug-print the gathered IPV6 address
-        when: print_debug
         ansible.builtin.debug:
             var: piserver_ipv6
 

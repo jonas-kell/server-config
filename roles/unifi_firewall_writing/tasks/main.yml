@@ -57,6 +57,30 @@
                     | selectattr('name', 'equalto', item.name)
                     | map(attribute='id')
                     | first
+                  ),
+                  'current': (
+                    (
+                      unifi_firewall_writing_ip_list_info.data.data
+                      | selectattr('name', 'equalto', item.name)
+                      | map(attribute='items')
+                      | first
+                      | map(attribute='value')
+                      | first
+                    )
+                  ),
+                  'different': (
+                    (
+                      unifi_firewall_writing_ip_list_info.data.data
+                      | selectattr('name', 'equalto', item.name)
+                      | map(attribute='items')
+                      | first
+                      | map(attribute='value')
+                      | first
+                    )
+                    !=
+                    (
+                      item.replacement_ip
+                    )
                   )
                 })
               ]
@@ -86,6 +110,7 @@
   loop: "{{ unifi_firewall_writing_firewall_tasks }}"
   loop_control:
       loop_var: item
+  when: item.different | bool
 # ---
 # Lists can be found at: https://unifi.ui.com/ > Network > Settings > Overview > Network Lists
 
