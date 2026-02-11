@@ -42,12 +42,48 @@
       proto: tcp
       port: "443"
 
+- name: Allow DNS (tcp + udp/53)
+  when: firewall_allow_dns
+  community.general.ufw:
+      rule: allow
+      proto: tcp
+      port: "53"
+
+- name: Allow DNS 2 (tcp + udp/53)
+  when: firewall_allow_dns
+  community.general.ufw:
+      rule: allow
+      proto: udp
+      port: "53"
+
 - name: Allow tcp port for HomeAssistant
   when: firewall_allow_ha
   community.general.ufw:
       rule: allow
       proto: tcp
       port: "{{ firewall_ha_port | default('8123') }}"
+
+- name: Allow tcp port for k8s/k3s apiserver
+  when: firewall_allow_k3s
+  community.general.ufw:
+      rule: allow
+      proto: tcp
+      port: "{{ firewall_k3s_port | default('6443') }}"
+      comment: "k8s/k3s apiserver"
+
+- name: Allow pod network (10.42.0.0/16)
+  when: firewall_allow_k3s
+  community.general.ufw:
+      rule: allow
+      src: 10.42.0.0/16
+      comment: "k8s/k3s pods"
+
+- name: Allow service network (10.43.0.0/16)
+  when: firewall_allow_k3s
+  community.general.ufw:
+      rule: allow
+      src: 10.43.0.0/16
+      comment: "k8s/k3s services"
 
 - name: Reload the UFW
   community.general.ufw:

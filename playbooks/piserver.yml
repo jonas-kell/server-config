@@ -6,5 +6,6 @@
         vars:
             firewall_allow_http: false
             firewall_allow_https: true
-            firewall_allow_ha: false
+            firewall_allow_dns: true
+            firewall_allow_k3s: true
   become: true

@@ -11,6 +11,15 @@ argument_specs:
             firewall_allow_ha:
                 type: bool
                 required: false
+            firewall_allow_k3s:
+                type: bool
+                required: false
+            firewall_allow_dns:
+                type: bool
+                required: false
             firewall_ha_port:
+                type: int
+                required: false
+            firewall_k3s_port:
                 type: int
                 required: false
