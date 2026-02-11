@@ -2,15 +2,15 @@
 argument_specs:
     main:
         options:
-            firewall_stream_allow_http:
+            firewall_allow_http:
                 type: bool
                 required: false
-            firewall_stream_allow_https:
+            firewall_allow_https:
                 type: bool
                 required: false
-            firewall_stream_allow_ha:
+            firewall_allow_ha:
                 type: bool
                 required: false
-            firewall_stream_ha_port:
+            firewall_ha_port:
                 type: int
                 required: false

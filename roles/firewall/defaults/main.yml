@@ -1,0 +1,4 @@
+firewall_allow_http: false
+firewall_allow_https: false
+firewall_allow_ha: false
+firewall_ha_port: 8123

@@ -29,25 +29,25 @@
       to_ip: "::"
 
 - name: Allow HTTP (tcp/80)
-  when: firewall_stream_allow_http
+  when: firewall_allow_http
   community.general.ufw:
       rule: allow
       proto: tcp
       port: "80"
 
 - name: Allow HTTPS (tcp/443)
-  when: firewall_stream_allow_https
+  when: firewall_allow_https
   community.general.ufw:
       rule: allow
       proto: tcp
       port: "443"
 
 - name: Allow tcp port for HomeAssistant
-  when: firewall_stream_allow_ha
+  when: firewall_allow_ha
   community.general.ufw:
       rule: allow
       proto: tcp
-      port: "{{ firewall_stream_ha_port | default('8123') }}"
+      port: "{{ firewall_ha_port | default('8123') }}"
 
 - name: Reload the UFW
   community.general.ufw:

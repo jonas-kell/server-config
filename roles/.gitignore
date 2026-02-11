@@ -1,7 +1,7 @@
 *
 
-!firewall_stream
-!firewall_stream/**
+!firewall
+!firewall/**
 !nginx_stream
 !nginx_stream/**
 !unifi_firewall_writing

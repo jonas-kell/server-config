@@ -4,12 +4,12 @@
       ha_port: 8123
   hosts: ionos1
   roles:
-      - role: firewall_stream
+      - role: firewall
         vars:
-            firewall_stream_allow_http: true
-            firewall_stream_allow_https: true
-            firewall_stream_allow_ha: true
-            firewall_stream_ha_port: "{{ ha_port }}"
+            firewall_allow_http: true
+            firewall_allow_https: true
+            firewall_allow_ha: true
+            firewall_ha_port: "{{ ha_port }}"
       - role: nginx_stream
         vars:
             nginx_stream_ha_stream_enabled: true
