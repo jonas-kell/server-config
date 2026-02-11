@@ -2,7 +2,7 @@ server {
     # Listen for incoming HTTPS connections
     listen 443 ssl;
 
-    server_name *.kellehorreur.de;
+    server_name {{ nginx_stream_default_server_name }};
 
     # Use the specified certificate for TLS
     ssl_certificate     {{ nginx_stream_certs_path }}fullchain.pem;
