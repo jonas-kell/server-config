@@ -2,6 +2,10 @@
 
 Management scripts for my personal servers and kubernetes setup.
 
+[First time setup commands](FirstTimeCommands.md) (Most relevant for custom local installations, Like the piserver)
+
+[HOW to set secrets](secrets/HOWTO.md)
+
 ## What is deployed
 
 - Ionos
@@ -11,12 +15,12 @@ Management scripts for my personal servers and kubernetes setup.
 - Local
   - Raspberry Pi 4B, 8GB
     - 64 GB SD card
-    - TODO choose os for kubernetes server
+    - Ubuntu 24.04
     - `pi@piserver.kellehorreur.de`
     - `https://cloud.kellehorreur.de`
   - Raspberry Pi 4B, 4GB
     - 64 GB SD card
-    - Home Assistant OS, with Home Assistant Core
+    - [Home Assistant OS, with Home Assistant Core](HAconfig.md)
     - `root@haserver.kellehorreur.de`
     - `https://haserver.kellehorreur.de:8123`
     - `https://ha.kellehorreur.de:8123`
