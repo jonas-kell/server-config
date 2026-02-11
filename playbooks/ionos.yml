@@ -6,6 +6,9 @@
   roles:
       - role: firewall_stream
         vars:
+            firewall_stream_allow_http: true
+            firewall_stream_allow_https: true
+            firewall_stream_allow_ha: true
             firewall_stream_ha_port: "{{ ha_port }}"
       - role: nginx_stream
         vars:

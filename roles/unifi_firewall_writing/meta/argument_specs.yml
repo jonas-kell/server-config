@@ -23,4 +23,4 @@ argument_specs:
                     replacement_ip:
                         type: str
                         required: true
-                default: []
+                required: false

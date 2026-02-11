@@ -7,44 +7,48 @@
       update_cache: true
       cache_valid_time: 1800
 
-- name: Enable UFW with default deny policy
+- name: Reset UFW
   community.general.ufw:
-      state: enabled
-      policy: deny
+      state: reset
 
-- name: Deny all inbound IPv6 traffic
-  community.general.ufw:
-      rule: deny
-      direction: in
-      to_ip: "::"
-
-- name: Allow SSH (tcp/22)
+- name: Allow SSH (tcp/22) # SSH first so we do not loose access
   community.general.ufw:
       rule: allow
       proto: tcp
       port: "22"
 
+- name: Enable UFW with default reject policy
+  community.general.ufw:
+      state: enabled
+      policy: reject
+
+- name: Reject all inbound IPv6 traffic
+  community.general.ufw:
+      rule: reject
+      direction: in
+      to_ip: "::"
+
 - name: Allow HTTP (tcp/80)
+  when: firewall_stream_allow_http
   community.general.ufw:
       rule: allow
       proto: tcp
       port: "80"
 
 - name: Allow HTTPS (tcp/443)
+  when: firewall_stream_allow_https
   community.general.ufw:
       rule: allow
       proto: tcp
       port: "443"
 
 - name: Allow tcp port for HomeAssistant
+  when: firewall_stream_allow_ha
   community.general.ufw:
       rule: allow
       proto: tcp
       port: "{{ firewall_stream_ha_port | default('8123') }}"
-# ---
 
-# - name: Allow udp port xxxx
-#   community.general.ufw:
-#       rule: allow
-#       proto: udp
-#       port: "xxxx"
+- name: Reload the UFW
+  community.general.ufw:
+      state: reloaded
