@@ -2,21 +2,49 @@
 argument_specs:
     main:
         options:
+            firewall_allow_ipv6_ssh:
+                type: bool
+                required: false
             firewall_allow_http:
-                type: bool
+                type: str
                 required: false
+                choices:
+                    - ipv4
+                    - ipv6
+                    - both
+                    - none
             firewall_allow_https:
-                type: bool
+                type: str
                 required: false
+                choices:
+                    - ipv4
+                    - ipv6
+                    - both
+                    - none
             firewall_allow_ha:
-                type: bool
+                type: str
                 required: false
+                choices:
+                    - ipv4
+                    - ipv6
+                    - both
+                    - none
             firewall_allow_k3s:
-                type: bool
+                type: str
                 required: false
+                choices:
+                    - ipv4
+                    - ipv6
+                    - both
+                    - none
             firewall_allow_dns:
-                type: bool
+                type: str
                 required: false
+                choices:
+                    - ipv4
+                    - ipv6
+                    - both
+                    - none
             firewall_ha_port:
                 type: int
                 required: false

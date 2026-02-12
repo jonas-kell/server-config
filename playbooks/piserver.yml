@@ -4,8 +4,9 @@
   roles:
       - role: firewall
         vars:
-            firewall_allow_http: false
-            firewall_allow_https: true
-            firewall_allow_dns: true
-            firewall_allow_k3s: true
+            firewall_allow_ipv6_ssh: false
+            firewall_allow_http: none
+            firewall_allow_https: none
+            firewall_allow_dns: none
+            firewall_allow_k3s: ipv4
   become: true
