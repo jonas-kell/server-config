@@ -3,6 +3,6 @@ firewall_allow_http: none
 firewall_allow_https: none
 firewall_allow_ha: none
 firewall_allow_k3s: none
-firewall_allow_dns: false
+firewall_allow_dns: none
 firewall_ha_port: 8123
 firewall_k3s_port: 6443

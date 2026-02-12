@@ -7,20 +7,11 @@
       update_cache: true
       cache_valid_time: 1800
 
-# reset and ssh
+# Reset and SSH
 
 - name: Reset UFW
   community.general.ufw:
       state: reset
-
-- name: Reject IPv6 SSH (tcp/22)
-  # when: not firewall_allow_ipv6_ssh
-  community.general.ufw:
-      comment: SSH override
-      rule: reject
-      direction: in
-      port: "22"
-      to_ip: "::/0"
 
 - name: Allow SSH (tcp/22) # SSH first so we do not loose access
   community.general.ufw:
@@ -28,6 +19,15 @@
       rule: allow
       proto: tcp
       port: "22"
+
+- name: Reject IPv6 SSH (tcp/22)
+  when: not firewall_allow_ipv6_ssh
+  community.general.ufw:
+      comment: SSH override
+      rule: reject
+      direction: in
+      port: "22"
+      to_ip: "::/0"
 
 - name: Enable UFW with default reject policy
   community.general.ufw:
@@ -71,64 +71,139 @@
       proto: tcp
       port: "80"
 
-# - name: Allow HTTPS (tcp/443)
-#   when: firewall_allow_https
-#   community.general.ufw:
-#       rule: allow
-#       proto: tcp
-#       port: "443"
+# Https
 
-# - name: Reject HTTPS (tcp/443) on IPv6
-#   when: firewall_allow_https
-#   community.general.ufw:
-#       rule: reject
-#       direction: in
-#       to_ip: "::"
-#       proto: tcp
-#       port: "443"
+- name: Reject HTTPS (tcp/443) on IPv4
+  when: firewall_allow_https in ["ipv6"]
+  community.general.ufw:
+      comment: Https override
+      rule: reject
+      direction: in
+      port: "443"
+      to_ip: "0.0.0.0/0"
 
-# - name: Allow DNS (tcp + udp/53)
-#   when: firewall_allow_dns
-#   community.general.ufw:
-#       rule: allow
-#       proto: tcp
-#       port: "53"
+- name: Reject HTTPS (tcp/443) on IPv6
+  when: firewall_allow_https in ["ipv4"]
+  community.general.ufw:
+      comment: Https override
+      rule: reject
+      direction: in
+      port: "443"
+      to_ip: "::/0"
 
-# - name: Allow DNS 2 (tcp + udp/53)
-#   when: firewall_allow_dns
-#   community.general.ufw:
-#       rule: allow
-#       proto: udp
-#       port: "53"
+- name: Allow HTTPS (tcp/443)
+  when: firewall_allow_https in ["ipv4", "ipv6", "both"]
+  community.general.ufw:
+      comment: Https
+      rule: allow
+      proto: tcp
+      port: "443"
 
-# - name: Allow tcp port for HomeAssistant
-#   when: firewall_allow_ha
-#   community.general.ufw:
-#       rule: allow
-#       proto: tcp
-#       port: "{{ firewall_ha_port | default('8123') }}"
+# DNS
 
-# - name: Allow tcp port for k8s/k3s apiserver
-#   when: firewall_allow_k3s
-#   community.general.ufw:
-#       rule: allow
-#       proto: tcp
-#       port: "{{ firewall_k3s_port | default('6443') }}"
-#       comment: "k8s/k3s apiserver"
+- name: Reject DNS (tcp + udp/53) on IPv4
+  when: firewall_allow_dns in ["ipv6"]
+  community.general.ufw:
+      comment: DNS override
+      rule: reject
+      direction: in
+      port: "53"
+      to_ip: "0.0.0.0/0"
 
-# - name: Allow pod network (10.42.0.0/16)
-#   when: firewall_allow_k3s
-#   community.general.ufw:
-#       rule: allow
-#       src: 10.42.0.0/16
-#       comment: "k8s/k3s pods"
+- name: Reject DNS (tcp + udp/53) on IPv6
+  when: firewall_allow_dns in ["ipv4"]
+  community.general.ufw:
+      comment: DNS override
+      rule: reject
+      direction: in
+      port: "53"
+      to_ip: "::/0"
 
-# - name: Allow service network (10.43.0.0/16)
-#   when: firewall_allow_k3s
-#   community.general.ufw:
-#       rule: allow
-#       src: 10.43.0.0/16
-#       comment: "k8s/k3s services"
+- name: Allow DNS (tcp + udp/53)
+  when: firewall_allow_dns in ["ipv4", "ipv6", "both"]
+  community.general.ufw:
+      comment: DNS
+      rule: allow
+      proto: tcp
+      port: "53"
+
+- name: Allow DNS (tcp + udp/53)
+  when: firewall_allow_dns in ["ipv4", "ipv6", "both"]
+  community.general.ufw:
+      comment: DNS
+      rule: allow
+      proto: udp
+      port: "53"
+
+# Home Assistant
+
+- name: Reject tcp port for HomeAssistant
+  when: firewall_allow_ha in ["ipv6"]
+  community.general.ufw:
+      comment: HomeAssistant override
+      rule: reject
+      direction: in
+      port: "{{ firewall_ha_port | default('8123') }}"
+      to_ip: "0.0.0.0/0"
+
+- name: Reject tcp port for HomeAssistant
+  when: firewall_allow_ha in ["ipv4"]
+  community.general.ufw:
+      comment: HomeAssistant override
+      rule: reject
+      direction: in
+      port: "{{ firewall_ha_port | default('8123') }}"
+      to_ip: "::/0"
+
+- name: Allow tcp port for HomeAssistant
+  when: firewall_allow_ha in ["ipv4", "ipv6", "both"]
+  community.general.ufw:
+      comment: HomeAssistant
+      rule: allow
+      proto: tcp
+      port: "{{ firewall_ha_port | default('8123') }}"
+
+# Kubernetes
+
+- name: Reject tcp port for k8s/k3s apiserver
+  when: firewall_allow_k3s in ["ipv6"]
+  community.general.ufw:
+      comment: "k8s/k3s apiserver override"
+      rule: reject
+      direction: in
+      port: "{{ firewall_k3s_port | default('6443') }}"
+      to_ip: "0.0.0.0/0"
+
+- name: Reject tcp port for k8s/k3s apiserver
+  when: firewall_allow_k3s in ["ipv4"]
+  community.general.ufw:
+      comment: "k8s/k3s apiserver override"
+      rule: reject
+      direction: in
+      port: "{{ firewall_k3s_port | default('6443') }}"
+      to_ip: "::/0"
+
+- name: Allow tcp port for k8s/k3s apiserver
+  when: firewall_allow_k3s in ["ipv4", "ipv6", "both"]
+  community.general.ufw:
+      comment: "k8s/k3s apiserver"
+      rule: allow
+      proto: tcp
+      port: "{{ firewall_k3s_port | default('6443') }}"
+
+- name: Allow pod network (10.42.0.0/16)
+  when: not (firewall_allow_k3s == "none")
+  community.general.ufw:
+      rule: allow
+      src: 10.42.0.0/16
+      comment: "k8s/k3s pods"
+
+- name: Allow service network (10.43.0.0/16)
+  when: not (firewall_allow_k3s == "none")
+  community.general.ufw:
+      rule: allow
+      src: 10.43.0.0/16
+      comment: "k8s/k3s services"
 
 # Finally: reload
 
