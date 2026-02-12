@@ -13,14 +13,7 @@
   community.general.ufw:
       state: reset
 
-- name: Allow SSH (tcp/22) # SSH first so we do not loose access
-  community.general.ufw:
-      comment: SSH
-      rule: allow
-      proto: tcp
-      port: "22"
-
-- name: Reject IPv6 SSH (tcp/22)
+- name: Reject IPv6 SSH (tcp/22) # SSH first so we do not loose access - but block before accept
   when: not firewall_allow_ipv6_ssh
   community.general.ufw:
       comment: SSH override
@@ -28,6 +21,13 @@
       direction: in
       port: "22"
       to_ip: "::/0"
+
+- name: Allow SSH (tcp/22) # SSH first so we do not loose access
+  community.general.ufw:
+      comment: SSH
+      rule: allow
+      proto: tcp
+      port: "22"
 
 - name: Enable UFW with default reject policy
   community.general.ufw:
