@@ -1,0 +1,13 @@
+all:
+    children:
+        ionos:
+            hosts:
+                ionos1:
+                    ansible_host: ionosserver.kellehorreur.de
+                    ansible_user: root
+
+        local:
+            hosts:
+                piserver:
+                    ansible_host: piserver.kellehorreur.de
+                    ansible_user: pi
