@@ -8,5 +8,8 @@
             firewall_allow_http: none
             firewall_allow_https: none
             firewall_allow_dns: none
-            firewall_allow_k3s: ipv4
+            firewall_allow_k3s: ipv4 # will get partially overwritten by k3s install (but NOT the ipv6 block on the apiserver)
   become: true
+
+- name: "K3s installation: Main node on Pi"
+  ansible.builtin.import_playbook: "./k3s_install.yml"

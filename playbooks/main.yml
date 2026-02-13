@@ -1,6 +1,6 @@
 ---
 - name: Central installation entrypoint - Ionos
-  import_playbook: ionos.yml
+  ansible.builtin.import_playbook: ionos.yml
 
 - name: Central installation entrypoint - Piserver
-  import_playbook: piserver.yml
+  ansible.builtin.import_playbook: piserver.yml

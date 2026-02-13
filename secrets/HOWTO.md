@@ -30,3 +30,18 @@ ubiquiti_api_token: "..."
 ionos_api_prefix: "..."
 ionos_api_key: "..."
 ```
+
+## K3s
+
+Taken from [the sample inventory](https://github.com/k3s-io/k3s-ansible/blob/main/inventory-sample.yml):
+
+The token should be a random string of reasonable length. You can generate one with the following commands:
+
+```cmd
+openssl rand -base64 64
+
+# create the symlink (not needed in the future typically)
+ln -s ../../secrets/k3s_token.yml inventories/group_vars/k3s_cluster.yml
+```
+
+You can use ansible-vault to encrypt this value / keep it secret.
