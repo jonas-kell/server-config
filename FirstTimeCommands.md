@@ -58,11 +58,12 @@ sudo blkid # get the uuid of the drive
 ### /dev/sda1: LABEL="kubernetes-data" UUID="05520912-6cfa-4185-8f26-8d00f54fcaa4" BLOCK_SIZE="4096" TYPE="ext4" PARTUUID="6f1f1002-03f3-4561-935c-e2d788bcdaf7"
 
 sudo mkdir /kubernetes-data
+sudo chmod 000 /kubernetes-data # make mountpoint folder itself unwritable!! (in case drice is missing later)
 sudo nano /etc/fstab
 
 # add this line to the bottom (we want boot to fail if it is missing)
 
-UUID=05520912-6cfa-4185-8f26-8d00f54fcaa4  /kubernetes-data  ext4  defaults,noatime  0  2
+UUID=05520912-6cfa-4185-8f26-8d00f54fcaa4  /kubernetes-data  ext4  defaults,noatime,x-systemd.automount,nofail    0  2
 
 # test config
 sudo mount -a
@@ -71,7 +72,7 @@ sudo mount -a
 
 # DO NOT REBOOT IF ERRORS APPEAR, IT WILL NOT COME BACK!
 
-# Set filesystem permissions https://chmod-calculator.com/
+# Set filesystem permissions https://chmod-calculator.com/ (AFTER mount, the folder is in fact a "different" folder. For that we set runtime permissions)
 
 sudo chown root:root /kubernetes-data
 sudo chmod 755 /kubernetes-data
@@ -109,3 +110,38 @@ Cleanup
 ```cmd
 rm benchfile
 ```
+
+<!--
+3.0 to USBC Adapter https://www.amazon.de/dp/B0FRLL3CWC?ref=ppx_yo2ov_dt_b_fed_asin_title
+2.0 to USBC Adapter https://www.amazon.de/dp/B085VT1VJT?ref=ppx_yo2ov_dt_b_fed_asin_title&th=1
+SATA to 3.0 Adapter https://www.amazon.de/dp/B0FGRTW9BR?ref=ppx_yo2ov_dt_b_fed_asin_title
+SATA to USBC 3.1 Adapter https://www.amazon.de/dp/B07KP9YK7T?ref=ppx_yo2ov_dt_b_fed_asin_title&th=1
+
+USB 3.0 Adapter PI
+w 174 MB/s
+r 31,1 MB/s - 270 MB/s - 319 MB/s (sometimes fast, sometimes slow)
+
+USB C over 3.0<->C Adapter (right way) PI
+--- RANDOMLY STOPPED WORKING AT ALL IN THIS COMBINATION WHILE BENCHMARKING ---
+--- worked for one try, then it just always died with that combination ---
+
+USB C over 2.0<->C Adapter PI
+w 29,6 MB/s
+r 35,8 MB/s
+
+USB 3.0 Over good USBc Hub
+w 349 MB/s
+r 420 MB/s
+
+USB C over 3.0<->C Adapter (right way) Over good USBc Hub
+w 351 MB/s
+r 426 MB/s
+
+USB C Adapter Over good USBc Hub
+w 348 MB/s
+r 423 MB/s
+
+USB C over 3.0<->C Adapter (wrong way) Over good USBc Hub
+w 40.7 MB/s
+r 41.7 MB/s
+ -->
