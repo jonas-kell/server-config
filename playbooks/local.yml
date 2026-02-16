@@ -16,3 +16,7 @@
         vars:
             dotfiles_profile_name: "jonas"
             dotfiles_set_bashrc: false
+# ---
+
+# TODO: gnome and gnome-tweaks https://gist.github.com/jonas-kell/44ecd5f06583ff119814f7d3dd06babc
+# then conversion to wayland/sway
