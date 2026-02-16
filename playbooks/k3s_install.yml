@@ -2,3 +2,6 @@
 - name: Import kube cluster playbook
   # `site.yml` could be replaced with `upgrade.yml` if the `k3s_version` field is updated in the inventory
   ansible.builtin.import_playbook: "./../collections/ansible_collections/k3s/orchestration/playbooks/site.yml"
+# ---
+
+# install flux & helm-dashboard

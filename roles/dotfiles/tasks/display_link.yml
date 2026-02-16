@@ -1,0 +1,20 @@
+---
+TODO
+# displaylink-driver and evdi
+
+# ---
+
+# Previous manual commands/build:
+# https://gist.github.com/jonas-kell/fb5c857177d97a3b815a3f1df8105510
+
+# ---
+
+# Nvidia re-install (should now be more stable and no longer required)
+
+# sudo apt purge ~nnvidia
+# sudo apt autoremove
+# sudo apt clean
+
+# sudo apt update
+# sudo apt full-upgrade
+# sudo apt install system76-driver-nvidia

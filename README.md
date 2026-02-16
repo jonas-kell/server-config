@@ -30,6 +30,8 @@ Management scripts for my personal servers and kubernetes setup.
 
 ## Local installation
 
+Must be ran to install this in a working manner locally (is not in the automatic install for `local.yml`, as you need ansible working for this to be executed, so that is not helpful...)
+
 ```cmd
 pip3 install ansible
 pip3 install ansible-lint
@@ -71,4 +73,10 @@ Set ipv6-firewalls on unifi devices and ionos DNS
 
 ```cmd
 ansible-playbook playbooks/unifi_ipv6_firewall_config.yml
+```
+
+Install a local Linux System (tested on and designed for Pop-Os at the moment)
+
+```cmd
+ansible-playbook playbooks/local.yml --ask-become-pass
 ```

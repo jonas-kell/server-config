@@ -6,6 +6,9 @@
 !nginx_stream/**
 !unifi_firewall_writing
 !unifi_firewall_writing/**
+!dotfiles
+!dotfiles/**
+
 
 !requirements.yml
 !.gitignore

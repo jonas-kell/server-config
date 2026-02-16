@@ -1,0 +1,8 @@
+- name: Place Bashrc include
+  when: dotfiles_set_bashrc
+  ansible.builtin.include_tasks: "{{ role_path }}/tasks/bashrc.yml"
+# ---
+
+# --- Where stuff could be looked up from (opinionated configs by friends)
+# https://github.com/jan-clr/dotfiles
+# https://gitlab.com/FStrk/dotfiles

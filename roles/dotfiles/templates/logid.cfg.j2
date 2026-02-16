@@ -1,0 +1,43 @@
+devices: (
+
+  {
+    name: "MX Master 4";
+    smartshift:
+    {
+        on: true;
+        threshold: 20;
+    };
+    hiresscroll:
+    {
+        hires: false; # if hires=true multiplier 0.18
+        invert: false;
+        target: false; # could use this to activate remapping below
+        #up: {
+        #    mode: "Axis";
+        #    axis: "REL_WHEEL";
+        #    axis_multiplier: 1.0;
+        #},
+        #down: {
+        #    mode: "Axis";
+        #    axis: "REL_WHEEL";
+        #    axis_multiplier: -1.0;
+        #},
+    };
+    thumbwheel:
+    {
+        divert: false;
+        invert: true;
+    };
+    dpi: 1000;
+    buttons: (
+        {
+            cid: 0x53;
+            action =
+            {
+                type: "Keypress";
+                keys: ["KEY_LEFTALT", "KEY_J"];
+            };
+        }
+    );
+  }
+);
