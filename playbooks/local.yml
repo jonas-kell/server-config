@@ -11,13 +11,42 @@
             cache_valid_time: 1800
             upgrade: "yes"
 
+      - name: Show interpreter
+        ansible.builtin.debug:
+            var: ansible_python_interpreter
+
+      - name: Show Python version
+        ansible.builtin.command: "{{ ansible_python_interpreter }} --version"
+        changed_when: false
+        register: pyver
+
+      - name: Show interpreter version
+        ansible.builtin.debug:
+            var: pyver.stdout
+
   roles:
       - role: dotfiles
         vars:
             dotfiles_profile_name: "jonas"
-            dotfiles_set_bashrc: false
+            dotfiles_device_type: "desktop"
+            # switches:
+            # dotfiles_set_bashrc: true
+            dotfiles_gnome_extensions: true
 # ---
 
 # TODO: gnome and gnome-tweaks https://gist.github.com/jonas-kell/44ecd5f06583ff119814f7d3dd06babc
 # probably move to https://github.com/vikdevelop/SaveDesktop
 # then conversion to wayland/sway
+
+# flatpak install --user com.discordapp.Discord -y
+# flatpak install --user com.geeks3d.furmark -y
+# flatpak install --user com.github.arminstraub.krop -y
+# flatpak install --user com.github.hluk.copyq -y
+# flatpak install --user com.slack.Slack -y
+# flatpak install --user com.spotify.Client -y
+# flatpak install --user io.github.vikdevelop.SaveDesktop -y
+# flatpak install --user org.gimp.GIMP -y
+# flatpak install --user org.gnome.GHex -y
+# flatpak install --user org.mozilla.Thunderbird -y
+# flatpak install --user org.torproject.torbrowser-launcher -y
+# flatpak install --user org.videolan.VLC -y

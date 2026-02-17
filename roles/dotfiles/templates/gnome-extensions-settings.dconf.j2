@@ -22,7 +22,12 @@ animate-appicon-hover=true
 animate-appicon-hover-animation-extent={'RIPPLE': 4, 'PLANK': 4, 'SIMPLE': 1}
 appicon-margin=0
 appicon-padding=4
+{% if dotfiles_device_type == "desktop" %}
+available-monitors=[0, 1]
+{% elif dotfiles_device_type == "laptop" %}
 available-monitors=[0]
+{% else %}
+{% endif %}
 dot-position='BOTTOM'
 dot-style-focused='METRO'
 hotkeys-overlay-combo='TEMPORARILY'
@@ -32,7 +37,12 @@ panel-anchors='{"0":"MIDDLE","1":"MIDDLE"}'
 panel-element-positions='{"0":[{"element":"showAppsButton","visible":true,"position":"stackedTL"},{"element":"activitiesButton","visible":false,"position":"stackedTL"},{"element":"leftBox","visible":false,"position":"stackedTL"},{"element":"taskbar","visible":true,"position":"stackedTL"},{"element":"centerBox","visible":true,"position":"stackedBR"},{"element":"rightBox","visible":true,"position":"stackedBR"},{"element":"dateMenu","visible":true,"position":"stackedBR"},{"element":"systemMenu","visible":true,"position":"stackedBR"},{"element":"desktopButton","visible":true,"position":"stackedBR"}],"1":[{"element":"showAppsButton","visible":true,"position":"stackedTL"},{"element":"activitiesButton","visible":false,"position":"stackedTL"},{"element":"leftBox","visible":false,"position":"stackedTL"},{"element":"taskbar","visible":true,"position":"stackedTL"},{"element":"centerBox","visible":true,"position":"stackedBR"},{"element":"rightBox","visible":true,"position":"stackedBR"},{"element":"dateMenu","visible":true,"position":"stackedBR"},{"element":"systemMenu","visible":true,"position":"stackedBR"},{"element":"desktopButton","visible":true,"position":"stackedBR"}]}'
 panel-lengths='{"0":100,"1":100}'
 panel-positions='{"0":"BOTTOM","1":"BOTTOM"}'
+{% if dotfiles_device_type == "desktop" %}
+panel-sizes='{"0":42,"1":42}'
+{% elif dotfiles_device_type == "laptop" %}
 panel-sizes='{"0":32,"1":42}'
+{% else %}
+{% endif %}
 primary-monitor=0
 show-favorites=true
 show-favorites-all-monitors=true
@@ -58,7 +68,12 @@ url-button=false
 icons=true
 position=2
 refreshrate=1
+{% if dotfiles_device_type == "desktop" %}
+settingsandsmiconfig=['active', 'inactive', 'active', 'inactive', 'active']
+{% elif dotfiles_device_type == "laptop" %}
 settingsandsmiconfig=['active', 'inactive', 'active', 'inactive', 'inactive']
+{% else %}
+{% endif %}
 
 [pop-cosmic]
 show-applications-button=false

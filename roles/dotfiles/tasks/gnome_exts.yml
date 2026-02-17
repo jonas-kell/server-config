@@ -1,0 +1,83 @@
+---
+- name: Install dependencies
+  ansible.builtin.package:
+      name:
+          - gnome-tweaks
+          - gnome-shell-extensions
+          - python3.12-venv
+      state: present
+      update_cache: true
+      cache_valid_time: 1800
+
+- name: Create venv for GNOME CLI
+  ansible.builtin.command: python3.12 -m venv --without-pip /opt/gnome-cli-venv
+  args:
+      creates: /opt/gnome-cli-venv
+
+- name: Install/upgrade pip in venv
+  ansible.builtin.command:
+      cmd: /opt/gnome-cli-venv/bin/python3 -m ensurepip --upgrade
+  changed_when: true
+
+- name: Install/upgrade setuptools, wheel in venv
+  ansible.builtin.command:
+      cmd: /opt/gnome-cli-venv/bin/python3 -m pip install --upgrade --force-reinstall pip setuptools
+  changed_when: true
+
+# !! breaks, because  "Module failed: module 'pkgutil' has no attribute 'ImpImporter'"
+# - name: Install GNOME extensions CLI in venv
+#   ansible.builtin.pip:
+#       name: gnome-extensions-cli
+#       virtualenv: /opt/gnome-cli-venv
+#       virtualenv_python: python3.12
+
+- name: Install GNOME extensions CLI in venv (using pip directly)
+  ansible.builtin.command: /opt/gnome-cli-venv/bin/pip install gnome-extensions-cli
+  changed_when: true
+
+- name: Define GNOME extensions list
+  ansible.builtin.set_fact:
+      dotfiles_gnome_extensions:
+          - name: cosmic-dock@system76.com
+            state: disable # default installed stuff
+          - name: dash-to-panel@jderose9.github.com
+            state: enable
+          - name: ding@rastersoft.com
+            state: enable
+          - name: Vitals@CoreCoding.com
+            state: enable
+          - name: sound-output-device-chooser@kgshank.net
+            state: enable
+          - name: extension-list@tu.berry
+            state: enable
+          - name: gnome-shell-screenshot@ttll.de
+            state: enable
+          - name: nvidiautil@ethanwharris
+            state: enable
+          - name: popx11gestures@system76.com
+            state: enable
+          - name: cosmic-workspaces@system76.com
+            state: enable
+          - name: pop-cosmic@system76.com
+            state: enable
+          - name: pop-shell@system76.com
+            state: enable
+          - name: system76-power@system76.com
+            state: enable
+          - name: ubuntu-appindicators@ubuntu.com
+            state: enable
+
+# https://github.com/essembeh/gnome-extensions-cli
+- name: Install GNOME extensions
+  ansible.builtin.command:
+      cmd: "/opt/gnome-cli-venv/bin/gext install {{ item.name }}"
+  loop: "{{ dotfiles_gnome_extensions }}"
+  become: false
+  changed_when: true
+
+- name: Set GNOME extension state (enable/disable)
+  ansible.builtin.command:
+      cmd: "/opt/gnome-cli-venv/bin/gext {{ item.state }} {{ item.name }}"
+  loop: "{{ dotfiles_gnome_extensions }}"
+  become: false
+  changed_when: true

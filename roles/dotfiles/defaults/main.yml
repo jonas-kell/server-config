@@ -1,1 +1,2 @@
-dotfiles_set_bashrc: true
+dotfiles_set_bashrc: false
+dotfiles_gnome_extensions: false

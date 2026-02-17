@@ -2,9 +2,20 @@
 argument_specs:
     main:
         options:
+            # switches
             dotfiles_set_bashrc:
                 type: bool
                 required: false
+            dotfiles_gnome_extensions:
+                type: bool
+                required: false
+            # configs:
             dotfiles_profile_name:
                 type: str
+                required: true
+            dotfiles_device_type:
+                type: str
+                choices:
+                    - desktop
+                    - laptop
                 required: true
