@@ -9,6 +9,9 @@ argument_specs:
             dotfiles_gnome_extensions:
                 type: bool
                 required: false
+            dotfiles_opinionated_apps:
+                type: bool
+                required: false
             # configs:
             dotfiles_profile_name:
                 type: str

@@ -1,20 +1,41 @@
-# gimp
-# chrome
-# inkscape
-# signal-desktop
-# spotify
-# simple screen recorder
-# vlc
-# vscode
-# thunderbird
-# discord
-# audacity
-# curl, wget
-# texlive-full
-# kdenlive
-# minecraft-launcher
-# ncat
-# rpi-imager
-# wireshark
-# localsend
-# firefox
+- name: Install System level packages
+  ansible.builtin.package:
+      name:
+          - google-chrome-stable
+          - inkscape
+          - signal-desktop
+          - simplescreenrecorder
+          - code
+          - audacity
+          - curl
+          - wget
+          - texlive-full
+          - kdenlive
+          - minecraft-launcher
+          - ncat
+          - rpi-imager
+          - wireshark
+          - localsend
+          - firefox
+      state: present
+      update_cache: true
+      cache_valid_time: 1800
+
+- name: Define Flatpak list
+  ansible.builtin.set_fact:
+      dotfiles_flatpak_installs:
+          - name: com.discordapp.Discord
+          - name: com.github.arminstraub.krop
+          - name: com.github.hluk.copyq
+          - name: com.spotify.Client
+          - name: org.gimp.GIMP
+          - name: org.mozilla.Thunderbird
+          - name: org.videolan.VLC
+
+- name: Install Flatpaks
+  community.general.flatpak:
+      name: "{{ item.name }}"
+      state: present
+      method: user
+  loop: "{{ dotfiles_flatpak_installs }}"
+  become: false

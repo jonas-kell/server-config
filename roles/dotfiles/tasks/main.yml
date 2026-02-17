@@ -5,6 +5,10 @@
 - name: Update Gnome (Shell) Extensions
   when: dotfiles_gnome_extensions
   ansible.builtin.include_tasks: "{{ role_path }}/tasks/gnome_exts.yml"
+
+- name: Install opinionated programs/apps
+  when: dotfiles_opinionated_apps
+  ansible.builtin.include_tasks: "{{ role_path }}/tasks/apps.yml"
 # ---
 
 # --- Where stuff could be looked up from (opinionated configs by friends)

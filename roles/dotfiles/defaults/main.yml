@@ -1,2 +1,3 @@
 dotfiles_set_bashrc: false
 dotfiles_gnome_extensions: false
+dotfiles_opinionated_apps: false

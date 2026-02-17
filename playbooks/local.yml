@@ -31,20 +31,8 @@
             dotfiles_device_type: "desktop"
             # switches:
             # dotfiles_set_bashrc: true
-            dotfiles_gnome_extensions: true
+            # dotfiles_gnome_extensions: true
+            dotfiles_opinionated_apps: true
 # ---
 
-# then conversion to wayland/sway
-
-# flatpak install --user com.discordapp.Discord -y
-# flatpak install --user com.geeks3d.furmark -y
-# flatpak install --user com.github.arminstraub.krop -y
-# flatpak install --user com.github.hluk.copyq -y
-# flatpak install --user com.slack.Slack -y
-# flatpak install --user com.spotify.Client -y
-# flatpak install --user io.github.vikdevelop.SaveDesktop -y
-# flatpak install --user org.gimp.GIMP -y
-# flatpak install --user org.gnome.GHex -y
-# flatpak install --user org.mozilla.Thunderbird -y
-# flatpak install --user org.torproject.torbrowser-launcher -y
-# flatpak install --user org.videolan.VLC -y
+# TODO: conversion to wayland/sway
