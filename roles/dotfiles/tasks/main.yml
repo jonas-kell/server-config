@@ -29,6 +29,10 @@
 - name: Install NVM
   when: dotfiles_install_nvm_node
   ansible.builtin.include_tasks: "{{ role_path }}/tasks/nvm.yml"
+
+- name: PDF tools and Xournalpp
+  when: dotfiles_pdf_tools_xournalpp
+  ansible.builtin.include_tasks: "{{ role_path }}/tasks/xournalpp.yml"
 # ---
 
 # --- Where stuff could be looked up from (opinionated configs by friends)

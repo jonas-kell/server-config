@@ -1,3 +1,24 @@
 ---
-# also deploy the convert-script
-# pdftk, pdfunite
+- name: Install System level packages for PDFs
+  ansible.builtin.package:
+      name:
+          - xournalpp
+          - pdftk
+          - poppler-utils # pdfunite and more
+      state: present
+      update_cache: true
+      cache_valid_time: 1800
+
+- name: Place `convert_xopp_to_pdf.sh` in invoking user's home directory
+  ansible.builtin.template:
+      src: convert_xopp_to_pdf.sh.j2
+      dest: "~/convert_xopp_to_pdf.sh"
+      mode: "711"
+  become: false
+
+- name: Place `join_pdfs.sh` in invoking user's home directory
+  ansible.builtin.template:
+      src: join_pdfs.sh.j2
+      dest: "~/join_pdfs.sh"
+      mode: "711"
+  become: false
