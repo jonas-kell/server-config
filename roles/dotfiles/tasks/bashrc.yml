@@ -1,10 +1,36 @@
-# -rw-r--r--   1 jonas jonas   828 Feb 14  2023 .profile
-# -rw-r--r--   1 jonas jonas  4806 Feb 11 16:20 .bashrc
-# -rw-r--r--   1 jonas jonas   220 Mai 10  2021 .bash_logout
+- name: Install System level packages
+  ansible.builtin.package:
+      name:
+          - bash
+          - bash-completion
+      state: present
+      update_cache: true
+      cache_valid_time: 1800
 
-- name: Place config file in invoking user's home directory
+- name: Place `bashrc` config file in invoking user's home directory
   ansible.builtin.template:
       src: .bashrc.j2
-      dest: "~/.myconfig"
+      dest: "~/.bashrc"
+      mode: "0644"
+  become: false
+
+- name: Place `bash_logout` config file in invoking user's home directory
+  ansible.builtin.template:
+      src: .bash_logout.j2
+      dest: "~/.bash_logout"
+      mode: "0644"
+  become: false
+
+- name: Place `inputrc` config file in invoking user's home directory
+  ansible.builtin.template:
+      src: .inputrc.j2
+      dest: "~/.inputrc"
+      mode: "0644"
+  become: false
+
+- name: Place `profile` config file in invoking user's home directory
+  ansible.builtin.template:
+      src: .profile.j2
+      dest: "~/.profile"
       mode: "0644"
   become: false

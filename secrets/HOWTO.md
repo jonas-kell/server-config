@@ -2,15 +2,7 @@
 
 ## SSL
 
-(From Ionos)
-
-- Generate Certificate
-  - Thereby a private key file is being downloaded
-    - ssl_certificate_key -> privkey.pem;
-- Wait for it to be issued
-  - Now Download the Certificate and the Intermediate
-  - Append FIRST Certificate and THEN Intermediate into
-    - ssl_certificate -> fullchain.pem;
+Like described in the [SSL config](./../SSL.md)
 
 ## Ubiquiti API token
 
@@ -45,3 +37,7 @@ ln -s ../../secrets/k3s_token.yml inventories/group_vars/k3s_cluster.yml
 ```
 
 You can use ansible-vault to encrypt this value / keep it secret.
+
+## Kubeconfigs
+
+Set the Kubeconfigs like described [in this cheat sheet](./../Kubectl.md)

@@ -1,2 +1,3 @@
 ---
-- name: geerlingguy.nodejs
+- name: andrewrothstein.kubectl
+- name: geerlingguy.helm
