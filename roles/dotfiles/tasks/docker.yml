@@ -1,1 +1,5 @@
-# with docker compose
+# with docker compose -> the role does it
+# https://galaxy.ansible.com/ui/standalone/roles/geerlingguy/docker/documentation/
+- name: Install docker and services locally
+  ansible.builtin.include_role:
+      name: geerlingguy.docker

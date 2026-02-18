@@ -1,3 +1,4 @@
 ---
 - name: andrewrothstein.kubectl
 - name: geerlingguy.helm
+- name: geerlingguy.docker

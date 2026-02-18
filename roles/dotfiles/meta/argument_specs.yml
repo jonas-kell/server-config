@@ -18,6 +18,9 @@ argument_specs:
             dotfiles_opinionated_apps:
                 type: bool
                 required: false
+            dotfiles_install_and_configure_docker:
+                type: bool
+                required: false
             # configs:
             dotfiles_profile_name:
                 type: str

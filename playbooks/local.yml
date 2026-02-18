@@ -34,7 +34,8 @@
             # dotfiles_install_kubernetes_clients: true
             # dotfiles_gnome_extensions: true
             # dotfiles_opinionated_apps: true
-            dotfiles_displaylink_compatibility: true
+            # dotfiles_displaylink_compatibility: true
+            # dotfiles_install_and_configure_docker: true
 # ---
 
 # TODO: conversion to wayland/sway

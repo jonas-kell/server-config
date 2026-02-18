@@ -17,6 +17,10 @@
 - name: Install Displaylink compatibility
   when: dotfiles_displaylink_compatibility
   ansible.builtin.include_tasks: "{{ role_path }}/tasks/display_link.yml"
+
+- name: Install Docker and deamons
+  when: dotfiles_install_and_configure_docker
+  ansible.builtin.include_tasks: "{{ role_path }}/tasks/docker.yml"
 # ---
 
 # --- Where stuff could be looked up from (opinionated configs by friends)
