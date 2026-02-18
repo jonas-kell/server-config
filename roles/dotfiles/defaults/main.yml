@@ -2,3 +2,4 @@ dotfiles_set_bashrc: false
 dotfiles_gnome_extensions: false
 dotfiles_opinionated_apps: false
 dotfiles_install_kubernetes_clients: false
+dotfiles_displaylink_compatibility: false

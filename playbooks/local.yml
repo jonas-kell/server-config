@@ -30,10 +30,11 @@
             dotfiles_profile_name: "jonas"
             dotfiles_device_type: "desktop"
             # switches:
-            dotfiles_set_bashrc: true
-            dotfiles_install_kubernetes_clients: true
+            # dotfiles_set_bashrc: true
+            # dotfiles_install_kubernetes_clients: true
             # dotfiles_gnome_extensions: true
             # dotfiles_opinionated_apps: true
+            dotfiles_displaylink_compatibility: true
 # ---
 
 # TODO: conversion to wayland/sway

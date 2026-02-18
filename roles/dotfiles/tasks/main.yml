@@ -13,6 +13,10 @@
 - name: Install opinionated programs/apps
   when: dotfiles_opinionated_apps
   ansible.builtin.include_tasks: "{{ role_path }}/tasks/apps.yml"
+
+- name: Install Displaylink compatibility
+  when: dotfiles_displaylink_compatibility
+  ansible.builtin.include_tasks: "{{ role_path }}/tasks/display_link.yml"
 # ---
 
 # --- Where stuff could be looked up from (opinionated configs by friends)

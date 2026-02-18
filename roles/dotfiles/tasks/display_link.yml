@@ -1,7 +1,12 @@
 ---
-TODO
-# displaylink-driver and evdi
-
+- name: Install System level displaylink packages
+  ansible.builtin.package:
+      name:
+          - displaylink-driver
+          - evdi
+      state: present
+      update_cache: true
+      cache_valid_time: 1800
 # ---
 
 # Previous manual commands/build:
