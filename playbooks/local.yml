@@ -30,9 +30,9 @@
             dotfiles_profile_name: "jonas"
             dotfiles_device_type: "desktop"
             # switches:
-            # dotfiles_set_bashrc: true
+            dotfiles_set_bashrc: true
             # dotfiles_gnome_extensions: true
-            dotfiles_opinionated_apps: true
+            # dotfiles_opinionated_apps: true
 # ---
 
 # TODO: conversion to wayland/sway
