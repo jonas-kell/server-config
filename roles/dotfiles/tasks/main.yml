@@ -38,6 +38,10 @@
 - name: Nextcloud Desktop
   when: dotfiles_install_nextcloud_desktop
   ansible.builtin.include_tasks: "{{ role_path }}/tasks/nextcloud.yml"
+
+- name: Logiops Driver
+  when: dotfiles_logiops_driver
+  ansible.builtin.include_tasks: "{{ role_path }}/tasks/mx_master.yml"
 # ---
 
 # --- Where stuff could be looked up from (opinionated configs by friends)

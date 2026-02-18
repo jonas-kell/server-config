@@ -29,7 +29,8 @@
         vars:
             dotfiles_profile_name: "jonas"
             dotfiles_device_type: "desktop"
-            # switches:
+            # dotfiles_skip_logiops_driver_compilation: true # for rapid config application
+            # !! switches:
             # dotfiles_set_bashrc: true
             # dotfiles_install_kubernetes_clients: true
             # dotfiles_gnome_extensions: true
@@ -39,7 +40,8 @@
             # dotfiles_terminal_and_global_shortcuts: true
             # dotfiles_install_nvm_node: true
             # dotfiles_pdf_tools_xournalpp: true
-            dotfiles_install_nextcloud_desktop: true
+            # dotfiles_install_nextcloud_desktop: true
+            # dotfiles_logiops_driver: true
 # ---
 
 # TODO: conversion to wayland/sway

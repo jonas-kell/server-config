@@ -1,4 +1,72 @@
-# configure the linux mx_master drivers
+---
+# TODO Should probably migrate to soolar: https://github.com/pwr-Solaar/Solaar/issues/2964
+# https://wiki.archlinux.org/title/Logitech_MX_Master#Logiops
+# https://github.com/PixlOne/logiops
 
-TODO
-https://gist.github.com/jonas-kell/0ec4d36a4464cfbbb6a63fd4430b1bbc
+- name: Install driver compilation packages
+  ansible.builtin.package:
+      name:
+          - git
+          - build-essential
+          - cmake
+          - pkg-config
+          - libevdev-dev
+          - libudev-dev
+          - libconfig++-dev
+          - libglib2.0-dev
+      state: present
+      update_cache: true
+      cache_valid_time: 1800
+
+- name: Clone logiops repository
+  when: not dotfiles_skip_logiops_driver_compilation
+  ansible.builtin.git:
+      repo: "https://github.com/PixlOne/logiops"
+      dest: "/tmp/logiops"
+      version: "main"
+      force: true
+
+- name: Create build directory
+  when: not dotfiles_skip_logiops_driver_compilation
+  ansible.builtin.file:
+      path: "/tmp/logiops/build"
+      state: directory
+      mode: "777"
+
+- name: Run cmake
+  when: not dotfiles_skip_logiops_driver_compilation
+  ansible.builtin.command: cmake -DCMAKE_BUILD_TYPE=Release ..
+  args:
+      chdir: "/tmp/logiops/build"
+  changed_when: true
+
+- name: Compile logiops
+  when: not dotfiles_skip_logiops_driver_compilation
+  community.general.make:
+      chdir: "/tmp/logiops/build"
+      target: all
+
+- name: Install logiops
+  when: not dotfiles_skip_logiops_driver_compilation
+  community.general.make:
+      chdir: "/tmp/logiops/build"
+      target: install
+
+- name: Enable and start logiops daemon
+  ansible.builtin.service:
+      name: "logid"
+      enabled: true
+      state: started
+
+- name: Place logid config file
+  ansible.builtin.template:
+      src: logid.cfg.j2
+      dest: "/etc/logid.cfg"
+      mode: "0644"
+  register: dotfiles_logid_cfg
+
+- name: Restart logid if config changed
+  ansible.builtin.service:
+      name: "logid"
+      state: restarted
+  when: dotfiles_logid_cfg.changed

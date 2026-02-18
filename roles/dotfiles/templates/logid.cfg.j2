@@ -1,5 +1,37 @@
 devices: (
-
+  {
+    name: "Wireless Mouse MX Master 3";
+    smartshift:
+    {
+        on: true;
+        threshold: 20;
+    };
+    hiresscroll:
+    {
+        hires: true;
+        invert: false;
+        target: false;
+    };
+    dpi: 1000;
+    buttons: (
+        {
+            cid: 0x53;
+            action =
+            {
+                type: "Keypress";
+                keys: ["KEY_LEFTALT", "KEY_J"];
+            };
+        },
+        #{
+        #    cid: 0x56;
+        #    action =
+        #    {
+        #        type: "Keypress";
+        #        keys: ["KEY_LEFTCTRL", "KEY_Y"];
+        #    };
+        #}
+    );
+  },
   {
     name: "MX Master 4";
     smartshift:
