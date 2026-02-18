@@ -1,0 +1,17 @@
+# https://galaxy.ansible.com/ui/standalone/roles/stephdewit/nvm/documentation/
+- name: Block to allow to become on role inslusion
+  become: false
+  block:
+      - name: Create dummy NVM shell init file
+        ansible.builtin.file:
+            path: "/tmp/dummy"
+            state: touch
+            mode: "0644"
+
+      - name: Incluce NVM installation Role
+        ansible.builtin.include_role:
+            name: stephdewit.nvm
+        vars:
+            nvm_version: "latest"
+            nvm_node_version: "20"
+            nvm_shell_init_file: "/tmp/dummy"

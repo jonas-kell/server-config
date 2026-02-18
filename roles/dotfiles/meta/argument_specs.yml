@@ -24,6 +24,9 @@ argument_specs:
             dotfiles_terminal_and_global_shortcuts:
                 type: bool
                 required: false
+            dotfiles_install_nvm_node:
+                type: bool
+                required: false
             # configs:
             dotfiles_profile_name:
                 type: str

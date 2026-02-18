@@ -25,6 +25,10 @@
 - name: Install Terminal and set global shortcuts
   when: dotfiles_terminal_and_global_shortcuts
   ansible.builtin.include_tasks: "{{ role_path }}/tasks/terminator.yml"
+
+- name: Install NVM
+  when: dotfiles_install_nvm_node
+  ansible.builtin.include_tasks: "{{ role_path }}/tasks/nvm.yml"
 # ---
 
 # --- Where stuff could be looked up from (opinionated configs by friends)
