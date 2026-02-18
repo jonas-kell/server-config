@@ -29,7 +29,7 @@
         vars:
             dotfiles_profile_name: "jonas"
             dotfiles_device_type: "desktop"
-            # dotfiles_skip_logiops_driver_compilation: true # for rapid config application
+            dotfiles_skip_logiops_driver_compilation: false # for rapid config application
             # !! switches:
             # dotfiles_set_bashrc: true
             # dotfiles_install_kubernetes_clients: true

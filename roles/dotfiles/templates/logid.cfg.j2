@@ -14,14 +14,6 @@ devices: (
     };
     dpi: 1000;
     buttons: (
-        {
-            cid: 0x53;
-            action =
-            {
-                type: "Keypress";
-                keys: ["KEY_LEFTALT", "KEY_J"];
-            };
-        },
         #{
         #    cid: 0x56;
         #    action =
@@ -29,7 +21,15 @@ devices: (
         #        type: "Keypress";
         #        keys: ["KEY_LEFTCTRL", "KEY_Y"];
         #    };
-        #}
+        #},
+        {
+            cid: 0x53;
+            action =
+            {
+                type: "Keypress";
+                keys: ["KEY_LEFTALT", "KEY_J"];
+            };
+        } # last object must NOT have comma
     );
   },
   {
@@ -48,12 +48,12 @@ devices: (
         #    mode: "Axis";
         #    axis: "REL_WHEEL";
         #    axis_multiplier: 1.0;
-        #},
+        #};
         #down: {
         #    mode: "Axis";
         #    axis: "REL_WHEEL";
         #    axis_multiplier: -1.0;
-        #},
+        #};
     };
     thumbwheel:
     {

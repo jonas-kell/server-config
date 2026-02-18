@@ -69,4 +69,4 @@
   ansible.builtin.service:
       name: "logid"
       state: restarted
-  when: dotfiles_logid_cfg.changed
+  when: dotfiles_logid_cfg.changed # TODO too lazy to refactor to a handler
