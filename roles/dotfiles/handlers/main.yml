@@ -1,0 +1,5 @@
+---
+- name: Reload logid
+  ansible.builtin.service:
+      name: "logid"
+      state: restarted
