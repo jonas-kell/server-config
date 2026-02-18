@@ -21,6 +21,10 @@
 - name: Install Docker and deamons
   when: dotfiles_install_and_configure_docker
   ansible.builtin.include_tasks: "{{ role_path }}/tasks/docker.yml"
+
+- name: Install Terminal and set global shortcuts
+  when: dotfiles_terminal_and_global_shortcuts
+  ansible.builtin.include_tasks: "{{ role_path }}/tasks/terminator.yml"
 # ---
 
 # --- Where stuff could be looked up from (opinionated configs by friends)

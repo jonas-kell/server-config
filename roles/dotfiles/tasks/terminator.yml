@@ -1,0 +1,22 @@
+---
+- name: Ensure terminator is installed
+  ansible.builtin.package:
+      name: terminator
+      state: present
+  become: true
+
+- name: Set terminator as default x-terminal-emulator
+  community.general.alternatives:
+      name: x-terminal-emulator
+      path: /usr/bin/terminator
+  become: false
+# ---
+
+# This should also configure the terminal shortcuts (any maybe later shell theme)
+# But it turns out, taht the shortcuts are set by default in gnome now
+# Settings -> Keyboard -> View and customize shortcuts
+
+# Terminal: Super+T
+# Browser: Super+B
+# Files: Super+F
+# Email: Super+E

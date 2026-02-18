@@ -36,6 +36,7 @@
             # dotfiles_opinionated_apps: true
             # dotfiles_displaylink_compatibility: true
             # dotfiles_install_and_configure_docker: true
+            # dotfiles_terminal_and_global_shortcuts: true
 # ---
 
 # TODO: conversion to wayland/sway

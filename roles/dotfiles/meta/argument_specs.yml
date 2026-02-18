@@ -21,6 +21,9 @@ argument_specs:
             dotfiles_install_and_configure_docker:
                 type: bool
                 required: false
+            dotfiles_terminal_and_global_shortcuts:
+                type: bool
+                required: false
             # configs:
             dotfiles_profile_name:
                 type: str
