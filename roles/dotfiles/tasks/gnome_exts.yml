@@ -94,3 +94,19 @@
   ansible.builtin.shell: dconf load /org/gnome/shell/extensions/ < /tmp/gnome-extensions-settings.dconf
   become: false
   changed_when: true
+# ---
+
+# deactivate: (were probably installed, because I manually added cosmic-dock but do not use it (as the syntax installs, then deactivates))
+# TODO run deactivate on them, do not install if possible. If deactivate errors, only run  deactivate if they are installed
+
+# window-list@gnome-shell-extensions.gcampax.github.com
+# windowsNavigator@gnome-shell-extensions.gcampax.github.com
+# workspace-indicator@gnome-shell-extensions.gcampax.github.com
+# user-theme@gnome-shell-extensions.gcampax.github.com
+# screenshot-window-sizer@gnome-shell-extensions.gcampax.github.com
+# places-menu@gnome-shell-extensions.gcampax.github.com
+# native-window-placement@gnome-shell-extensions.gcampax.github.com
+# launch-new-instance@gnome-shell-extensions.gcampax.github.com       # could keep
+# drive-menu@gnome-shell-extensions.gcampax.github.com
+# auto-move-windows@gnome-shell-extensions.gcampax.github.com       # workspace stuff
+# apps-menu@gnome-shell-extensions.gcampax.github.com
