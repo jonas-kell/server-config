@@ -39,6 +39,7 @@
             # dotfiles_terminal_and_global_shortcuts: true
             # dotfiles_install_nvm_node: true
             # dotfiles_pdf_tools_xournalpp: true
+            dotfiles_install_nextcloud_desktop: true
 # ---
 
 # TODO: conversion to wayland/sway

@@ -1,1 +1,11 @@
-# nextcloud-desktop
+---
+- name: Install Nextcloud Desktop client
+  ansible.builtin.package:
+      name:
+          - nextcloud-desktop # will be able to be moved to tray, because of gnome shell extension enabled!
+      state: present
+      update_cache: true
+      cache_valid_time: 1800
+# ---
+
+# This could technically also configure stuff. But that is really hard to do and not obvious configuration-wise

@@ -1,3 +1,4 @@
+---
 - name: Install kubectl locally
   ansible.builtin.include_role:
       name: andrewrothstein.kubectl

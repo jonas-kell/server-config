@@ -1,3 +1,4 @@
+---
 - name: Place Bashrc include
   when: dotfiles_set_bashrc
   ansible.builtin.include_tasks: "{{ role_path }}/tasks/bashrc.yml"
@@ -33,6 +34,10 @@
 - name: PDF tools and Xournalpp
   when: dotfiles_pdf_tools_xournalpp
   ansible.builtin.include_tasks: "{{ role_path }}/tasks/xournalpp.yml"
+
+- name: Nextcloud Desktop
+  when: dotfiles_install_nextcloud_desktop
+  ansible.builtin.include_tasks: "{{ role_path }}/tasks/nextcloud.yml"
 # ---
 
 # --- Where stuff could be looked up from (opinionated configs by friends)

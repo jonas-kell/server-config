@@ -30,6 +30,9 @@ argument_specs:
             dotfiles_pdf_tools_xournalpp:
                 type: bool
                 required: false
+            dotfiles_install_nextcloud_desktop:
+                type: bool
+                required: false
             # configs:
             dotfiles_profile_name:
                 type: str

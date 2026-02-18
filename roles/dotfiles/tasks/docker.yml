@@ -1,3 +1,4 @@
+---
 # with docker compose -> the role does it
 # https://galaxy.ansible.com/ui/standalone/roles/geerlingguy/docker/documentation/
 - name: Install docker and services locally
