@@ -4,13 +4,15 @@
       name:
           - gnome-tweaks
           - gnome-shell-extensions
-          - python3.12-venv
+          - python3.10-venv # this and the one below must match the system python version because of gi...
+          - python3.10-dev
+          - python3-gi
       state: present
       update_cache: true
       cache_valid_time: 1800
 
 - name: Create venv for GNOME CLI
-  ansible.builtin.command: python3.12 -m venv --without-pip /opt/gnome-cli-venv
+  ansible.builtin.command: python3.10 -m venv --without-pip /opt/gnome-cli-venv
   args:
       creates: /opt/gnome-cli-venv
 
@@ -24,16 +26,22 @@
       cmd: /opt/gnome-cli-venv/bin/python3 -m pip install --upgrade --force-reinstall pip setuptools
   changed_when: true
 
-# !! breaks, because  "Module failed: module 'pkgutil' has no attribute 'ImpImporter'"
-# - name: Install GNOME extensions CLI in venv
-#   ansible.builtin.pip:
-#       name: gnome-extensions-cli
-#       virtualenv: /opt/gnome-cli-venv
-#       virtualenv_python: python3.12
-
 - name: Install GNOME extensions CLI in venv (using pip directly)
-  ansible.builtin.command: /opt/gnome-cli-venv/bin/pip install gnome-extensions-cli
+  ansible.builtin.command: /opt/gnome-cli-venv/bin/python3 -m pip install --upgrade --force-reinstall gnome-extensions-cli
   changed_when: true
+
+# get the path from:
+# python3 -c "import gi; print(gi.__path__)"
+- name: Add gi path to venv site-packages
+  ansible.builtin.lineinfile:
+      path: /opt/gnome-cli-venv/lib/python3.10/site-packages/gi.pth
+      line: /usr/lib/python3/dist-packages/gi
+      create: true
+
+- name: Add system site-packages path to venv site-packages
+  ansible.builtin.lineinfile:
+      path: /opt/gnome-cli-venv/lib/python3.10/site-packages/gi.pth
+      line: /usr/lib/python3/dist-packages
 
 - name: Define GNOME extensions list
   ansible.builtin.set_fact:
