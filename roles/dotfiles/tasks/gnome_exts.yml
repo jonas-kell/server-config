@@ -4,50 +4,24 @@
       name:
           - gnome-tweaks
           - gnome-shell-extensions
-          - python3.10-venv # this and the one below must match the system python version because of gi...
-          - python3.10-dev
-          - python3-gi
+          - python3-gi # needed by gnome-extensions-cli
       state: present
       update_cache: true
       cache_valid_time: 1800
 
-- name: Create venv for GNOME CLI
-  ansible.builtin.command: python3.10 -m venv --without-pip /opt/gnome-cli-venv
-  args:
-      creates: /opt/gnome-cli-venv
-
-- name: Install/upgrade pip in venv
-  ansible.builtin.command:
-      cmd: /opt/gnome-cli-venv/bin/python3 -m ensurepip --upgrade
-  changed_when: true
-
-- name: Install/upgrade setuptools, wheel in venv
-  ansible.builtin.command:
-      cmd: /opt/gnome-cli-venv/bin/python3 -m pip install --upgrade --force-reinstall pip setuptools
-  changed_when: true
-
-- name: Install GNOME extensions CLI in venv (using pip directly)
-  ansible.builtin.command: /opt/gnome-cli-venv/bin/python3 -m pip install --upgrade --force-reinstall gnome-extensions-cli
-  changed_when: true
-
-# get the path from:
-# python3 -c "import gi; print(gi.__path__)"
-- name: Add gi path to venv site-packages
-  ansible.builtin.lineinfile:
-      path: /opt/gnome-cli-venv/lib/python3.10/site-packages/gi.pth
-      line: /usr/lib/python3/dist-packages/gi
-      create: true
-
-- name: Add system site-packages path to venv site-packages
-  ansible.builtin.lineinfile:
-      path: /opt/gnome-cli-venv/lib/python3.10/site-packages/gi.pth
-      line: /usr/lib/python3/dist-packages
+- name: Install gnome-extensions-cli
+  community.general.pipx:
+      name: gnome-extensions-cli
+      state: install
+      system_site_packages: true
+      executable: "~/.local/bin/pipx" # should use the system-wide pipx
+      force: true
+      python: "3.10" # must be the default python version of the os (Ubuntu 20.04 = 3.10) you get from "python3 --version"
+  become: false
 
 - name: Define GNOME extensions list
   ansible.builtin.set_fact:
       dotfiles_gnome_extensions:
-          - name: cosmic-dock@system76.com
-            state: disable # default installed stuff
           - name: dash-to-panel@jderose9.github.com
             state: enable
           - name: ding@rastersoft.com
@@ -78,17 +52,47 @@
 # https://github.com/essembeh/gnome-extensions-cli
 - name: Install GNOME extensions
   ansible.builtin.command:
-      cmd: "/opt/gnome-cli-venv/bin/gext install {{ item.name }}"
+      cmd: "gext --dbus install {{ item.name }}"
   loop: "{{ dotfiles_gnome_extensions }}"
   become: false
   changed_when: true
 
 - name: Set GNOME extension state (enable/disable)
   ansible.builtin.command:
-      cmd: "/opt/gnome-cli-venv/bin/gext {{ item.state }} {{ item.name }}"
+      cmd: "gext --dbus {{ item.state }} {{ item.name }}"
   loop: "{{ dotfiles_gnome_extensions }}"
   become: false
   changed_when: true
+
+- name: Define GNOME builtin extensions list
+  ansible.builtin.set_fact:
+      dotfiles_gnome_builtin_extensions:
+          - name: cosmic-dock@system76.com
+          - name: window-list@gnome-shell-extensions.gcampax.github.com
+          - name: windowsNavigator@gnome-shell-extensions.gcampax.github.com
+          - name: workspace-indicator@gnome-shell-extensions.gcampax.github.com
+          - name: user-theme@gnome-shell-extensions.gcampax.github.com
+          - name: screenshot-window-sizer@gnome-shell-extensions.gcampax.github.com
+          - name: places-menu@gnome-shell-extensions.gcampax.github.com
+          - name: native-window-placement@gnome-shell-extensions.gcampax.github.com
+          - name: launch-new-instance@gnome-shell-extensions.gcampax.github.com
+          - name: drive-menu@gnome-shell-extensions.gcampax.github.com
+          - name: auto-move-windows@gnome-shell-extensions.gcampax.github.com
+          - name: apps-menu@gnome-shell-extensions.gcampax.github.com
+          - name: nonexistant@dummy.package
+
+# goal: disable       cosmic-dock@system76.com   =    default installed stuff
+# deactivate: (were probably installed, because I manually added cosmic-dock but do not use it (as the syntax installs, then deactivates))
+# see all: gext --dbus list --all
+# I do not know why this does not work over gext (to be honest I do not know whyt I need gext for now even...)
+# seems like installation only works properly from online sources for gnome-extensions-cli
+- name: Set GNOME extension state (enable/disable)
+  ansible.builtin.command:
+      cmd: "gnome-extensions disable {{ item.name }}"
+  loop: "{{ dotfiles_gnome_builtin_extensions }}"
+  become: false
+  changed_when: true
+  ignore_errors: true # we do not want it to fail if a package is not installed
 
 - name: Render dconf settings template
   ansible.builtin.template:
@@ -102,19 +106,3 @@
   ansible.builtin.shell: dconf load /org/gnome/shell/extensions/ < /tmp/gnome-extensions-settings.dconf
   become: false
   changed_when: true
-# ---
-
-# deactivate: (were probably installed, because I manually added cosmic-dock but do not use it (as the syntax installs, then deactivates))
-# TODO run deactivate on them, do not install if possible. If deactivate errors, only run  deactivate if they are installed
-
-# window-list@gnome-shell-extensions.gcampax.github.com
-# windowsNavigator@gnome-shell-extensions.gcampax.github.com
-# workspace-indicator@gnome-shell-extensions.gcampax.github.com
-# user-theme@gnome-shell-extensions.gcampax.github.com
-# screenshot-window-sizer@gnome-shell-extensions.gcampax.github.com
-# places-menu@gnome-shell-extensions.gcampax.github.com
-# native-window-placement@gnome-shell-extensions.gcampax.github.com
-# launch-new-instance@gnome-shell-extensions.gcampax.github.com       # could keep
-# drive-menu@gnome-shell-extensions.gcampax.github.com
-# auto-move-windows@gnome-shell-extensions.gcampax.github.com       # workspace stuff
-# apps-menu@gnome-shell-extensions.gcampax.github.com
