@@ -1,4 +1,27 @@
 ---
+- name: Ensure GPG tooling is installed
+  ansible.builtin.apt:
+      name:
+          - gnupg
+          - ca-certificates
+          - "linux-headers-{{ ansible_facts['kernel'] }}"
+          - dkms
+      state: present
+      update_cache: true
+      cache_valid_time: 1800
+
+- name: Download Synaptics repository keyring .deb
+  ansible.builtin.get_url:
+      url: https://www.synaptics.com/sites/default/files/Ubuntu/pool/stable/main/all/synaptics-repository-keyring.deb
+      dest: /tmp/synaptics-repository-keyring.deb
+      mode: "0644"
+
+- name: Install Synaptics repository keyring .deb
+  ansible.builtin.apt:
+      deb: /tmp/synaptics-repository-keyring.deb
+      state: present
+      force: true
+
 - name: Install System level displaylink packages
   ansible.builtin.package:
       name:
