@@ -23,76 +23,118 @@
   ansible.builtin.set_fact:
       dotfiles_gnome_extensions:
           - name: dash-to-panel@jderose9.github.com
+            install: true
             state: enable
           - name: ding@rastersoft.com
+            install: true
             state: enable
           - name: Vitals@CoreCoding.com
+            install: true
             state: enable
           - name: sound-output-device-chooser@kgshank.net
+            install: true
             state: enable
           - name: extension-list@tu.berry
+            install: true
             state: enable
           - name: gnome-shell-screenshot@ttll.de
+            install: true
             state: enable
           - name: nvidiautil@ethanwharris
+            install: true
             state: enable
           - name: popx11gestures@system76.com
+            install: true
             state: enable
           - name: cosmic-workspaces@system76.com
+            install: true
             state: enable
           - name: pop-cosmic@system76.com
+            install: true
             state: enable
           - name: pop-shell@system76.com
+            install: true
             state: enable
           - name: system76-power@system76.com
+            install: true
             state: enable
           - name: ubuntu-appindicators@ubuntu.com
+            install: true
             state: enable
+          - name: cosmic-dock@system76.com
+            install: false
+            state: disable
+          - name: window-list@gnome-shell-extensions.gcampax.github.com
+            install: false
+            state: disable
+          - name: windowsNavigator@gnome-shell-extensions.gcampax.github.com
+            install: false
+            state: disable
+          - name: workspace-indicator@gnome-shell-extensions.gcampax.github.com
+            install: false
+            state: disable
+          - name: user-theme@gnome-shell-extensions.gcampax.github.com
+            install: false
+            state: disable
+          - name: screenshot-window-sizer@gnome-shell-extensions.gcampax.github.com
+            install: false
+            state: disable
+          - name: places-menu@gnome-shell-extensions.gcampax.github.com
+            install: false
+            state: disable
+          - name: native-window-placement@gnome-shell-extensions.gcampax.github.com
+            install: false
+            state: disable
+          - name: launch-new-instance@gnome-shell-extensions.gcampax.github.com
+            install: false
+            state: disable
+          - name: drive-menu@gnome-shell-extensions.gcampax.github.com
+            install: false
+            state: disable
+          - name: auto-move-windows@gnome-shell-extensions.gcampax.github.com
+            install: false
+            state: disable
+          - name: apps-menu@gnome-shell-extensions.gcampax.github.com
+            install: false
+            state: disable
+          - name: nonexistant@dummy.package # to test the lower command does not fail if missing
+            install: false
+            state: disable
 
 # https://github.com/essembeh/gnome-extensions-cli
 - name: Install GNOME extensions
+  when: item.install
   ansible.builtin.command:
       cmd: "gext --dbus install {{ item.name }}"
   loop: "{{ dotfiles_gnome_extensions }}"
   become: false
   changed_when: true
 
-- name: Set GNOME extension state (enable/disable)
-  ansible.builtin.command:
-      cmd: "gext --dbus {{ item.state }} {{ item.name }}"
-  loop: "{{ dotfiles_gnome_extensions }}"
-  become: false
-  changed_when: true
-
-- name: Define GNOME builtin extensions list
-  ansible.builtin.set_fact:
-      dotfiles_gnome_builtin_extensions:
-          - name: cosmic-dock@system76.com
-          - name: window-list@gnome-shell-extensions.gcampax.github.com
-          - name: windowsNavigator@gnome-shell-extensions.gcampax.github.com
-          - name: workspace-indicator@gnome-shell-extensions.gcampax.github.com
-          - name: user-theme@gnome-shell-extensions.gcampax.github.com
-          - name: screenshot-window-sizer@gnome-shell-extensions.gcampax.github.com
-          - name: places-menu@gnome-shell-extensions.gcampax.github.com
-          - name: native-window-placement@gnome-shell-extensions.gcampax.github.com
-          - name: launch-new-instance@gnome-shell-extensions.gcampax.github.com
-          - name: drive-menu@gnome-shell-extensions.gcampax.github.com
-          - name: auto-move-windows@gnome-shell-extensions.gcampax.github.com
-          - name: apps-menu@gnome-shell-extensions.gcampax.github.com
-          - name: nonexistant@dummy.package
+# ! we enable now over the `gnome-extensions` command (can en/disable system extensions, this one can't ... )
+# - name: Set GNOME extension state (enable/disable)
+#   ansible.builtin.command:
+#       cmd: "gext --dbus {{ item.state }} {{ item.name }}"
+#   loop: "{{ dotfiles_gnome_extensions }}"
+#   become: false
+#   changed_when: true
 
 # goal: disable       cosmic-dock@system76.com   =    default installed stuff
 # deactivate: (were probably installed, because I manually added cosmic-dock but do not use it (as the syntax installs, then deactivates))
 # see all: gext --dbus list --all
-# I do not know why this does not work over gext (to be honest I do not know whyt I need gext for now even...)
+# I do not know why this does not work over gext
+# (to be honest I do not know whyt I need gext for now even... - Note: It can install more reliably from online sources)
 # seems like installation only works properly from online sources for gnome-extensions-cli
 - name: Set GNOME extension state (enable/disable)
   ansible.builtin.command:
-      cmd: "gnome-extensions disable {{ item.name }}"
-  loop: "{{ dotfiles_gnome_builtin_extensions }}"
+      cmd: "gnome-extensions {{ item.state }} {{ item.name }}"
+  loop: "{{ dotfiles_gnome_extensions }}"
   become: false
   changed_when: true
-  ignore_errors: true # we do not want it to fail if a package is not installed
+  register: dotfiles_enable_result # we do not want it to fail if a package is not installed
+  failed_when: >
+      dotfiles_enable_result.stderr is search("parse error") or
+      dotfiles_enable_result.stderr is search("invalid input") or
+      dotfiles_enable_result.stderr is search("syntax error")
 
 - name: Render dconf settings template
   ansible.builtin.template:
