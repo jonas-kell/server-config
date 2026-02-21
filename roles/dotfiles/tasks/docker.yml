@@ -8,4 +8,4 @@
 
 # Probably necessary to avoid apt warnings:
 # sudo nano /etc/apt/sources.list.d/docker.sources
-# add (as laast line):        Architectures: amd64
+# add (as last line):        Architectures: amd64
