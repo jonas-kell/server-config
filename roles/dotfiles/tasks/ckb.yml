@@ -22,6 +22,15 @@
       update_cache: true
       cache_valid_time: 1800
 
+- name: Ensure ckb config directory exists
+  ansible.builtin.file:
+      path: ~/.config/ckb-next/
+      state: directory
+      # owner: "{{ dotfiles_profile_name }}"
+      # group: "{{ dotfiles_profile_name }}"
+      mode: "0755"
+  become: false
+
 - name: Place `ckb-next.conf` config file
   ansible.builtin.template:
       src: .bash_logout.j2
