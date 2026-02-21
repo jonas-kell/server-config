@@ -57,3 +57,6 @@
 # Yes is ok
 
 # q -> quit
+
+# ! dedupe files remotely (will start mode: interactive. Will auto-delete if name and hash match, otherwise will additionally ask what to do)
+# rclone dedupe GoogleDrive: --dry-run
