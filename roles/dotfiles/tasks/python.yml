@@ -6,4 +6,5 @@
       repo: ppa:deadsnakes/ppa
       state: present
       update_cache: true
-# sudo add-apt-repository ppa:deadsnakes/ppa # no warnings
+# sudo add-apt-repository ppa:deadsnakes/ppa -y # no warnings
+# TODO convert to use apt-key (like e.g. vscode)

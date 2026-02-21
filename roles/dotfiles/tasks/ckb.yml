@@ -12,7 +12,8 @@
       repo: ppa:tatokis/ckb-next
       state: present
       update_cache: true
-# sudo add-apt-repository ppa:tatokis/ckb-next # no warnings
+# sudo add-apt-repository ppa:tatokis/ckb-next -y # no warnings
+# TODO convert to use apt-key (like e.g. vscode)
 
 # https://github.com/ckb-next/ckb-next
 - name: Install System level ckb-next package
