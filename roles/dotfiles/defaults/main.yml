@@ -1,3 +1,4 @@
+dotfiles_skip_logiops_driver_compilation: false
 dotfiles_set_bashrc: false
 dotfiles_gnome_extensions: false
 dotfiles_opinionated_apps: false
@@ -9,4 +10,4 @@ dotfiles_install_nvm_node: false
 dotfiles_pdf_tools_xournalpp: false
 dotfiles_install_nextcloud_desktop: false
 dotfiles_logiops_driver: false
-dotfiles_skip_logiops_driver_compilation: false
+dotfiles_ckb_keyboard_driver: false

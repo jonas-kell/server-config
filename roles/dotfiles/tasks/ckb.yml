@@ -1,4 +1,21 @@
+---
 # https://github.com/ckb-next/ckb-next
+- name: Install System level ckb-next package
+  ansible.builtin.package:
+      name:
+          - ckb-next
+      state: present
+      update_cache: true
+      cache_valid_time: 1800
 
-~/.config/ckb-next/ckb-next.conf
--rw-rw-r--
+- name: Place `ckb-next.conf` config file
+  ansible.builtin.template:
+      src: .bash_logout.j2
+      dest: "~/.config/ckb-next/ckb-next.conf"
+      mode: "664"
+  become: false
+
+- name: Reload ckb-next-daemon
+  ansible.builtin.service:
+      name: ckb-next-daemon
+      state: restarted

@@ -39,6 +39,9 @@ argument_specs:
             dotfiles_skip_logiops_driver_compilation:
                 type: bool
                 required: false
+            dotfiles_ckb_keyboard_driver:
+                type: bool
+                required: false
             # configs:
             dotfiles_profile_name:
                 type: str

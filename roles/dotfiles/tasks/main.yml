@@ -42,6 +42,10 @@
 - name: Logiops Driver
   when: dotfiles_logiops_driver
   ansible.builtin.include_tasks: "{{ role_path }}/tasks/mx_master.yml"
+
+- name: CKB Next Driver
+  when: dotfiles_ckb_keyboard_driver
+  ansible.builtin.include_tasks: "{{ role_path }}/tasks/ckb.yml"
 # ---
 
 # --- Where stuff could be looked up from (opinionated configs by friends)
