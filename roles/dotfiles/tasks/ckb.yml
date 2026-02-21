@@ -12,6 +12,7 @@
       repo: ppa:tatokis/ckb-next
       state: present
       update_cache: true
+# sudo add-apt-repository ppa:tatokis/ckb-next # no warnings
 
 # https://github.com/ckb-next/ckb-next
 - name: Install System level ckb-next package

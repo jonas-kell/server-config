@@ -6,3 +6,4 @@
       repo: ppa:deadsnakes/ppa
       state: present
       update_cache: true
+# sudo add-apt-repository ppa:deadsnakes/ppa # no warnings
