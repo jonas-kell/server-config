@@ -1,1 +1,59 @@
-# https://gist.github.com/jonas-kell/b9d7c9ddc2dac4b0c2f24469bcec6237
+# https://galaxy.ansible.com/ui/standalone/roles/stefangweichinger/ansible_rclone/documentation/
+- name: Install rclone locally
+  ansible.builtin.include_role:
+      name: stefangweichinger.ansible_rclone
+
+- name: Ensure drive config directory exists
+  ansible.builtin.file:
+      path: /home/{{ dotfiles_profile_name }}/.drive
+      state: directory
+      # owner: "{{ dotfiles_profile_name }}"
+      # group: "{{ dotfiles_profile_name }}"
+      mode: "0755"
+  become: false
+
+- name: Ensure drive file directory exists
+  ansible.builtin.file:
+      path: /home/{{ dotfiles_profile_name }}/rcloneGoogleDrive
+      state: directory
+      # owner: "{{ dotfiles_profile_name }}"
+      # group: "{{ dotfiles_profile_name }}"
+      mode: "0755"
+  become: false
+
+- name: Place logo in invoking user's home directory
+  ansible.builtin.copy:
+      src: drive.png
+      dest: "/home/{{ dotfiles_profile_name }}/.drive/drive.png"
+      mode: "0644"
+  become: false
+
+- name: Place script in invoking user's home directory
+  ansible.builtin.template:
+      src: drive.sh.j2
+      dest: "/home/{{ dotfiles_profile_name }}/.drive/drive.sh"
+      mode: "0755"
+  become: false
+
+- name: Place desktop file in invoking user's desktop files folder
+  ansible.builtin.template:
+      src: drive.desktop.j2
+      dest: "~/.local/share/applications/drive.desktop"
+      mode: "0644"
+  become: false
+# ---
+
+# ! must be configured manually (as each installation has their own rclone config as they should not share refresh tokens)
+# rclone config
+# n (new remote)
+# name: "GoogleDrive"
+# Option Storage: drive
+# https://rclone.org/drive/#making-your-own-client-id
+# 1 -> scope: drive
+# leave service_account_file empty
+# not edit advanced config
+# Yes use webbrowser to authenticate
+# No not shared drive
+# Yes is ok
+
+# q -> quit

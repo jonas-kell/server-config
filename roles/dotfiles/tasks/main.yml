@@ -46,6 +46,10 @@
 - name: CKB Next Driver
   when: dotfiles_ckb_keyboard_driver
   ansible.builtin.include_tasks: "{{ role_path }}/tasks/ckb.yml"
+
+- name: Drive offline sync
+  when: dotfiles_drive_offline_sync
+  ansible.builtin.include_tasks: "{{ role_path }}/tasks/drive.yml"
 # ---
 
 # --- Where stuff could be looked up from (opinionated configs by friends)

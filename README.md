@@ -84,3 +84,5 @@ Install a local Linux System (tested on and designed for Pop-Os at the moment)
 ```cmd
 ansible-playbook playbooks/local.yml --ask-become-pass
 ```
+
+(Configuration of `rclone` needed manually, see [role](./roles/dotfiles/tasks/drive.yml))

@@ -42,6 +42,9 @@ argument_specs:
             dotfiles_ckb_keyboard_driver:
                 type: bool
                 required: false
+            dotfiles_drive_offline_sync:
+                type: bool
+                required: false
             # configs:
             dotfiles_profile_name:
                 type: str

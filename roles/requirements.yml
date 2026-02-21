@@ -3,3 +3,4 @@
 - name: geerlingguy.helm
 - name: geerlingguy.docker
 - name: stephdewit.nvm
+- name: stefangweichinger.ansible_rclone
