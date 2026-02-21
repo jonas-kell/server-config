@@ -50,6 +50,22 @@
 - name: Drive offline sync
   when: dotfiles_drive_offline_sync
   ansible.builtin.include_tasks: "{{ role_path }}/tasks/drive.yml"
+
+- name: Vscode with gpg keys
+  when: dotfiles_install_vscode
+  ansible.builtin.include_tasks: "{{ role_path }}/tasks/vscode.yml"
+
+- name: Chrome with gpg keys
+  when: dotfiles_install_chrome
+  ansible.builtin.include_tasks: "{{ role_path }}/tasks/chrome.yml"
+
+- name: Python apt ppa
+  when: dotfiles_python_apt_ppa
+  ansible.builtin.include_tasks: "{{ role_path }}/tasks/python.yml"
+
+- name: Signal desktop with gpg keys
+  when: dotfiles_install_signal
+  ansible.builtin.include_tasks: "{{ role_path }}/tasks/signal.yml"
 # ---
 
 # --- Where stuff could be looked up from (opinionated configs by friends)

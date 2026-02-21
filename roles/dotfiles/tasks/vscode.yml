@@ -1,0 +1,32 @@
+- name: Ensure required packages are installed
+  ansible.builtin.package:
+      name:
+          - wget
+          - apt-transport-https
+      state: present
+      update_cache: true
+      cache_valid_time: 1800
+
+- name: Download Microsoft GPG key and save it
+  ansible.builtin.get_url:
+      url: https://packages.microsoft.com/keys/microsoft.asc
+      dest: /usr/share/keyrings/microsoft.gpg
+      mode: "0644"
+
+- name: Add VS Code repository
+  ansible.builtin.apt_repository:
+      repo: "deb [arch=amd64,arm64,armhf signed-by=/usr/share/keyrings/microsoft.gpg] https://packages.microsoft.com/repos/code stable main"
+      state: present
+      filename: vscode
+
+- name: Update apt cache
+  ansible.builtin.package:
+      update_cache: true
+
+- name: "Install System level package: code"
+  ansible.builtin.package:
+      name:
+          - code
+      state: present
+      update_cache: true
+      cache_valid_time: 1800

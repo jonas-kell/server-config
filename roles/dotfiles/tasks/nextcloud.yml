@@ -1,4 +1,8 @@
 ---
+# could use
+# - Stock Ubuntu with Nautilus: sudo apt install nautilus-nextcloud
+# see https://launchpad.net/~nextcloud-devs/+archive/ubuntu/client -> newer versions in ppa: apt-cache policy nextcloud-desktop -> part of pop
+
 - name: Install Nextcloud Desktop client
   ansible.builtin.package:
       name:

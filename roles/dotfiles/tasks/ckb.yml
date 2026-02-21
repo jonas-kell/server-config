@@ -1,4 +1,18 @@
 ---
+# https://launchpad.net/~tatokis/+archive/ubuntu/ckb-next
+- name: Ensure software-properties-common is installed
+  ansible.builtin.package:
+      name: software-properties-common
+      state: present
+      update_cache: true
+      cache_valid_time: 1800
+
+- name: Add ckb-next PPA
+  ansible.builtin.apt_repository:
+      repo: ppa:tatokis/ckb-next
+      state: present
+      update_cache: true
+
 # https://github.com/ckb-next/ckb-next
 - name: Install System level ckb-next package
   ansible.builtin.package:

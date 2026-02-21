@@ -45,6 +45,18 @@ argument_specs:
             dotfiles_drive_offline_sync:
                 type: bool
                 required: false
+            dotfiles_install_vscode:
+                type: bool
+                required: false
+            dotfiles_install_chrome:
+                type: bool
+                required: false
+            dotfiles_python_apt_ppa:
+                type: bool
+                required: false
+            dotfiles_install_signal:
+                type: bool
+                required: false
             # configs:
             dotfiles_profile_name:
                 type: str

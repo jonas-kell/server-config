@@ -1,0 +1,37 @@
+- name: Ensure required packages are installed
+  ansible.builtin.package:
+      name:
+          - wget
+          - apt-transport-https
+      state: present
+      update_cache: true
+
+- name: Create keyrings directory
+  ansible.builtin.file:
+      path: /etc/apt/keyrings
+      state: directory
+      mode: "0755"
+
+- name: Download Google Linux signing key
+  ansible.builtin.get_url:
+      url: https://dl-ssl.google.com/linux/linux_signing_key.pub
+      dest: /etc/apt/keyrings/google.asc
+      mode: "0644"
+
+- name: Add Google Chrome repository
+  ansible.builtin.apt_repository:
+      repo: "deb [arch=amd64 signed-by=/etc/apt/keyrings/google.asc] http://dl.google.com/linux/chrome/deb/ stable main"
+      state: present
+      filename: google-chrome
+
+- name: Update apt cache
+  ansible.builtin.package:
+      update_cache: true
+
+- name: "Install System level package: chrome"
+  ansible.builtin.package:
+      name:
+          - google-chrome-stable
+      state: present
+      update_cache: true
+      cache_valid_time: 1800

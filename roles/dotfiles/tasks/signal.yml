@@ -1,0 +1,29 @@
+- name: Ensure required packages are installed
+  ansible.builtin.package:
+      name:
+          - wget
+          - apt-transport-https
+      state: present
+      update_cache: true
+      cache_valid_time: 1800
+
+- name: Download Signal GPG key
+  ansible.builtin.get_url:
+      url: https://updates.signal.org/desktop/apt/keys.asc
+      dest: /usr/share/keyrings/signal-desktop-keyring.gpg
+      mode: "0644"
+
+- name: Download Signal repository file
+  ansible.builtin.get_url:
+      url: https://updates.signal.org/static/desktop/apt/signal-desktop.sources
+      dest: /etc/apt/sources.list.d/signal-desktop.sources
+      mode: "0644"
+
+- name: Update apt cache
+  ansible.builtin.package:
+      update_cache: true
+
+- name: Install Signal Desktop
+  ansible.builtin.package:
+      name: signal-desktop
+      state: present

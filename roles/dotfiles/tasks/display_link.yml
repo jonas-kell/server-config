@@ -29,7 +29,6 @@
           - evdi
       state: present
       update_cache: true
-      cache_valid_time: 1800
 # ---
 
 # Previous manual commands/build:

@@ -12,3 +12,7 @@ dotfiles_install_nextcloud_desktop: false
 dotfiles_logiops_driver: false
 dotfiles_ckb_keyboard_driver: false
 dotfiles_drive_offline_sync: false
+dotfiles_install_vscode: false
+dotfiles_install_chrome: false
+dotfiles_python_apt_ppa: false
+dotfiles_install_signal: false

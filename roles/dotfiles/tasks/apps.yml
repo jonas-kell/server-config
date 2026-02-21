@@ -2,11 +2,8 @@
 - name: Install System level packages
   ansible.builtin.package:
       name:
-          - google-chrome-stable
           - inkscape
-          - signal-desktop
           - simplescreenrecorder
-          - code
           - audacity
           - curl
           - wget

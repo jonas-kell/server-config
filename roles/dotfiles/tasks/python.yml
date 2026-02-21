@@ -1,0 +1,8 @@
+---
+# https://launchpad.net/~deadsnakes/+archive/ubuntu/ppa
+
+- name: Add deadsnakes PPA
+  ansible.builtin.apt_repository:
+      repo: ppa:deadsnakes/ppa
+      state: present
+      update_cache: true
