@@ -27,3 +27,11 @@ After installation
 ```cmd
 flux check
 ```
+
+## Check on cluster resources (available and usage)
+
+```cmd
+kubectl top nodes
+
+# Needs: kubectl get deployment metrics-server -n kube-system # Should be installed by default in k3s
+```
