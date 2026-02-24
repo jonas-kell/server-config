@@ -1,1 +1,7 @@
 ansible.cfg text eol=lf
+
+*.md linguist-documentation=false
+*.md linguist-vendored=false
+
+*.yml linguist-language=YAML
+*.yml linguist-vendored=false
