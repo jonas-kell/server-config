@@ -19,5 +19,11 @@ mv /tmp/merged-kubeconfig ~/.kube/config
 ## Check on cluster flux compatibility (before flux installation)
 
 ```cmd
+flux check --pre
+```
+
+After installation
+
+```cmd
 flux check
 ```

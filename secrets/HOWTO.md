@@ -41,3 +41,16 @@ You can use ansible-vault to encrypt this value / keep it secret.
 ## Kubeconfigs
 
 Set the Kubeconfigs like described [in this cheat sheet](./../Kubectl.md)
+
+## Deploy
+
+```cmd
+ssh-keygen -t ed25519 \
+  -C "flux-deploy-key" \
+  -f secrets/flux_deploy_key
+
+ansible-vault encrypt secrets/flux_deploy_key
+ansible-vault encrypt secrets/flux_deploy_key.pub
+```
+
+Put the public key as a deploy key for this repo (WITH write access)

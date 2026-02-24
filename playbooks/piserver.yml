@@ -13,3 +13,6 @@
 
 - name: "K3s installation: Main node on Pi"
   ansible.builtin.import_playbook: "./k3s_install.yml"
+
+- name: "K3s flux installation"
+  ansible.builtin.import_playbook: "./k3s_flux_install.yml"

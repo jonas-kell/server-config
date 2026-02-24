@@ -1,0 +1,64 @@
+---
+- name: Bootstrap Flux using deploy key
+  hosts: localhost
+  gather_facts: false
+  become: false
+
+  vars:
+      repo_url: "{{ repo_url_override | default('ssh://git@github.com/jonas-kell/server-config.git') }}"
+      branch: "{{ branch_override | default('master') }}"
+      cluster_path: "{{ cluster_path_override | default('flux-clusters/piserver') }}"
+
+      encrypted_private_key_path: "{{ playbook_dir }}/../secrets/flux_deploy_key"
+      # encrypted_public_key_path: "{{ playbook_dir }}/../secrets/flux_deploy_key.pub"
+
+      temp_key_path: "/tmp/flux_deploy_key"
+
+  tasks:
+      - name: Ensure Flux CLI is available
+        ansible.builtin.command: flux --version
+        changed_when: false
+
+      - name: Ensure Flux can be installed on  the cluster
+        ansible.builtin.command: flux check --pre
+        changed_when: false
+
+      - name: Decrypt and copy private key to temporary location
+        ansible.builtin.copy:
+            src: "{{ encrypted_private_key_path }}"
+            dest: "{{ temp_key_path }}"
+            mode: "0600"
+        no_log: true
+
+      - name: Run flux bootstrap with deploy key
+        ansible.builtin.command:
+            cmd: >
+                flux bootstrap git
+                --url={{ repo_url }}
+                --branch={{ branch }}
+                --private-key-file={{ temp_key_path }}
+                --path={{ cluster_path }}
+                --silent
+        register: flux_bootstrap
+        changed_when: "'installed' in flux_bootstrap.stdout or flux_bootstrap.rc == 0"
+
+      - name: Log flux bootstrap stdout
+        ansible.builtin.debug:
+            msg: "{{ item }}"
+        loop: "{{ flux_bootstrap.stdout.split('\n') }}"
+
+      - name: Log flux bootstrap stderr
+        ansible.builtin.debug:
+            msg: "{{ item }}"
+        loop: "{{ flux_bootstrap.stderr.split('\n') }}"
+
+      - name: Fail explicitly if bootstrap failed
+        ansible.builtin.fail:
+            msg: "Flux bootstrap failed"
+        when: flux_bootstrap.rc != 0
+
+      - name: Remove temporary private key
+        ansible.builtin.file:
+            path: "{{ temp_key_path }}"
+            state: absent
+        no_log: true
