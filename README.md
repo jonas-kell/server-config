@@ -6,6 +6,8 @@ Management scripts for my personal servers and kubernetes setup.
 
 [HOW to set secrets](secrets/HOWTO.md)
 
+This is also my automatically deployed dotfiles repository (see below)
+
 ## What is deployed
 
 - Ionos
@@ -79,7 +81,12 @@ Set ipv6-firewalls on unifi devices and ionos DNS
 ansible-playbook playbooks/unifi_ipv6_firewall_config.yml
 ```
 
-Install a local Linux System (tested on and designed for Pop-Os at the moment)
+## Dotfiles
+
+Install a local Linux System (tested on and designed for Pop-Os at the moment).
+This Repository doubles as my personal dotfiles repository.
+
+The files live in the [dotfiels role](./roles/dotfiles/).
 
 ```cmd
 ansible-playbook playbooks/local.yml --ask-become-pass
