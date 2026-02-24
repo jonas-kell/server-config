@@ -46,3 +46,32 @@
       mode: "0600"
       backup: true
   become: false
+
+- name: Download Flux install script
+  ansible.builtin.get_url:
+      url: https://fluxcd.io/install.sh
+      dest: /tmp/flux_install.sh
+      mode: "0755"
+
+- name: Execute Flux install script
+  ansible.builtin.command: /tmp/flux_install.sh
+  args:
+      creates: /usr/local/bin/flux
+
+- name: Remove Flux install script
+  ansible.builtin.file:
+      path: /tmp/flux_install.sh
+      state: absent
+
+- name: Generate flux completion script
+  ansible.builtin.command: flux completion bash
+  register: dotfiles_flux_completion
+  changed_when: false
+
+- name: Write flux completion to system directory
+  ansible.builtin.copy:
+      content: "{{ dotfiles_flux_completion.stdout }}"
+      dest: /etc/bash_completion.d/flux
+      owner: root
+      group: root
+      mode: "0644"

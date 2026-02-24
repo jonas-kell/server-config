@@ -15,3 +15,9 @@ KUBECONFIG=~/.kube/config:/path/to/new-kubeconfig.yaml \
 kubectl config view --flatten > /tmp/merged-kubeconfig
 mv /tmp/merged-kubeconfig ~/.kube/config
 ```
+
+## Check on cluster flux compatibility (before flux installation)
+
+```cmd
+flux check
+```
