@@ -76,3 +76,18 @@ helm ls
 kubectl api-resources
 kubectl api-resources | grep ...
 ```
+
+## Lint a remote chart against a local values file
+
+Here for the traefik chart
+
+```cmd
+rm -rf /tmp/traefik
+helm repo add traefik https://traefik.github.io/charts
+helm repo update
+helm pull traefik/traefik --version 39.0.2 --untar --untardir /tmp
+helm lint /tmp/traefik -f ./flux-clusters/piserver/flux-system/addons/traefik-values.yaml
+rm -rf /tmp/traefik
+```
+
+TODO: this fails. Even with default values
