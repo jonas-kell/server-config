@@ -1,0 +1,17 @@
+---
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: HelmChart
+metadata:
+  name: traefik
+  namespace: flux-system
+spec:
+  interval: 5m0s
+  reconcileStrategy: ChartVersion
+  chart: traefik
+  sourceRef:
+    kind: HelmRepository
+    name: traefik
+    namespace: flux-system
+  version: 39.0.2
+  valuesFiles:
+    - ./traefik-values.yaml
