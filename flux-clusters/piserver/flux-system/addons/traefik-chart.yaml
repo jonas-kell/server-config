@@ -13,4 +13,4 @@ spec:
     name: traefik
   version: 39.0.2
   valuesFiles:
-    - ./traefik-values.yaml
+    - traefik-values.yaml
