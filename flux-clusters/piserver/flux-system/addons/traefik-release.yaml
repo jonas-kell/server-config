@@ -26,6 +26,8 @@ spec:
       listeners: # https://gateway-api.sigs.k8s.io/reference/1.4/spec/#listener
         web:
           port: 80
+          hostname: ""
+          protocol: HTTP
           namespacePolicy: All
 
   ports:
