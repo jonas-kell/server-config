@@ -40,7 +40,7 @@ You can use ansible-vault to encrypt this value / keep it secret.
 
 ## Kubeconfigs
 
-Set the Kubeconfigs like described [in this cheat sheet](./../Kubectl.md)
+Set the Kubeconfigs like described [in this cheat sheet](./../helm/Kubectl.md)
 
 ## Deploy
 
