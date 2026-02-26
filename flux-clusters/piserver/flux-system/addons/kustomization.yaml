@@ -5,4 +5,5 @@ resources:
   - gateway-api-source.yaml
   - gateway-api-crds.yaml
   - traefik-source.yaml
+  - traefik-chart.yaml
   - traefik-release.yaml
