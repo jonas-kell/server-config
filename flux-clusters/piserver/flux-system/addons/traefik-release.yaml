@@ -4,13 +4,11 @@ kind: HelmRelease
 metadata:
   name: traefik
   namespace: flux-system
-spec:
+spec: # https://fluxcd.io/flux/components/helm/helmreleases/#chart-template
   interval: 5m0s
-  chart:
-    spec:
-      # the WHOLE chart (including valuesFiles key could be inlined here) https://fluxcd.io/flux/components/source/helmcharts/#values-files
-      chartRef:
-        kind: HelmChart
-        name: traefik
+  # the WHOLE chart (including valuesFiles key could be inlined here) https://fluxcd.io/flux/components/source/helmcharts/#values-files
+  chartRef:
+    kind: HelmChart
+    name: traefik
 
 # list current listeners               kubectl get gateways.gateway.networking.k8s.io -n flux-system traefik-gateway -o yaml
