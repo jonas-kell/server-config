@@ -42,9 +42,17 @@ kubectl kustomize ./flux-clusters/piserver/flux-system | kubectl apply --dry-run
 # there are ownership errors, because the check (kubectl) is not the same owner as the deployer (flux)
 kubectl kustomize ./flux-clusters/piserver/flux-system | kubectl apply --server-side --dry-run=server -f -
 
-
 # Validates everything BUT the flux-vendored files
 kubectl kustomize ./flux-clusters/piserver/flux-system/addons | kubectl apply --dry-run=server -f -
+```
+
+## flux logs
+
+```cmd
+kubectl logs -n flux-system deploy/kustomize-controller -f
+
+# Reconcile immediately
+flux reconcile source git flux-system -n flux-system
 ```
 
 ## Check on cluster resources (available and usage)
@@ -59,4 +67,11 @@ kubectl top nodes
 
 ```cmd
 helm ls
+```
+
+## Check api resources (for apiVersion Key)
+
+```cmd
+kubectl api-resources
+kubectl api-resources | grep ...
 ```

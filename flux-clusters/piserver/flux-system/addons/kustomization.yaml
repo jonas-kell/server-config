@@ -3,3 +3,5 @@ kind: Kustomization
 resources:
   - gateway-api-source.yaml
   - gateway-api-crds.yaml
+  - traefik-source.yaml
+  - traefik-release.yaml
