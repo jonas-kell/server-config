@@ -29,6 +29,7 @@ flux check
 
 flux get sources git -n flux-system
 flux get kustomizations -n flux-system
+flux get helmreleases
 ```
 
 ## Check flux kustomization syntax
