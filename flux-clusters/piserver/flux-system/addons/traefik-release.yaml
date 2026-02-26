@@ -23,7 +23,11 @@ spec:
         enabled: true
     gateway:
       # defaultScope: "All" # currently experimental setting
-      listeners: {}
+      listeners:
+        web:
+          enabled: false
+        websecure:
+          enabled: false
 
 # This automatically installs a GatewayClass and default Gateway. THis could be overwritten, see https://github.com/marcel-dempers/docker-development-youtube-series/blob/master/kubernetes/gateway-api/values.yaml
 
