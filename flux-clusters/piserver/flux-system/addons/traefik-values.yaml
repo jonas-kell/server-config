@@ -19,11 +19,11 @@ gateway: # https://gateway-api.sigs.k8s.io/reference/1.4/spec/#gateway
       namespacePolicy:
         from: All
 
-# ports:
-# web:
-#   port: 80
-#   expose:
-#     default: true
-#   exposedPort: 80
+ports:
+  web:
+    port: 80
+    expose:
+      default: true
+    exposedPort: 80
 
 # This automatically installs a default GatewayClass and default Gateway. This could be overwritten, see https://github.com/marcel-dempers/docker-development-youtube-series/blob/master/kubernetes/gateway-api/values.yaml
