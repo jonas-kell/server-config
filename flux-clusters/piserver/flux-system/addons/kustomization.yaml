@@ -6,11 +6,23 @@ configMapGenerator:
   - name: traefik-values
     files:
       - values.yaml=traefik-values.yaml
+    options:
+      labels:
+        reconcile.fluxcd.io/watch: "Enabled"
 generatorOptions:
-  disableNameSuffixHash: false # default, name should get replaced with hased version in ref
+  disableNameSuffixHash: false # file name+hash will be patched
+patches:
+  - path: traefik-release.yaml
+    target:
+      kind: HelmRelease
+      name: traefik
+configurations:
+  - kustomizeconfig.yaml
 resources:
   - gateway-api-source.yaml
   - gateway-api-crds.yaml
   - traefik-source.yaml
   - traefik-chart.yaml
   - traefik-release.yaml
+
+# https://github.com/fluxcd/flux2/discussions/2919#discussioncomment-14872421
