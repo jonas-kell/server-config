@@ -24,14 +24,11 @@ ports:
     port: 80
     expose:
       default: true
+    exposedPort: 30080 # no rights to expose 80 directly as that is a priviledged port
+
 
 # expose without a cluster load balancer (not HA compatible) -> Add a standalone load balancer sometime maybe
-hostNetwork: true
-securityContext:
-  capabilities:
-    drop:
-      - ALL
-    add:
-      - NET_BIND_SERVICE
+# Needs config: but that runs traefik as root
+# https://github.com/traefik/traefik-helm-chart/issues/336#issuecomment-776163841
 
 # This automatically installs a default GatewayClass and default Gateway. This could be overwritten, see https://github.com/marcel-dempers/docker-development-youtube-series/blob/master/kubernetes/gateway-api/values.yaml
