@@ -75,3 +75,7 @@
       owner: root
       group: root
       mode: "0644"
+
+- name: Install k9s locally
+  ansible.builtin.include_role:
+      name: andrewrothstein.k9s

@@ -1,5 +1,6 @@
 ---
 - name: andrewrothstein.kubectl
+- name: andrewrothstein.k9s
 - name: geerlingguy.helm
 - name: geerlingguy.docker
 - name: stephdewit.nvm
