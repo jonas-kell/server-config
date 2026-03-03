@@ -8,6 +8,12 @@ kubectl config get-contexts
 kubectl config use-context ... # should get auto-completed
 ```
 
+## Pretty gui: k9s
+
+```cmd
+k9s # requires kubectl to work beforehand. Is installed like the other tools by the dotfiles scripts
+```
+
 ## Merge a new context into config file
 
 ```cmd
