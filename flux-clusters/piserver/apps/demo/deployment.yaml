@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: demo-http
+  namespace: demo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: demo-http
+  template:
+    metadata:
+      labels:
+        app: demo-http
+    spec:
+      containers:
+        - name: http-echo
+          image: hashicorp/http-echo:0.2.3
+          args:
+            - "-text=hello from demo namespace"
+          ports:
+            - containerPort: 5678
