@@ -26,11 +26,4 @@ ports:
       default: true
     exposedPort: 80
 
-# expose without a cluster load balancer (not HA compatible) -> Add a standalone load balancer sometime maybe
-hostNetwork: true
-securityContext:
-  capabilities:
-    add:
-      - NET_BIND_SERVICE
-
 # This automatically installs a default GatewayClass and default Gateway. This could be overwritten, see https://github.com/marcel-dempers/docker-development-youtube-series/blob/master/kubernetes/gateway-api/values.yaml
