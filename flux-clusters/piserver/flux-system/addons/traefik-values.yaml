@@ -26,4 +26,7 @@ ports:
       default: true
     exposedPort: 80
 
+hostNetwork: true # expose without a cluster load balancer (not HA compatible)
+
+
 # This automatically installs a default GatewayClass and default Gateway. This could be overwritten, see https://github.com/marcel-dempers/docker-development-youtube-series/blob/master/kubernetes/gateway-api/values.yaml
