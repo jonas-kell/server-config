@@ -14,9 +14,7 @@ spec:
         app: demo-http
     spec:
       containers:
-        - name: http-echo
-          image: hashicorp/http-echo:0.2.3
-          args:
-            - "-text=hello from demo namespace"
+        - name: whoami
+          image: traefik/whoami:v1.10.1
           ports:
-            - containerPort: 5678
+            - containerPort: 80
