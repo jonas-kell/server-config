@@ -1,3 +1,2 @@
-# this does not currently do anything, it is not dns or connection aware
 primary_host: piserver.kellehorreur.de
-fallback_host: 192.168.2.105
+primary_ip: 192.168.2.105

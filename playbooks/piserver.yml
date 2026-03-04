@@ -14,7 +14,12 @@
             nginx_stream_into_k3s:
                 - port_from: 80
                   port_to: 30080
-                  target_ip: "192.168.2.105"
+                  target_ip: "{{ primary_ip }}"
+                  tcp: true
+                  udp: false
+                - port_from: 443
+                  port_to: 30443
+                  target_ip: "{{ primary_ip }}"
                   tcp: true
                   udp: false
   become: true
@@ -24,3 +29,13 @@
 
 - name: "K3s flux installation"
   ansible.builtin.import_playbook: "./k3s_flux_install.yml"
+
+- name: Create ssl secret in flux cluster
+  hosts: piserver
+  gather_facts: true
+  become: true
+  roles:
+      - role: k8s_tls
+        vars:
+            k8s_tls_namespace: flux-system
+            k8s_tls_secret_name: tls-certificate

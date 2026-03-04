@@ -19,6 +19,17 @@ gateway: # https://gateway-api.sigs.k8s.io/reference/1.4/spec/#gateway
       namespacePolicy:
         from: All
 
+    websecure:
+      port: 443
+      protocol: HTTPS
+      namespacePolicy:
+        from: All
+      tls:
+        mode: Terminate
+        certificateRefs:
+          - kind: Secret
+            name: tls-certificate
+
 ports:
   web:
     port: 80
@@ -26,6 +37,11 @@ ports:
       default: true
     exposedPort: 30080 # no rights to expose 80 directly as that is a priviledged port
 
+  websecure:
+    port: 443
+    expose:
+      default: true
+    exposedPort: 30443
 
 # expose without a cluster load balancer (not HA compatible) -> Add a standalone load balancer sometime maybe
 # Needs config: but that runs traefik as root

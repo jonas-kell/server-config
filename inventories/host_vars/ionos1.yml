@@ -1,0 +1,2 @@
+primary_host: ionosserver.kellehorreur.de
+primary_ip: 212.227.161.210 # TODO we do not want to rely on this being static in the future

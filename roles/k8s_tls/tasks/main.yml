@@ -1,0 +1,23 @@
+---
+- name: Install Kubernetes Phyton dependency on server
+  ansible.builtin.package:
+      name:
+          - python3-kubernetes
+      state: present
+      update_cache: true
+      cache_valid_time: 1800
+
+- name: Create/Update TLS secret for Traefik Gateway
+  kubernetes.core.k8s:
+      state: present
+      namespace: "{{ k8s_tls_namespace }}"
+      definition:
+          apiVersion: v1
+          kind: Secret
+          metadata:
+              name: "{{ k8s_tls_secret_name }}"
+          type: kubernetes.io/tls
+          data:
+              tls.crt: "{{ lookup('file', playbook_dir + '/../secrets/fullchain.pem') | b64encode }}"
+              tls.key: "{{ lookup('file', playbook_dir + '/../secrets/privkey.pem') | b64encode }}"
+  become: false
