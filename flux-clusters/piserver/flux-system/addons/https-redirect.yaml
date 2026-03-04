@@ -10,7 +10,7 @@ spec:
       namespace: flux-system
       sectionName: http # This targets the HTTP listener (port 80)
   hostnames:
-    - "*.kellehorreur.de"
+    - "piserver.kellehorreur.de"
   rules:
     - filters:
         - type: RequestRedirect
