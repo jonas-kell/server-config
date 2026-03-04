@@ -112,6 +112,12 @@
       loop_var: item
   when: item.different | bool
 # ---
+
+# The update of the traffic matching list does not trigger firewall rules to be re-evaluated.
+# TODO see this: https://community.ui.com/questions/Bug-Firewall-rules-do-not-get-re-evaluated/d40fe9a4-6c6e-4e77-af90-27f9099ab36e
+
+# ---
+
 # Lists can be found at: https://unifi.ui.com/ > Network > Settings > Overview > Network Lists
 
 # https://developer.ui.com/network/v10.0.162/updatetrafficmatchinglist
