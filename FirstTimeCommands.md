@@ -145,3 +145,15 @@ USB C over 3.0<->C Adapter (wrong way) Over good USBc Hub
 w 40.7 MB/s
 r 41.7 MB/s
  -->
+
+## Switch to more stable USB driver (UAS -> usb-storage)
+
+```cmd
+lsusb  # get id
+sudo nano /boot/firmware/cmdline.txt
+
+# add to last line (must stay as one line!!):
+# set id from step before
+
+usb-storage.quirks=7825:a2a4:u
+```
