@@ -12,7 +12,8 @@ spec:
   hostnames:
     - "*.kellehorreur.de"
   rules:
-    - filters:
+    - matches: []
+      filters:
         - type: RequestRedirect
           requestRedirect:
             scheme: https
