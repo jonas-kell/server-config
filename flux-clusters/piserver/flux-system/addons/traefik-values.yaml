@@ -24,11 +24,10 @@ gateway: # https://gateway-api.sigs.k8s.io/reference/1.4/spec/#gateway
       protocol: HTTPS
       namespacePolicy:
         from: All
-      tls:
-        mode: Terminate
-        certificateRefs:
-          - kind: Secret
-            name: tls-certificate
+      mode: Terminate
+      certificateRefs:
+        - kind: Secret
+          name: tls-certificate
 
 ports:
   web:
