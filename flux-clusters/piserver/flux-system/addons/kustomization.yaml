@@ -24,5 +24,6 @@ resources:
   - traefik-source.yaml
   - traefik-chart.yaml
   - traefik-release.yaml
+  - https-redirect.yaml
 
 # https://github.com/fluxcd/flux2/discussions/2919#discussioncomment-14872421
