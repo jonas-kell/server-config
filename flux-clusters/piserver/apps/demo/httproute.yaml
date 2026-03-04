@@ -8,7 +8,6 @@ spec:
   parentRefs:
     - name: traefik-gateway
       namespace: flux-system
-      sectionName: https
   rules:
     - matches:
         - path:

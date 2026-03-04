@@ -8,7 +8,7 @@ spec:
   parentRefs:
     - name: traefik-gateway
       namespace: flux-system
-      sectionName: http # This targets the HTTP listener (port 80)
+      sectionName: web # This targets the HTTP listener (port 80)
   hostnames:
     - "*.kellehorreur.de"
   rules:
