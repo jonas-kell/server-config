@@ -17,6 +17,7 @@
             nginx_stream_ha_https_enabled: true
             nginx_stream_cloud_https_enabled: true
             nginx_stream_default_https_enabled: true
+            nginx_stream_place_ssl_certs: true
             nginx_stream_certs_path: "/etc/ionoshttps/kellehorreur.de/"
             nginx_stream_default_server_name: "*.kellehorreur.de"
             nginx_stream_cloud_domain: "cloud.kellehorreur.de"

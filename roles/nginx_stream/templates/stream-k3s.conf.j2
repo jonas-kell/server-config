@@ -1,0 +1,17 @@
+{% for mapping in nginx_stream_into_k3s %}
+{% if mapping.tcp %}
+server {
+    listen {{ mapping.port_from }};
+    listen [::]:{{ mapping.port_from }};
+    proxy_pass {{ mapping.target_ip }}:{{ mapping.port_to }};
+}
+{% endif %}
+
+{% if mapping.udp %}
+server {
+    listen {{ mapping.port_from }} udp;
+    listen [::]:{{ mapping.port_from }} udp;
+    proxy_pass {{ mapping.target_ip }}:{{ mapping.port_to }};
+}
+{% endif %}
+{% endfor %}

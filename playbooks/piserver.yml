@@ -9,6 +9,14 @@
             firewall_allow_https: ipv4
             firewall_allow_dns: ipv4
             firewall_allow_k3s: ipv4 # will get partially overwritten by k3s install (but NOT the ipv6 block on the apiserver)
+      - role: nginx_stream
+        vars:
+            nginx_stream_into_k3s:
+                - port_from: 80
+                  port_to: 30080
+                  target_ip: "192.168.2.105"
+                  tcp: true
+                  udp: false
   become: true
 
 - name: "K3s installation: Main node on Pi"
