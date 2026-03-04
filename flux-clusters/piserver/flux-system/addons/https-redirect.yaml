@@ -10,11 +10,7 @@ spec:
       namespace: flux-system
       sectionName: http # This targets the HTTP listener (port 80)
   rules:
-    - matches:
-        - path:
-            type: PathPrefix
-            value: /
-      filters:
+    - filters:
         - type: RequestRedirect
           requestRedirect:
             scheme: https
