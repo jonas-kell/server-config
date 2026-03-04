@@ -9,11 +9,10 @@ spec:
     - name: traefik-gateway
       namespace: flux-system
       sectionName: web # This targets the HTTP listener (port 80)
-  hostnames:
-    - "*.kellehorreur.de"
+  # hostnames:
+  #   - "*.kellehorreur.de"
   rules:
-    - matches: []
-      filters:
+    - filters:
         - type: RequestRedirect
           requestRedirect:
             scheme: https
