@@ -45,6 +45,7 @@ argument_specs:
                     - ipv6
                     - both
                     - none
+                    - all_but_global_unicast
             firewall_ha_port:
                 type: int
                 required: false

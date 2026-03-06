@@ -7,7 +7,7 @@
             firewall_allow_ipv6_ssh: false
             firewall_allow_http: both
             firewall_allow_https: both
-            firewall_allow_dns: ipv4
+            firewall_allow_dns: all_but_global_unicast
             firewall_allow_k3s: ipv4 # will get partially overwritten by k3s install (but NOT the ipv6 block on the apiserver)
       - role: nginx_stream
         vars:

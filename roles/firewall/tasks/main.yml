@@ -128,11 +128,47 @@
       port: "53"
 
 - name: Allow DNS (tcp + udp/53)
+  when: firewall_allow_dns in ["all_but_global_unicast"]
+  community.general.ufw:
+      comment: DNS
+      rule: allow
+      proto: tcp
+      from_ip: "0.0.0.0/0"
+      port: "53"
+
+- name: Allow DNS (tcp + udp/53)
+  when: firewall_allow_dns in ["all_but_global_unicast"]
+  community.general.ufw:
+      comment: DNS
+      rule: allow
+      proto: tcp
+      from_ip: "fc00::/7" # specifically allow unique local traffic
+      port: "53"
+
+- name: Allow DNS (tcp + udp/53)
   when: firewall_allow_dns in ["ipv4", "ipv6", "both"]
   community.general.ufw:
       comment: DNS
       rule: allow
       proto: udp
+      port: "53"
+
+- name: Allow DNS (tcp + udp/53)
+  when: firewall_allow_dns in ["all_but_global_unicast"]
+  community.general.ufw:
+      comment: DNS
+      rule: allow
+      proto: udp
+      from_ip: "0.0.0.0/0"
+      port: "53"
+
+- name: Allow DNS (tcp + udp/53)
+  when: firewall_allow_dns in ["all_but_global_unicast"]
+  community.general.ufw:
+      comment: DNS
+      rule: allow
+      proto: udp
+      from_ip: "fc00::/7" # specifically allow unique local traffic
       port: "53"
 
 # Home Assistant

@@ -54,3 +54,15 @@ ansible-vault encrypt secrets/flux_deploy_key.pub
 ```
 
 Put the public key as a deploy key for this repo (WITH write access)
+
+## Pihole
+
+```cmd
+ansible-vault edit secrets/pihole.yml
+```
+
+```yml
+admin_pw: "..."
+```
+
+Put the password and save
