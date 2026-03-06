@@ -4,12 +4,13 @@ persistentVolumeClaim:
   enabled: true
 
 serviceWeb:
-  enabled: true
+  enabled: false # We create the service manually
   https:
     enabled: false
 
 serviceDns:
   enabled: true
+  nodePort: 30053
 
 serviceDhcp:
   enabled: false
