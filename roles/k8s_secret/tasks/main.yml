@@ -1,0 +1,33 @@
+---
+- name: Install Kubernetes Phyton dependency on server
+  ansible.builtin.package:
+      name:
+          - python3-kubernetes
+      state: present
+      update_cache: true
+      cache_valid_time: 1800
+
+- name: Create/Update secret on the cluster
+  kubernetes.core.k8s:
+      state: present
+      namespace: "{{ k8s_secret_namespace }}"
+      definition:
+          apiVersion: v1
+          kind: Secret
+          metadata:
+              name: "{{ k8s_secret_secret_name }}"
+          type: Opaque
+          data: "{{ secret_data }}"
+  vars:
+      secret_data: >-
+          {{
+            dict(
+              k8s_secret_secret_contents | map(attribute='key')
+              | zip(
+                  k8s_secret_secret_contents
+                  | map(attribute='value')
+                  | map('b64encode')
+                )
+            )
+          }}
+  become: false

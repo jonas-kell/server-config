@@ -7,7 +7,7 @@
       update_cache: true
       cache_valid_time: 1800
 
-- name: Create/Update TLS secret for Traefik Gateway
+- name: Create/Update TLS secret for Gateway API
   kubernetes.core.k8s:
       state: present
       namespace: "{{ k8s_tls_namespace }}"

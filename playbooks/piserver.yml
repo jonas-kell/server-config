@@ -39,3 +39,18 @@
         vars:
             k8s_tls_namespace: flux-system
             k8s_tls_secret_name: tls-certificate
+
+- name: Create admin-pw secret in flux cluster
+  hosts: piserver
+  gather_facts: true
+  become: true
+  vars_files:
+      - "{{ playbook_dir }}/../secrets/pihole.yml"
+  roles:
+      - role: k8s_secret
+        vars:
+            k8s_secret_namespace: pihole
+            k8s_secret_secret_name: pihole-admin-pw
+            k8s_secret_secret_contents:
+                - key: password
+                  value: "{{ admin_pw }}"

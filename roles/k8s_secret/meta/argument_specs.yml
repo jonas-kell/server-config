@@ -1,0 +1,21 @@
+---
+argument_specs:
+    main:
+        options:
+            k8s_secret_namespace:
+                type: str
+                required: false
+            k8s_secret_secret_name:
+                type: str
+                required: true
+            k8s_secret_secret_contents:
+                type: list
+                required: true
+                elements: dict
+                options:
+                    key:
+                        type: str
+                        required: true
+                    value:
+                        type: str
+                        required: true
