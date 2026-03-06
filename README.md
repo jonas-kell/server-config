@@ -19,7 +19,6 @@ This is also my automatically deployed dotfiles repository (see below)
     - 64 GB SD card
     - Ubuntu 24.04
     - `pi@piserver.kellehorreur.de`
-    - `https://cloud.kellehorreur.de`
   - Raspberry Pi 4B, 4GB
     - 64 GB SD card
     - [Home Assistant OS, with Home Assistant Core](HAconfig.md)
@@ -30,12 +29,20 @@ This is also my automatically deployed dotfiles repository (see below)
     - 4TB HDD
     - `http://storageserver.kellehorreur.de`
 - Other DNS entries for services
+  - `cloud.kellehorreur.de`
+    - Personal Nextcloud installation to access the storageserver
+    - See [Nextcloud](./Nextcloud.md)
   - `pihole.kellehorreur.de`
     - Only points to the local adress of piserver -> DNS just inside the LAN
+    - See [Pihole](./Pihole.md)
   - `mailbackup.kellehorreur.de`
+    - TODO [Experiment-Notes](https://github.com/jonas-kell/mail-backup)
   - `mail.kellehorreur.de`
+    - TODO maybe host onw mailserver. [Experiment-Notes](https://gist.github.com/jonas-kell/940e91d0483e89908b44f3f8ba2c85fa)
   - `vpn.kellehorreur.de`
+    - TODO setup VPN (maybe with [udp-over-https](https://github.com/jonas-kell/udp-over-https))
   - `dev.kellehorreur.de`
+    - Local development host. Used for [this project](https://github.com/jonas-kell/ssl-dev-termination/)
 
 ## Local installation
 
