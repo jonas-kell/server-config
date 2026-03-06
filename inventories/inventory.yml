@@ -35,7 +35,9 @@ all:
                 extra_server_args: >-
                     --disable=traefik
                     --disable=servicelb
-                    --disable=local-storage
+
+                # we enable the local storage storage class for default persistent volume claims like the cache of pihole
+                # --disable=local-storage
 
                 # extra_agent_args: ""
                 # extra_install_envs: { 'INSTALL_K3S_SKIP_SELINUX_RPM': 'true' }
