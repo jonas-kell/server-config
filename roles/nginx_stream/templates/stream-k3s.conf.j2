@@ -1,14 +1,14 @@
 {% for mapping in nginx_stream_into_k3s %}
 {% if mapping.tcp or mapping.udp %}
 server {
-    {% if mapping.tcp %}
+{% if mapping.tcp %}
     listen {{ mapping.port_from }};
     listen [::]:{{ mapping.port_from }};
-    {% endif %}
-    {% if mapping.udp %}
+{% endif %}
+{% if mapping.udp %}
     listen {{ mapping.port_from }} udp;
     listen [::]:{{ mapping.port_from }} udp;
-    {% endif %}
+{% endif %}
 
     proxy_pass {{ mapping.target_ip }}:{{ mapping.port_to }};
 }
