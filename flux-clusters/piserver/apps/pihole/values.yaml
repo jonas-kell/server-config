@@ -11,6 +11,7 @@ serviceWeb:
 serviceDns:
   enabled: true
   nodePort: 30053
+  mixedService: true
 
 serviceDhcp:
   enabled: false
