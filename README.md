@@ -24,11 +24,18 @@ This is also my automatically deployed dotfiles repository (see below)
     - 64 GB SD card
     - [Home Assistant OS, with Home Assistant Core](HAconfig.md)
     - `root@haserver.kellehorreur.de`
-    - `https://haserver.kellehorreur.de:8123`
-    - `https://ha.kellehorreur.de:8123`
+    - `https://haserver.kellehorreur.de:8123` - IPv4 internal
+    - `https://ha.kellehorreur.de:8123` - IPv6 + external IPv4
   - My Clound EX2 Ultra
     - 4TB HDD
     - `http://storageserver.kellehorreur.de`
+- Other DNS entries for services
+  - `pihole.kellehorreur.de`
+    - Only points to the local adress of piserver -> DNS just inside the LAN
+  - `mailbackup.kellehorreur.de`
+  - `mail.kellehorreur.de`
+  - `vpn.kellehorreur.de`
+  - `dev.kellehorreur.de`
 
 ## Local installation
 

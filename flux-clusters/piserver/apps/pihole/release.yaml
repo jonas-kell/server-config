@@ -1,0 +1,14 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: pihole
+  namespace: pihole
+spec:
+  interval: 5m0s
+  chartRef:
+    kind: HelmChart
+    name: pihole
+  valuesFrom:
+    - kind: ConfigMap
+      name: pihole-values
