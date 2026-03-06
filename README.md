@@ -24,6 +24,8 @@ This is also my automatically deployed dotfiles repository (see below)
   - Raspberry Pi 4B, 4GB
     - 64 GB SD card
     - [Home Assistant OS, with Home Assistant Core](HAconfig.md)
+      - TODO symmetric http encryption for [the pico lock](https://github.com/jonas-kell/home-assistant-custom-components-pico-lock)
+      - TODO LED matrix HA conversion [See](https://github.com/jonas-kell/led-matrix) (also with symmetric encryption)
     - `root@haserver.kellehorreur.de`
     - `https://haserver.kellehorreur.de:8123` - IPv4 internal
     - `https://ha.kellehorreur.de:8123` - IPv6 + external IPv4
