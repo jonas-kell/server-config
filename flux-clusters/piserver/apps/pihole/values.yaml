@@ -6,6 +6,9 @@ persistentVolumeClaim:
 serviceWeb:
   enabled: true
 
+serviceHttps:
+  enabled: false
+
 serviceDns:
   enabled: true
 
