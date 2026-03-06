@@ -32,6 +32,7 @@ This is also my automatically deployed dotfiles repository (see below)
   - `cloud.kellehorreur.de`
     - Personal Nextcloud installation to access the storageserver
     - See [Nextcloud](./Nextcloud.md)
+    - TODO TURN server on ionosserver [see](https://gist.github.com/jonas-kell/b744d5dd8d87277589e51c3e9b71a18f)
   - `pihole.kellehorreur.de`
     - Only points to the local adress of piserver -> DNS just inside the LAN
     - See [Pihole](./Pihole.md)
@@ -43,6 +44,10 @@ This is also my automatically deployed dotfiles repository (see below)
     - TODO setup VPN (maybe with [udp-over-https](https://github.com/jonas-kell/udp-over-https))
   - `dev.kellehorreur.de`
     - Local development host. Used for [this project](https://github.com/jonas-kell/ssl-dev-termination/)
+  - Other TODOs
+    - TODO [smartphone-keyboard-remote](https://github.com/jonas-kell/smartphone-keyboard-remote)
+    - TODO [batch-viewer-for-reddit proxy](https://github.com/jonas-kell/batch-viewer-for-reddit)
+    - TODO [license key management](https://github.com/jonas-kell/jta-display-wall-adapter)
 
 ## Local installation
 
