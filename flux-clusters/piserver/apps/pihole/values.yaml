@@ -10,7 +10,7 @@ serviceWeb:
 
 serviceDns:
   enabled: true
-  nodePort: 30055
+  nodePort: 30053
   mixedService: true
 
 serviceDhcp:
