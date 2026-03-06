@@ -40,7 +40,8 @@ ports:
     port: 443
     expose:
       default: true
-    exposedPort: 30443
+    exposedPort: 30443 # == nodePort of a Service
+
 
 # expose without a cluster load balancer (not HA compatible) -> Add a standalone load balancer sometime maybe
 # Needs config: but that runs traefik as root
