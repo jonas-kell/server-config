@@ -44,3 +44,11 @@ Make Other Devices get such a Unique Local IP:
 
 - Network -> Settings -> Networks -> Default -> IPv6 -> Additional IPs
   - Enter IPv6 CIDR -> add the full IP with the ::1/64 (the one gets cut because of the /64, the /64 is needed)
+
+## Testing
+
+You can resolve with a specific DNS server e.g. with (alternatively use the Unique-Local IPv6 address)
+
+```cmd
+dig @192.168.2.105 google.com
+```
