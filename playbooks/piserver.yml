@@ -22,6 +22,11 @@
                   target_ip: "{{ primary_ip }}"
                   tcp: true
                   udp: false
+                - port_from: 53
+                  port_to: 30053
+                  target_ip: "{{ primary_ip }}"
+                  tcp: true
+                  udp: true
   become: true
 
 - name: "K3s installation: Main node on Pi"
