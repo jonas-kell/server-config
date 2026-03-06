@@ -4,7 +4,7 @@ persistentVolumeClaim:
   enabled: true
 
 serviceWeb:
-  enabled: false # We create the service manually
+  enabled: false # We create the service manually - deactivation did not work though.... it is named `pihole-web`
   https:
     enabled: false
 
