@@ -157,3 +157,29 @@ sudo nano /boot/firmware/cmdline.txt
 
 usb-storage.quirks=7825:a2a4:u
 ```
+
+## Disable the default DNS (if pihole is wanted)
+
+See: [Pihole Docs](https://docs.pi-hole.net/docker/tips-and-tricks/)
+
+```cmd
+sudo lsof -i :53
+
+# see the service that uses port 53
+# if systemd-resolve:
+
+sudo mkdir /etc/systemd/resolved.conf.d/
+sudo nano /etc/systemd/resolved.conf.d/no-stub.conf
+
+# enter:
+
+[Resolve]
+DNSStubListener=no
+
+# up to here. Save and restart the service
+
+sudo sh -c 'rm -f /etc/resolv.conf && ln -s /run/systemd/resolve/resolv.conf /etc/resolv.conf'
+
+
+systemctl restart systemd-resolved
+```
