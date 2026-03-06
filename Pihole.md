@@ -38,6 +38,7 @@ Set it in the router
 
 - Network -> Settings -> Networks -> Default -> IPv6 -> Advanced -> DNS Server
   - Full with ::1, not the /64
+  - OBVIOUSLY set in the region above the IPv4 DNS server
 
 Make Other Devices get such a Unique Local IP:
 

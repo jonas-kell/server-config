@@ -8,6 +8,8 @@ Management scripts for my personal servers and kubernetes setup.
 
 This is also my automatically deployed dotfiles repository (see below)
 
+[How to configure required things on Unifi](./Unifi.md)
+
 ## What is deployed
 
 - Ionos
