@@ -37,3 +37,7 @@
       method: user
   loop: "{{ dotfiles_flatpak_installs }}"
   become: false
+# ---
+
+# If this fails on a new installation, maybe you need to install
+# flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
