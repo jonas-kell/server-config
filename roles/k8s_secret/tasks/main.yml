@@ -1,5 +1,5 @@
 ---
-- name: Install Kubernetes Phyton dependency on server
+- name: Install Kubernetes Python dependency on server
   ansible.builtin.package:
       name:
           - python3-kubernetes

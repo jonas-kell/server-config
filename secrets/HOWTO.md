@@ -42,7 +42,7 @@ You can use ansible-vault to encrypt this value / keep it secret.
 
 Set the Kubeconfigs like described [in this cheat sheet](./../helm/Kubectl.md)
 
-## Deploy
+## Deploy Key for Flux
 
 ```cmd
 ssh-keygen -t ed25519 \
@@ -66,3 +66,18 @@ admin_pw: "..."
 ```
 
 Put the password and save
+
+## Nextcloud
+
+```cmd
+openssl rand -hex 50
+
+ansible-vault edit secrets/nextcloud.yml
+```
+
+```yml
+postgres_admin_pw: "..."
+postgres_user_pw: "..."
+postgres_replication_pw: "..."
+nextcloud_admin_pw: "..."
+```

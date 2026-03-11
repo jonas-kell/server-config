@@ -35,27 +35,5 @@
 - name: "K3s flux installation"
   ansible.builtin.import_playbook: "./k3s_flux_install.yml"
 
-- name: Create ssl secret in flux cluster
-  hosts: piserver
-  gather_facts: true
-  become: true
-  roles:
-      - role: k8s_tls
-        vars:
-            k8s_tls_namespace: flux-system
-            k8s_tls_secret_name: tls-certificate
-
-- name: Create admin-pw secret in flux cluster
-  hosts: piserver
-  gather_facts: true
-  become: true
-  vars_files:
-      - "{{ playbook_dir }}/../secrets/pihole.yml"
-  roles:
-      - role: k8s_secret
-        vars:
-            k8s_secret_namespace: pihole
-            k8s_secret_secret_name: pihole-admin-pw
-            k8s_secret_secret_contents:
-                - key: password
-                  value: "{{ admin_pw }}"
+- name: "K3s secrets rollout"
+  ansible.builtin.import_playbook: "./k3s_secrets.yml"
