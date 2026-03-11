@@ -1,0 +1,38 @@
+# https://github.com/nextcloud/helm/tree/main/charts/nextcloud
+---
+nextcloud:
+  host: "cloud.kellehorreur.de"
+  trustedDomains:
+    - "cloud.kellehorreur.de"
+  existingSecret:
+    enabled: true
+    secretName: nextcloud-admin
+    passwordKey: admin_pw
+
+ingress:
+  enabled: false
+
+internalDatabase:
+  enabled: false
+
+postgresql:
+  enabled: true
+  global:
+    postgresql:
+      auth:
+        existingSecret: nextcloud-database-pws
+        secretKeys:
+          adminPasswordKey: admin_pw
+          userPasswordKey: user_pw
+          replicationPasswordKey: replication_pw
+
+# TODO postgresql.primary.persistence.enabled
+
+externalDatabase:
+  enabled: true
+  type: postgresql
+  host: ""
+  existingSecret:
+    enabled: true
+    secretName: nextcloud-database-pws
+    passwordKey: user_pw

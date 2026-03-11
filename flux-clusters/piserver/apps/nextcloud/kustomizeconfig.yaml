@@ -1,0 +1,8 @@
+# https://github.com/kubernetes-sigs/kustomize/tree/master/examples/transformerconfigs - must be in a file. Can not be inline
+---
+nameReference:
+  - kind: ConfigMap
+    version: v1
+    fieldSpecs:
+      - path: spec/valuesFrom/name
+        kind: HelmRelease

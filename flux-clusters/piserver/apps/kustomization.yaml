@@ -4,3 +4,4 @@ kind: Kustomization
 resources:
   # - demo-kustomization.yaml # deactivated, as no http only route needed for testing anymore
   - pihole-kustomization.yaml
+  - nextcloud-kustomization.yaml

@@ -1,15 +1,15 @@
 ---
-# https://artifacthub.io/packages/helm/mojo2600/pihole
+# https://artifacthub.io/packages/helm/nextcloud/nextcloud
 apiVersion: source.toolkit.fluxcd.io/v1
 kind: HelmChart
 metadata:
-  name: pihole
-  namespace: pihole
+  name: nextcloud
+  namespace: nextcloud
 spec:
   interval: 5m0s
   reconcileStrategy: ChartVersion
-  chart: pihole
+  chart: nextcloud
   sourceRef:
     kind: HelmRepository
-    name: pihole
-  version: 2.35.0
+    name: nextcloud
+  version: 9.0.3
