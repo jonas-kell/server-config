@@ -85,6 +85,7 @@ kubectl exec -it -n nextcloud nextcloud-postgresql-0 -- env PGPASSWORD="$(ansibl
 ## Things to do on a new Installation
 
 - Insert the `Password Salt` and `Secret` in the config.php (needs to correspond to the database)
+- Execute `occ maintenance:repair` to clear the frontend js caches
 - Disable the app `AppAPI` ([see](https://apps.nextcloud.com/apps/app_api))
   - TODO maybe in the future fix it so that it can be used
 - Enable the app `External storage support`
