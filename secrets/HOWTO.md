@@ -67,6 +67,19 @@ admin_pw: "..."
 
 Put the password and save
 
+## SMB server
+
+```cmd
+ansible-vault edit secrets/smb.yml
+```
+
+[Structure of secret](https://github.com/kubernetes-csi/csi-driver-smb/blob/master/docs/driver-parameters.md)
+
+```yml
+smb_username: "..."
+smb_password: "..."
+```
+
 ## Nextcloud
 
 ```cmd
