@@ -86,6 +86,7 @@ kubectl exec -it -n nextcloud nextcloud-postgresql-0 -- env PGPASSWORD="$(ansibl
 
 - Insert the `Password Salt` and `Secret` in the config.php (needs to correspond to the database)
 - Execute `occ maintenance:repair` to clear the frontend js caches
+- Add `'default_phone_region' => 'DE',` into config
 - Apps
   - Install external Apps
     - Tasks
