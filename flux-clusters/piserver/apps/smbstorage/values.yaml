@@ -12,8 +12,8 @@ storageClasses:
     volumeBindingMode: Immediate
     allowVolumeExpansion: true
     mountOptions:
-      - dir_mode=0777
-      - file_mode=0777
+      - dir_mode=0770
+      - file_mode=0770
       - noperm
       - mfsymlinks
       - cache=strict
