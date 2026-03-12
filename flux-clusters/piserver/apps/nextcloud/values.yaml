@@ -31,7 +31,7 @@ postgresql:
 externalDatabase:
   enabled: true
   type: postgresql
-  host: ""
+  host: "nextcloud-postgresql:5432"
   existingSecret:
     enabled: true
     secretName: nextcloud-database-pws
