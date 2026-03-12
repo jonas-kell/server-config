@@ -14,6 +14,13 @@ nextcloud:
     smtpPasswordKey: null # TODO
     smtpHostKey: null # TODO
 
+persistence:
+  enabled: true
+  size: 8Gi
+  nextcloudData:
+    enabled: true
+    existingClaim: nextcloud-data-claim
+
 ingress:
   enabled: false
 
@@ -34,8 +41,9 @@ postgresql:
           adminPasswordKey: admin_pw
           userPasswordKey: user_pw
           replicationPasswordKey: replication_pw
-
-# TODO postgresql.primary.persistence.enabled
+  primary:
+    persistence:
+      enabled: false # TODO enable if happy with situation
 
 externalDatabase:
   enabled: true
