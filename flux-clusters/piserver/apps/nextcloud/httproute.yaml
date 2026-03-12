@@ -17,5 +17,5 @@ spec:
             type: PathPrefix
             value: /
       backendRefs:
-        - name: nextcloud-dashboard
+        - name: nextcloud
           port: 80

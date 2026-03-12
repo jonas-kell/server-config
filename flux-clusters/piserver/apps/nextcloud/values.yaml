@@ -17,6 +17,10 @@ nextcloud:
 ingress:
   enabled: false
 
+service:
+  type: ClusterIP
+  port: 80
+
 internalDatabase:
   enabled: false
 
