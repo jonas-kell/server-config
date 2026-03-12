@@ -3,7 +3,7 @@
 storageClasses:
   - name: smb-csi
     parameters:
-      source: "//storageserver.kellehorreur.de/test"
+      source: "//storageserver.kellehorreur.de/nextcloud-data"
       # if csi.storage.k8s.io/provisioner-secret is provided, will create a sub directory
       # with PV name under source
       csi.storage.k8s.io/node-stage-secret-name: smbcredentials
