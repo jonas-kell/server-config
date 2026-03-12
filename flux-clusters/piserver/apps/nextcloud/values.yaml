@@ -36,3 +36,4 @@ externalDatabase:
     enabled: true
     secretName: nextcloud-database-pws
     passwordKey: user_pw
+    usernameKey: null
