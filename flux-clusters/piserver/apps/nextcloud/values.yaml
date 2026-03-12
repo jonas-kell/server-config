@@ -19,7 +19,10 @@ persistence:
   size: 8Gi
   nextcloudData:
     enabled: true
-    existingClaim: nextcloud-data-claim
+    storageClassName: smb-csi
+    accessModes:
+      - ReadWriteOnce
+    size: 100Gi
 
 ingress:
   enabled: false

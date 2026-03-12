@@ -18,7 +18,6 @@ configurations:
   - kustomizeconfig.yaml
 resources:
   - namespace.yaml
-  - claim.yaml
   - source.yaml
   - chart.yaml
   - release.yaml
