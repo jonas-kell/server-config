@@ -19,7 +19,7 @@ persistence:
   size: 8Gi
   nextcloudData:
     enabled: true
-    storageClassName: smb-csi
+    storageClass: smb-csi
     accessModes:
       - ReadWriteOnce
     size: 100Gi
