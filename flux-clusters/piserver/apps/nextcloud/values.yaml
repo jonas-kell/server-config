@@ -46,7 +46,7 @@ postgresql:
           replicationPasswordKey: replication_pw
   primary:
     persistence:
-      enabled: false # TODO enable if happy with situation
+      enabled: true
 
 externalDatabase:
   enabled: true
