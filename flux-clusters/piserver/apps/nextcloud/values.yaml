@@ -14,6 +14,10 @@ nextcloud:
     smtpPasswordKey: null # TODO
     smtpHostKey: null # TODO
 
+phpClientHttpsFix:
+  enabled: true
+  protocol: https
+
 persistence:
   enabled: true
   size: 8Gi
