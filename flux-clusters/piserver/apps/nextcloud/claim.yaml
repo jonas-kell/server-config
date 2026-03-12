@@ -7,7 +7,7 @@ metadata:
 spec:
   storageClassName: smb-csi
   volumeName: nextcloud-data
-  accessMode:
+  accessModes:
     - ReadWriteOnce
   resources:
     requests:
