@@ -1,0 +1,15 @@
+---
+# https://artifacthub.io/packages/helm/smbstorage/smbstorage
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: HelmChart
+metadata:
+  name: smbstorage
+  namespace: smbstorage
+spec:
+  interval: 5m0s
+  reconcileStrategy: ChartVersion
+  chart: csi-driver-smb
+  sourceRef:
+    kind: HelmRepository
+    name: smbstorage
+  version: 1.20.0

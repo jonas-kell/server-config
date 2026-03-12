@@ -1,0 +1,20 @@
+# https://github.com/kubernetes-csi/csi-driver-smb/tree/master/charts
+---
+storageClasses:
+  - name: smb-csi
+    parameters:
+      source: "//storageserver.kellehorreur.de/test"
+      # if csi.storage.k8s.io/provisioner-secret is provided, will create a sub directory
+      # with PV name under source
+      csi.storage.k8s.io/node-stage-secret-name: smbcredentials
+      csi.storage.k8s.io/node-stage-secret-namespace: smbstorage
+    reclaimPolicy: Retain # do not remove on permanent storage!
+    volumeBindingMode: Immediate
+    allowVolumeExpansion: true
+    mountOptions:
+      - dir_mode=0777
+      - file_mode=0777
+      - noperm
+      - mfsymlinks
+      - cache=strict
+      - noserverino # required to prevent data corruption

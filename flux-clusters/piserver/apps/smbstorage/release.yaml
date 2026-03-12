@@ -1,0 +1,14 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: smbstorage
+  namespace: smbstorage
+spec:
+  interval: 5m0s
+  chartRef:
+    kind: HelmChart
+    name: smbstorage
+  valuesFrom:
+    - kind: ConfigMap
+      name: smbstorage-values

@@ -1,0 +1,23 @@
+---
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+configMapGenerator:
+  - name: smbstorage-values
+    namespace: smbstorage
+    files:
+      - values.yaml=values.yaml
+    options:
+      labels:
+        reconcile.fluxcd.io/watch: "Enabled"
+patches:
+  - path: release.yaml
+    target:
+      kind: HelmRelease
+      name: smbstorage
+configurations:
+  - kustomizeconfig.yaml
+resources:
+  - namespace.yaml
+  - source.yaml
+  - chart.yaml
+  - release.yaml
