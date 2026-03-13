@@ -14,6 +14,9 @@ nextcloud:
     smtpPasswordKey: smtp_password
     smtpHostKey: smtp_host
   mail:
+    enabled: true
+    domain: kellehorreur.de
+    fromAddress: cloud
     smtp:
       secure: ssl
       port: 465
