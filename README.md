@@ -41,7 +41,8 @@ This is also my automatically deployed dotfiles repository (see below)
     - Only points to the local adress of piserver -> DNS just inside the LAN
     - See [Pihole](./Pihole.md)
   - `talk-backend.kellehorreur.de`
-    - High-performance backend for Nextcloud talk and TURN server
+    - TURN server
+    - TODO [High-performance backend for Nextcloud talk](https://nextcloud-talk.readthedocs.io/en/latest/quick-install/)
   - `mailbackup.kellehorreur.de`
     - TODO [Experiment-Notes](https://github.com/jonas-kell/mail-backup)
   - `mail.kellehorreur.de`
