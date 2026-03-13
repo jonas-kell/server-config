@@ -199,6 +199,42 @@
       proto: tcp
       port: "{{ firewall_ha_port | default('8123') }}"
 
+# Turn
+
+- name: Reject tcp AND udp port for Turn
+  when: firewall_allow_turn in ["ipv6"]
+  community.general.ufw:
+      comment: Turn override
+      rule: reject
+      direction: in
+      port: "{{ firewall_turn_port | default('3478') }}"
+      to_ip: "0.0.0.0/0"
+
+- name: Reject tcp AND udp port for Turn
+  when: firewall_allow_turn in ["ipv4"]
+  community.general.ufw:
+      comment: Turn override
+      rule: reject
+      direction: in
+      port: "{{ firewall_turn_port | default('3478') }}"
+      to_ip: "::/0"
+
+- name: Allow tcp port for Turn
+  when: firewall_allow_turn in ["ipv4", "ipv6", "both"]
+  community.general.ufw:
+      comment: Turn
+      rule: allow
+      proto: tcp
+      port: "{{ firewall_turn_port | default('3478') }}"
+
+- name: Allow udp port for Turn
+  when: firewall_allow_turn in ["ipv4", "ipv6", "both"]
+  community.general.ufw:
+      comment: Turn
+      rule: allow
+      proto: udp
+      port: "{{ firewall_turn_port | default('3478') }}"
+
 # Kubernetes
 
 - name: Reject tcp port for k8s/k3s apiserver

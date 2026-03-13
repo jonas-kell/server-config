@@ -1,0 +1,13 @@
+---
+argument_specs:
+    main:
+        options:
+            coturn_secret:
+                type: str
+                required: true
+            coturn_domain:
+                type: str
+                required: true
+            coturn_port:
+                type: int
+                required: false

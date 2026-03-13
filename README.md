@@ -36,11 +36,12 @@ This is also my automatically deployed dotfiles repository (see below)
   - `cloud.kellehorreur.de`
     - Personal Nextcloud installation to access the storageserver
     - See [Nextcloud](./Nextcloud.md)
-    - TODO TURN server on ionosserver [see](https://gist.github.com/jonas-kell/b744d5dd8d87277589e51c3e9b71a18f)
-    - TODO [Test your installation](https://scan.nextcloud.com/)
+    - [Test your installation](https://scan.nextcloud.com/)
   - `pihole.kellehorreur.de`
     - Only points to the local adress of piserver -> DNS just inside the LAN
     - See [Pihole](./Pihole.md)
+  - `talk-backend.kellehorreur.de`
+    - High-performance backend for Nextcloud talk and TURN server
   - `mailbackup.kellehorreur.de`
     - TODO [Experiment-Notes](https://github.com/jonas-kell/mail-backup)
   - `mail.kellehorreur.de`

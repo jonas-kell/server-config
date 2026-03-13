@@ -21,6 +21,14 @@ argument_specs:
                     - ipv6
                     - both
                     - none
+            firewall_allow_turn:
+                type: str
+                required: false
+                choices:
+                    - ipv4
+                    - ipv6
+                    - both
+                    - none
             firewall_allow_ha:
                 type: str
                 required: false
@@ -50,5 +58,8 @@ argument_specs:
                 type: int
                 required: false
             firewall_k3s_port:
+                type: int
+                required: false
+            firewall_turn_port:
                 type: int
                 required: false

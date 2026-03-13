@@ -3,6 +3,8 @@
   vars:
       ha_port: 8123
   hosts: ionos1
+  vars_files:
+      - "{{ playbook_dir }}/../secrets/talk_backend.yml"
   roles:
       - role: firewall
         vars:
@@ -10,6 +12,7 @@
             firewall_allow_http: ipv4
             firewall_allow_https: ipv4
             firewall_allow_ha: ipv4
+            firewall_allow_turn: ipv4
             firewall_ha_port: "{{ ha_port }}"
       - role: nginx_stream
         vars:
@@ -23,3 +26,7 @@
             nginx_stream_cloud_domain: "cloud.kellehorreur.de"
             nginx_stream_ha_domain: "ha.kellehorreur.de"
             nginx_stream_ha_port: "{{ ha_port }}"
+      - role: coturn
+        vars:
+            coturn_secret: "{{ coturn_secret_val }}"
+            coturn_domain: "talk-backend.kellehorreur.de"

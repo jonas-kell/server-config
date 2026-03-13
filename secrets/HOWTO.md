@@ -80,6 +80,18 @@ smb_username: "..."
 smb_password: "..."
 ```
 
+## Talk (coturn and high performance backend)
+
+```cmd
+openssl rand -hex 32
+
+ansible-vault edit secrets/talk_backend.yml
+```
+
+```yml
+coturn_secret_val: "..."
+```
+
 ## Nextcloud
 
 ```cmd

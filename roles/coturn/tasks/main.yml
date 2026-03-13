@@ -1,0 +1,49 @@
+# https://nextcloud-talk.readthedocs.io/en/latest/TURN/
+---
+- name: Install coturn
+  ansible.builtin.package:
+      name:
+          - coturn
+      state: present
+      update_cache: true
+      cache_valid_time: 1800
+
+- name: Enable coturn service
+  ansible.builtin.template:
+      src: coturn.j2
+      dest: /etc/default/coturn
+      mode: "0644"
+  notify: Reload coturn
+
+- name: Ensure coturn systemd override directory exists
+  ansible.builtin.file:
+      path: /etc/systemd/system/coturn.service.d
+      state: directory
+      mode: "0755"
+
+- name: Configure coturn service override
+  ansible.builtin.template:
+      src: override.conf.j2
+      dest: /etc/systemd/system/coturn.service.d/override.conf
+      mode: "0644"
+  notify: Reload coturn
+
+# ---
+# Was modified to include these vals
+
+# listening-port=3478
+# fingerprint
+# use-auth-secret
+# static-auth-secret=##REPLACEME##
+# realm=##REPLACEME##
+# total-quota=0
+# bps-capacity=0
+# stale-nonce
+# no-multicast-peers
+
+- name: Configure turnserver
+  ansible.builtin.template:
+      src: turnserver.conf.j2
+      dest: /etc/turnserver.conf
+      mode: "0644"
+  notify: Reload coturn
