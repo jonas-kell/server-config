@@ -32,7 +32,7 @@ kubectl exec -n nextcloud $NEXTCLOUD_POD -- su -s /bin/sh www-data -c "php cron.
 If pod crashes, get some details out of the status page (can not be reached otherwise, because the kubernetes pod is not `ready`).
 
 ```cmd
-kubectl exec -it <pod> -- curl -i localhost/status.php
+kubectl exec -it -n nextcloud <pod> -c nextcloud-nginx -- curl -v -i localhost/status.php
 ```
 
 Get the detailed logs
