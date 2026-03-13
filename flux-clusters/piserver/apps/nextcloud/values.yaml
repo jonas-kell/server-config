@@ -74,6 +74,9 @@ externalDatabase:
     passwordKey: user_pw
     usernameKey: user_name
 
+redis:
+  enabled: true
+
 nginx:
   enabled: true
 image:
