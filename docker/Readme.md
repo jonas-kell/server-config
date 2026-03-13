@@ -15,6 +15,7 @@ Seems to be the correct method of including smb support for the nextcloud instal
 <!-- image: needed for php-smbclient support https://github.com/nextcloud/helm/issues/205#issuecomment-2252118329 -->
 
 Was used by default: docker.io/library/nextcloud:32.0.3-apache
+When nginx + fpm: docker.io/library/nextcloud:32.0.3-fpm
 
 ## How to push the image
 
@@ -30,6 +31,6 @@ cd docker/nextcloud-reexport
 
 docker buildx build \
   --platform linux/amd64,linux/arm64 \
-  -t kellehorreur/nextcloud:32.0.3-apache \
+  -t kellehorreur/nextcloud:32.0.3-fpm \
   --push .
 ```
