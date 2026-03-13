@@ -54,6 +54,13 @@ postgresql:
   primary:
     persistence:
       enabled: true
+    resources:
+      limits:
+        cpu: 250m # was 150m
+        # memory: 192Mi
+      #requests:
+      #  cpu: 100m
+      #  memory: 128Mi
 
 externalDatabase:
   enabled: true
