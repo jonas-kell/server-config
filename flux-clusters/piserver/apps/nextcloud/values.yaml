@@ -76,12 +76,12 @@ postgresql:
       enabled: true
     resources:
       limits:
-        cpu: 350m # was 150m
-        memory: 192Mi
+        cpu: 1000m # was 150m
+        memory: 265Mi # was 192Mi
         ephemeral-storage: 2Gi
       requests:
-        cpu: 150m
-        memory: 128Mi
+        cpu: 350m # was 150m
+        memory: 192Mi # was 128Mi
         ephemeral-storage: 50Mi
 
 externalDatabase:
