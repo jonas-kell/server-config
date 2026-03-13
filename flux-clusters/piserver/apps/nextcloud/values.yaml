@@ -74,7 +74,10 @@ externalDatabase:
     passwordKey: user_pw
     usernameKey: user_name
 
-image:
-  repository: kellehorreur/nextcloud
-  tag: 32.0.3-apache
-  pullPolicy: IfNotPresent
+nginx:
+  enabled: true
+
+# image:
+#   repository: kellehorreur/nextcloud
+#   tag: 32.0.3-apache
+#   pullPolicy: IfNotPresent
