@@ -13,6 +13,18 @@ nextcloud:
     smtpUsernameKey: null # TODO
     smtpPasswordKey: null # TODO
     smtpHostKey: null # TODO
+  configs:
+    proxy.config.php: |-
+      <?php
+      $CONFIG = array (
+        'trusted_proxies' => array(
+          0 => '127.0.0.1',
+          1 => '10.0.0.0/8',
+        ),
+        'forwarded_for_headers' => array('HTTP_X_FORWARDED_FOR'),
+      );
+    # TODO does not include the ipv4 to ipv6 proxy AND the local port change with nginx.
+    # So source IP currently is not preserved properly
 
 phpClientHttpsFix:
   enabled: true
