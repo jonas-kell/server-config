@@ -9,10 +9,15 @@ nextcloud:
     secretName: nextcloud-admin
     passwordKey: admin_pw
     usernameKey: admin_user
-    tokenKey: null
-    smtpUsernameKey: null # TODO
-    smtpPasswordKey: null # TODO
-    smtpHostKey: null # TODO
+    tokenKey: null # metrics
+    smtpUsernameKey: smtp_username
+    smtpPasswordKey: smtp_password
+    smtpHostKey: smtp_host
+  mail:
+    smtp:
+      secure: ssl
+      port: 465
+      authtype: LOGIN
   configs:
     proxy.config.php: |-
       <?php

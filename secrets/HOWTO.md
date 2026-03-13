@@ -93,4 +93,7 @@ postgres_admin_pw: "..."
 postgres_user_pw: "..."
 postgres_replication_pw: "..."
 nextcloud_admin_pw: "..."
+smtp_username: "..."
+smtp_password: "..."
+smtp_host: "smtp.ionos.de"
 ```
