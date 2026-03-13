@@ -76,6 +76,8 @@ externalDatabase:
 
 nginx:
   enabled: true
+image:
+  flavor: fpm
 
 # image:
 #   repository: kellehorreur/nextcloud
