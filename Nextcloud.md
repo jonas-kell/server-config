@@ -16,6 +16,7 @@ kubectl exec -n nextcloud $NEXTCLOUD_POD -- su -s /bin/sh www-data -c "php occ"
 kubectl exec -n nextcloud $NEXTCLOUD_POD -- su -s /bin/sh www-data -c "php occ maintenance:mode --on"
 kubectl exec -n nextcloud $NEXTCLOUD_POD -- su -s /bin/sh www-data -c "php occ maintenance:mode --off"
 
+kubectl exec -n nextcloud $NEXTCLOUD_POD -- su -s /bin/sh www-data -c "php occ upgrade"
 kubectl exec -n nextcloud $NEXTCLOUD_POD -- su -s /bin/sh www-data -c "php occ maintenance:repair"
 kubectl exec -n nextcloud $NEXTCLOUD_POD -- su -s /bin/sh www-data -c "php occ files:scan --all"
 
@@ -80,6 +81,7 @@ kubectl cp ./nextcloud-sqlbkp_20260211.bak -n nextcloud nextcloud-postgresql-0:/
 # load
 kubectl exec -it -n nextcloud nextcloud-postgresql-0 -- env PGPASSWORD="$(ansible-vault view secrets/nextcloud.yml | grep postgres_admin_pw | grep -oP '"\K[^"]+(?=")')" psql -U postgres -d template1 -c "DROP DATABASE \"nextcloud\";"
 kubectl exec -it -n nextcloud nextcloud-postgresql-0 -- env PGPASSWORD="$(ansible-vault view secrets/nextcloud.yml | grep postgres_admin_pw | grep -oP '"\K[^"]+(?=")')" psql -U postgres -d template1 -c "CREATE DATABASE \"nextcloud\";"
+kubectl exec -it -n nextcloud nextcloud-postgresql-0 -- env PGPASSWORD="$(ansible-vault view secrets/nextcloud.yml | grep postgres_admin_pw | grep -oP '"\K[^"]+(?=")')" psql -U postgres -d nextcloud -c "GRANT ALL PRIVILEGES ON SCHEMA public TO nextcloud;"
 kubectl exec -it -n nextcloud nextcloud-postgresql-0 -- env PGPASSWORD="$(ansible-vault view secrets/nextcloud.yml | grep postgres_admin_pw | grep -oP '"\K[^"]+(?=")')" psql -U postgres -d nextcloud -f /tmp/nextcloud-sqlbkp.bak
 ```
 
