@@ -81,5 +81,5 @@ nginx:
   enabled: true
 image:
   repository: kellehorreur/nextcloud
-  tag: 32.0.3-fpm
+  tag: 32.0.6-fpm
   pullPolicy: IfNotPresent
