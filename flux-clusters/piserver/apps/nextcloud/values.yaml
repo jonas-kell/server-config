@@ -65,6 +65,7 @@ externalDatabase:
     passwordKey: user_pw
     usernameKey: user_name
 
-# TODO smb support
-# image: needed for php-smbclient support https://github.com/nextcloud/helm/issues/205#issuecomment-2252118329
-# Was used by default:      docker.io/library/nextcloud:32.0.3-apache
+image:
+  repository: kellehorreur/nextcloud
+  tag: 32.0.3-apache
+  pullPolicy: IfNotPresent

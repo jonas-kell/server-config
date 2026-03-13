@@ -82,6 +82,14 @@ kubectl exec -it -n nextcloud nextcloud-postgresql-0 -- env PGPASSWORD="$(ansibl
 kubectl exec -it -n nextcloud nextcloud-postgresql-0 -- env PGPASSWORD="$(ansible-vault view secrets/nextcloud.yml | grep postgres_admin_pw | grep -oP '"\K[^"]+(?=")')" psql -U postgres -d nextcloud -f /tmp/nextcloud-sqlbkp.bak
 ```
 
+## Updates and custom docker images
+
+Only way to add smb support to the kubernetes nextcloud is seemingly to extend the image.
+
+Updating will happen, when the image is updated...
+
+For how to do this, see [this documentation](./docker/Readme.md)
+
 ## Things to do on a new Installation
 
 - Insert the `Password Salt` and `Secret` in the config.php (needs to correspond to the database)
