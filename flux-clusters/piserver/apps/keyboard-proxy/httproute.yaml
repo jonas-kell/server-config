@@ -1,0 +1,21 @@
+---
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: keyboard-proxy-route
+  namespace: external-keyboard
+spec:
+  parentRefs:
+    - name: traefik-gateway
+      namespace: flux-system
+      sectionName: websecure # only for https traffic
+  hostnames:
+    - "keyboard-proxy.kellehorreur.de"
+  rules:
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /
+      backendRefs:
+        - name: external-keyboard-proxy
+          port: 7865

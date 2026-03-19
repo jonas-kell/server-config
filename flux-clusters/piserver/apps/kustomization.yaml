@@ -6,3 +6,4 @@ resources:
   - smbstorage.yaml
   - pihole-kustomization.yaml
   - nextcloud-kustomization.yaml
+  - keyboard-proxy-kustomization.yaml

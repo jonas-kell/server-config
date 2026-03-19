@@ -51,8 +51,9 @@ This is also my automatically deployed dotfiles repository (see below)
     - TODO setup VPN (maybe with [udp-over-https](https://github.com/jonas-kell/udp-over-https))
   - `dev.kellehorreur.de`
     - Local development host. Used for [this project](https://github.com/jonas-kell/ssl-dev-termination/)
+  - `keyboard-proxy.kellehorreur.de`
+    - Proxy for [smartphone-keyboard-remote](https://github.com/jonas-kell/smartphone-keyboard-remote)
   - Other TODOs
-    - TODO [smartphone-keyboard-remote](https://github.com/jonas-kell/smartphone-keyboard-remote)
     - TODO [batch-viewer-for-reddit proxy](https://github.com/jonas-kell/batch-viewer-for-reddit)
     - TODO [license key management](https://github.com/jonas-kell/jta-display-wall-adapter)
 
