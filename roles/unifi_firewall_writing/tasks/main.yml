@@ -94,7 +94,7 @@
   ansible.builtin.debug:
       var: unifi_firewall_writing_firewall_tasks
 
-# ! This is not properly idempotent (because unifi did not implement this properly)! Not sure if this changed!
+# ! This is not properly idempotent (because unifi did not implement this properly)! Not sure if this changed! - Note: by now it seems to be implemented
 - name: Update Traffic Matching List
   ubiquiti.unifi_api.network:
       base_url: "{{ unifi_firewall_writing_base_url }}"
@@ -111,6 +111,55 @@
   loop_control:
       loop_var: item
   when: item.different | bool
+
+- name: Get firewall policies
+  ubiquiti.unifi_api.network:
+      path: "/v1/sites/{{ unifi_firewall_writing_site_id }}/firewall/policies"
+      method: GET
+      base_url: "{{ unifi_firewall_writing_base_url }}"
+      token: "{{ unifi_firewall_writing_unifi_token }}"
+      query:
+          offset: 0
+          limit: 100
+          filter: "name.eq('debug-reevaluate')"
+  register: unifi_firewall_writing_policies
+
+- name: Print policies
+  when: unifi_firewall_writing_print_debug
+  ansible.builtin.debug:
+      var: unifi_firewall_writing_policies.data
+
+- name: Extract the debug-reevaluate policy id with json_query
+  ansible.builtin.set_fact:
+      unifi_firewall_writing_policy_id: >-
+          {{ unifi_firewall_writing_policies.data |
+          community.general.json_query('data[?name==`debug-reevaluate`].id') |
+          first }}
+
+- name: Print policy id
+  when: unifi_firewall_writing_print_debug
+  ansible.builtin.debug:
+      var: unifi_firewall_writing_policy_id
+
+# TODO only touch the action below if nothing changed (the api seems to recognize idempotence for the commands above by now)
+
+- name: Touch to re-evaluate firewall rules
+  ubiquiti.unifi_api.network:
+      base_url: "{{ unifi_firewall_writing_base_url }}"
+      token: "{{ unifi_firewall_writing_unifi_token }}"
+      path: "/v1/sites/{{ unifi_firewall_writing_site_id }}/firewall/policies/{{ unifi_firewall_writing_policy_id }}"
+      method: PATCH
+      body:
+          loggingEnabled: true
+
+- name: Touch to re-evaluate firewall rules
+  ubiquiti.unifi_api.network:
+      base_url: "{{ unifi_firewall_writing_base_url }}"
+      token: "{{ unifi_firewall_writing_unifi_token }}"
+      path: "/v1/sites/{{ unifi_firewall_writing_site_id }}/firewall/policies/{{ unifi_firewall_writing_policy_id }}"
+      method: PATCH
+      body:
+          loggingEnabled: false
 # ---
 
 # The update of the traffic matching list does not trigger firewall rules to be re-evaluated.

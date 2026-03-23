@@ -21,6 +21,9 @@ Adapt Internet v6 rules
   - Destination: Internal -> IP -> List -> Created List
   - IP Version: IPv6
 
+Add a policy with name `debug-reevaluate` to be able to trigger re-evaluation of firewall rules
+(it can do just nothing or allow traffic from and to the same IP (effectively does nothing))
+
 ## Setting values
 
 The values for these entries get set by [this ansible script](./playbooks/unifi_ipv6_firewall_config.yml)
