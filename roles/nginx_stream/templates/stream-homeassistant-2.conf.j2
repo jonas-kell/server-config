@@ -1,0 +1,10 @@
+# HomeAssistant 2
+server {
+    listen     {{ nginx_stream_ha_2_port }};
+
+    # dns entry is ipv4 and ipv6, ipv4 address is this server itself, but if ipv6 enabled, this is preferred and sent on 
+    resolver [2001:4860:4860::8888] valid=300s; 
+    set $urlha {{ nginx_stream_ha_2_domain }}:{{ nginx_stream_ha_2_port }};
+
+    proxy_pass $urlha;
+}

@@ -8,6 +8,12 @@ argument_specs:
             nginx_stream_ha_https_enabled:
                 type: bool
                 required: false
+            nginx_stream_ha_2_stream_enabled:
+                type: bool
+                required: false
+            nginx_stream_ha_2_https_enabled:
+                type: bool
+                required: false
             nginx_stream_cloud_https_enabled:
                 type: bool
                 required: false
@@ -30,6 +36,12 @@ argument_specs:
                 type: str
                 required: false
             nginx_stream_ha_port:
+                type: int
+                required: false
+            nginx_stream_ha_2_domain:
+                type: str
+                required: false
+            nginx_stream_ha_2_port:
                 type: int
                 required: false
             nginx_stream_into_k3s:

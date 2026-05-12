@@ -1,5 +1,7 @@
 nginx_stream_ha_stream_enabled: false
 nginx_stream_ha_https_enabled: false
+nginx_stream_ha_2_stream_enabled: false
+nginx_stream_ha_2_https_enabled: false
 nginx_stream_cloud_https_enabled: false
 nginx_stream_default_https_enabled: false
 nginx_stream_into_k3s: []
@@ -8,4 +10,6 @@ nginx_stream_default_server_name: "replaceme"
 nginx_stream_cloud_domain: "replaceme"
 nginx_stream_ha_domain: "replaceme"
 nginx_stream_ha_port: 8123
+nginx_stream_ha_2_domain: "replaceme"
+nginx_stream_ha_2_port: 8124
 nginx_stream_place_ssl_certs: false

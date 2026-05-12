@@ -2,9 +2,11 @@ firewall_allow_ipv6_ssh: false
 firewall_allow_http: none
 firewall_allow_https: none
 firewall_allow_ha: none
+firewall_allow_ha_2: none
 firewall_allow_k3s: none
 firewall_allow_dns: none
 firewall_allow_turn: none
 firewall_ha_port: 8123
+firewall_ha_2_port: 8124
 firewall_k3s_port: 6443
 firewall_turn_port: 3478

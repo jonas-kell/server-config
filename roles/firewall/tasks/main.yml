@@ -199,6 +199,32 @@
       proto: tcp
       port: "{{ firewall_ha_port | default('8123') }}"
 
+- name: Reject tcp port for HomeAssistant 2
+  when: firewall_allow_ha_2 in ["ipv6"]
+  community.general.ufw:
+      comment: HomeAssistant 2 override
+      rule: reject
+      direction: in
+      port: "{{ firewall_ha_2_port | default('8124') }}"
+      to_ip: "0.0.0.0/0"
+
+- name: Reject tcp port for HomeAssistant 2
+  when: firewall_allow_ha_2 in ["ipv4"]
+  community.general.ufw:
+      comment: HomeAssistant 2 override
+      rule: reject
+      direction: in
+      port: "{{ firewall_ha_2_port | default('8124') }}"
+      to_ip: "::/0"
+
+- name: Allow tcp port for HomeAssistant 2
+  when: firewall_allow_ha_2 in ["ipv4", "ipv6", "both"]
+  community.general.ufw:
+      comment: HomeAssistant 2
+      rule: allow
+      proto: tcp
+      port: "{{ firewall_ha_2_port | default('8124') }}"
+
 # Turn
 
 - name: Reject tcp AND udp port for Turn

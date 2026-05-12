@@ -37,6 +37,14 @@ argument_specs:
                     - ipv6
                     - both
                     - none
+            firewall_allow_ha_2:
+                type: str
+                required: false
+                choices:
+                    - ipv4
+                    - ipv6
+                    - both
+                    - none
             firewall_allow_k3s:
                 type: str
                 required: false
@@ -55,6 +63,9 @@ argument_specs:
                     - none
                     - all_but_global_unicast
             firewall_ha_port:
+                type: int
+                required: false
+            firewall_ha_2_port:
                 type: int
                 required: false
             firewall_k3s_port:

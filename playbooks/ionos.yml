@@ -2,6 +2,7 @@
 - name: Streaming Server (IPv4 to IPv6)
   vars:
       ha_port: 8123
+      ha_2_port: 8124
   hosts: ionos1
   vars_files:
       - "{{ playbook_dir }}/../secrets/talk_backend.yml"
@@ -11,13 +12,17 @@
             firewall_allow_ipv6_ssh: true
             firewall_allow_http: ipv4
             firewall_allow_https: ipv4
-            firewall_allow_ha: ipv4
             firewall_allow_turn: ipv4
+            firewall_allow_ha: ipv4
             firewall_ha_port: "{{ ha_port }}"
+            firewall_allow_ha_2: ipv4
+            firewall_ha_2_port: "{{ ha_2_port }}"
       - role: nginx_stream
         vars:
             nginx_stream_ha_stream_enabled: true
             nginx_stream_ha_https_enabled: true
+            nginx_stream_ha_2_stream_enabled: true
+            nginx_stream_ha_2_https_enabled: true
             nginx_stream_cloud_https_enabled: true
             nginx_stream_default_https_enabled: true
             nginx_stream_place_ssl_certs: true
@@ -26,6 +31,8 @@
             nginx_stream_cloud_domain: "cloud.kellehorreur.de"
             nginx_stream_ha_domain: "ha.kellehorreur.de"
             nginx_stream_ha_port: "{{ ha_port }}"
+            nginx_stream_ha_2_domain: "ha-sb.kellehorreur.de"
+            nginx_stream_ha_2_port: "{{ ha_2_port }}"
       - role: coturn
         vars:
             coturn_secret: "{{ coturn_secret_val }}"

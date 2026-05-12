@@ -56,7 +56,7 @@ http {
         # Redirect all http traffic
         ##
 
-{% if nginx_stream_ha_https_enabled or nginx_stream_cloud_https_enabled or nginx_stream_default_https_enabled %}
+{% if nginx_stream_ha_https_enabled or nginx_stream_ha_2_https_enabled or nginx_stream_cloud_https_enabled or nginx_stream_default_https_enabled %}
         server {
             listen 80;
             listen [::]:80;
