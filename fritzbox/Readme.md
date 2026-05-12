@@ -62,4 +62,4 @@ Prefix is assigned, in the case of O2 with only DS-Lite (/64 Prefix -> no real I
 
 [Prefix lengths](https://v64.tech/t/liste-ipv6-prefix-laenge-unsere-deutschen-provider/2249?page=2)
 
-[Prefixlength might be overwritable with FB Hack](https://hilfe.o2online.de/dsl%2Dkabel%2Dglasfaser%2Drouter%2Dsoftware%2Dinternet%2Dtelefonie%2D34/56%2Der%2Dpraefix%2Dfuer%2Dipv6%2Dbei%2Do2%2Dkabel%2Dist%2Dmoeglich%2D594598?tid=594598&fid=34)
+[Prefixlength IS overwritable with Fritzbox Hack!!!](https://hilfe.o2online.de/dsl%2Dkabel%2Dglasfaser%2Drouter%2Dsoftware%2Dinternet%2Dtelefonie%2D34/56%2Der%2Dpraefix%2Dfuer%2Dipv6%2Dbei%2Do2%2Dkabel%2Dist%2Dmoeglich%2D594598?tid=594598&fid=34) -> Tested and works <3
