@@ -66,6 +66,10 @@
 - name: Signal desktop with gpg keys
   when: dotfiles_install_signal
   ansible.builtin.include_tasks: "{{ role_path }}/tasks/signal.yml"
+
+- name: Tmux with bash completion
+  when: dotfiles_install_tmux
+  ansible.builtin.include_tasks: "{{ role_path }}/tasks/tmux.yml"
 # ---
 
 # --- Where stuff could be looked up from (opinionated configs by friends)

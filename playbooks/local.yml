@@ -48,6 +48,7 @@
             # dotfiles_install_chrome: true
             # dotfiles_python_apt_ppa: true
             # dotfiles_install_signal: true
+            # dotfiles_install_tmux: true
 # ---
 
 # TODO: conversion to wayland/sway

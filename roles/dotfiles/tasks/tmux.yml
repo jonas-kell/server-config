@@ -1,0 +1,22 @@
+---
+- name: Install tmux locally
+  ansible.builtin.package:
+      name: tmux
+      state: present
+      update_cache: true
+      cache_valid_time: 1800
+
+- name: Download tmux completion script
+  ansible.builtin.uri:
+      url: https://raw.githubusercontent.com/imomaliev/tmux-bash-completion/master/completions/tmux
+      return_content: true
+  register: dotfiles_tmux_completion
+  changed_when: false
+
+- name: Write tmux completion to system directory
+  ansible.builtin.copy:
+      content: "{{ dotfiles_tmux_completion.content }}"
+      dest: /etc/bash_completion.d/tmux
+      owner: root
+      group: root
+      mode: "0644"
