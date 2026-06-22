@@ -1,0 +1,18 @@
+---
+- name: Ensure software-properties-common is installed
+  ansible.builtin.apt:
+      name: software-properties-common
+      state: present
+      update_cache: true
+      cache_valid_time: 1800
+
+- name: Add solaar-unifying PPA
+  ansible.builtin.apt_repository:
+      repo: ppa:solaar-unifying/stable
+      state: present
+      update_cache: true
+
+- name: Install solaar
+  ansible.builtin.apt:
+      name: solaar
+      state: present

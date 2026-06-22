@@ -10,6 +10,7 @@ dotfiles_install_nvm_node: false
 dotfiles_pdf_tools_xournalpp: false
 dotfiles_install_nextcloud_desktop: false
 dotfiles_logiops_driver: false
+dotfiles_solaar_driver: false
 dotfiles_ckb_keyboard_driver: false
 dotfiles_drive_offline_sync: false
 dotfiles_install_vscode: false

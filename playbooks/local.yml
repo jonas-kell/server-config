@@ -42,6 +42,7 @@
             # dotfiles_pdf_tools_xournalpp: true
             # dotfiles_install_nextcloud_desktop: true
             # dotfiles_logiops_driver: true
+            dotfiles_solaar_driver: true
             # dotfiles_ckb_keyboard_driver: true
             # dotfiles_drive_offline_sync: true
             # dotfiles_install_vscode: true

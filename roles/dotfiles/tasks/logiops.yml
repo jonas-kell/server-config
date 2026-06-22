@@ -1,5 +1,4 @@
 ---
-# TODO Should probably migrate to soolar: https://github.com/pwr-Solaar/Solaar/issues/2964
 # https://wiki.archlinux.org/title/Logitech_MX_Master#Logiops
 # https://github.com/PixlOne/logiops
 
@@ -64,3 +63,8 @@
       dest: "/etc/logid.cfg"
       mode: "0644"
   notify: Reload logid
+# ---
+#
+#
+# Migrated to solaar
+#    sudo systemctl disable --now logid

@@ -33,3 +33,8 @@ Interactive shell
 ```cmd
 kubectl exec -n mathezirkel-app -it mathezirkel-app-backend-webserver-...... -- /bin/bash
 ```
+
+## How to configure Solaar
+
+![Solaar Config 1](./images/Solaar1.png)
+![Solaar Config 2](./images/Solaar2.png)

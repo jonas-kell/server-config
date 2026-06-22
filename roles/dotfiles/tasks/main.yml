@@ -39,9 +39,13 @@
   when: dotfiles_install_nextcloud_desktop
   ansible.builtin.include_tasks: "{{ role_path }}/tasks/nextcloud.yml"
 
-- name: Logiops Driver
+- name: MX-Master Driver (logiops)
   when: dotfiles_logiops_driver
-  ansible.builtin.include_tasks: "{{ role_path }}/tasks/mx_master.yml"
+  ansible.builtin.include_tasks: "{{ role_path }}/tasks/logiops.yml"
+
+- name: MX-Master Driver (solaar)
+  when: dotfiles_solaar_driver
+  ansible.builtin.include_tasks: "{{ role_path }}/tasks/solaar.yml"
 
 - name: CKB Next Driver
   when: dotfiles_ckb_keyboard_driver
