@@ -1,0 +1,22 @@
+#!/bin/bash
+
+MTU=1280
+
+while true; do
+    for iface in /sys/class/net/wg*; do
+        [ -e "$iface" ] || continue
+
+        name=$(basename "$iface")
+
+        if ip link show "$name" | grep -q POINTOPOINT; then
+            current=$(ip link show "$name" | awk '/mtu/ {print $5}')
+
+            if [ "$current" != "$MTU" ]; then
+                echo "$(date): changing $name MTU $current -> $MTU"
+                ip link set dev "$name" mtu "$MTU"
+            fi
+        fi
+    done
+
+    sleep 5
+done

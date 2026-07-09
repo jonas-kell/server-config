@@ -18,3 +18,4 @@ dotfiles_install_chrome: false
 dotfiles_python_apt_ppa: false
 dotfiles_install_signal: false
 dotfiles_install_tmux: false
+dotfiles_install_wifiman: false

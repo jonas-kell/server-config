@@ -74,6 +74,10 @@
 - name: Tmux with bash completion
   when: dotfiles_install_tmux
   ansible.builtin.include_tasks: "{{ role_path }}/tasks/tmux.yml"
+
+- name: Wifiman to access home location
+  when: dotfiles_install_wifiman
+  ansible.builtin.include_tasks: "{{ role_path }}/tasks/wifiman.yml"
 # ---
 
 # --- Where stuff could be looked up from (opinionated configs by friends)

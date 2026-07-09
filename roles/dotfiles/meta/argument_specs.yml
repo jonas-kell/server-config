@@ -63,6 +63,9 @@ argument_specs:
             dotfiles_install_tmux:
                 type: bool
                 required: false
+            dotfiles_install_wifiman:
+                type: bool
+                required: false
             # configs:
             dotfiles_profile_name:
                 type: str

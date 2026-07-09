@@ -9,7 +9,7 @@
         ansible.builtin.package:
             update_cache: true
             cache_valid_time: 1800
-            upgrade: "yes"
+            # upgrade: "yes" # automatic upgrading kind of a hassle
 
       - name: Show interpreter
         ansible.builtin.debug:
@@ -42,7 +42,7 @@
             # dotfiles_pdf_tools_xournalpp: true
             # dotfiles_install_nextcloud_desktop: true
             # dotfiles_logiops_driver: true
-            dotfiles_solaar_driver: true
+            # dotfiles_solaar_driver: true
             # dotfiles_ckb_keyboard_driver: true
             # dotfiles_drive_offline_sync: true
             # dotfiles_install_vscode: true
@@ -50,6 +50,7 @@
             # dotfiles_python_apt_ppa: true
             # dotfiles_install_signal: true
             # dotfiles_install_tmux: true
+            dotfiles_install_wifiman: true
 # ---
 
 # TODO: conversion to wayland/sway

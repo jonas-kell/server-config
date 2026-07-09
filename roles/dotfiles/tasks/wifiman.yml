@@ -1,0 +1,60 @@
+---
+- name: Install WiFiman dependencies
+  ansible.builtin.package:
+      name:
+          - wireguard-tools
+      state: present
+      update_cache: true
+      cache_valid_time: 1800
+
+- name: Download WiFiman Desktop deb
+  ansible.builtin.get_url:
+      url: https://desktop.wifiman.com/wifiman-desktop-1.2.8-amd64.deb
+      dest: /tmp/wifiman-desktop-1.2.8-amd64.deb
+      mode: "0644"
+
+- name: Install WiFiman Desktop
+  ansible.builtin.apt:
+      deb: /tmp/wifiman-desktop-1.2.8-amd64.deb
+
+- name: Install MTU fix script
+  ansible.builtin.template:
+      src: fix-wifiman-mtu.sh.j2
+      dest: /usr/local/bin/fix-wifiman-mtu.sh
+      owner: root
+      group: root
+      mode: "0755"
+
+- name: Install systemd service
+  ansible.builtin.copy:
+      dest: /etc/systemd/system/wifiman-mtu.service
+      mode: "0644"
+      content: |
+          [Unit]
+          Description=Fix WiFiman Teleport WireGuard MTU
+          After=network-online.target
+
+          [Service]
+          Type=simple
+          ExecStart=/usr/local/bin/fix-wifiman-mtu.sh
+          Restart=always
+          RestartSec=10
+
+          [Install]
+          WantedBy=multi-user.target
+
+- name: Reload systemd
+  become: true
+  ansible.builtin.systemd:
+      daemon_reload: "yes"
+
+- name: Enable MTU fixer
+  become: true
+  ansible.builtin.systemd:
+      name: wifiman-mtu.service
+      enabled: "yes"
+# -- this equals:
+
+# sudo systemctl daemon-reload
+# sudo systemctl enable wifiman-mtu.service
+# sudo systemctl restart wifiman-mtu.service
