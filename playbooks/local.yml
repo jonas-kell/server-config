@@ -50,7 +50,7 @@
             # dotfiles_python_apt_ppa: true
             # dotfiles_install_signal: true
             # dotfiles_install_tmux: true
-            dotfiles_install_wifiman: true
+            # dotfiles_install_wifiman: true
 # ---
 
 # TODO: conversion to wayland/sway
