@@ -58,3 +58,5 @@
 # sudo systemctl daemon-reload
 # sudo systemctl enable wifiman-mtu.service
 # sudo systemctl restart wifiman-mtu.service
+
+# ip addr # check POINTTOPOINT interface for vpn
