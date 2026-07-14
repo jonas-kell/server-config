@@ -22,3 +22,10 @@
       dest: "~/join_pdfs.sh"
       mode: "711"
   become: false
+
+- name: Place `portraitize.sh` in invoking user's home directory
+  ansible.builtin.template:
+      src: portraitize.sh.j2
+      dest: "~/portraitize.sh"
+      mode: "711"
+  become: false

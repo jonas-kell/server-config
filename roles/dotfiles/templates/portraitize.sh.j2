@@ -1,0 +1,59 @@
+#!/bin/bash
+
+INPUT="$1"
+OUTPUT="$2"
+
+if [ -z "$INPUT" ] || [ -z "$OUTPUT" ]; then
+    echo "Usage: $0 input.pdf output.pdf"
+    exit 1
+fi
+
+TMP=$(mktemp -d)
+
+# Stage 1: Convert all pages to A4 portrait using pdfcpu
+A4PDF="$TMP/a4.pdf"
+
+echo "If fails, get executable from https://pdfcpu.io/getting_started/install_cli/"
+
+echo "Converting to A4 portrait..."
+~/pdfcpu resize 'form:A4P' "$INPUT" "$A4PDF"
+
+if [ $? -ne 0 ]; then
+    echo "pdfcpu resize failed"
+    rm -rf "$TMP"
+    exit 1
+fi
+
+# Split PDF into single pages
+pdfseparate "$A4PDF" "$TMP/page-%d.pdf"
+
+PAGES=$(ls "$TMP"/page-*.pdf | sort -V)
+
+ROTATED=""
+
+for PAGE in $PAGES; do
+    WIDTH=$(pdfinfo "$PAGE" | awk '/Page size/ {print $3}')
+    HEIGHT=$(pdfinfo "$PAGE" | awk '/Page size/ {print $5}')
+
+    BASENAME=$(basename "$PAGE")
+
+    # Landscape detected
+    if (( $(echo "$WIDTH > $HEIGHT" | bc -l) )); then
+        echo "Rotating $BASENAME"
+
+        # Rotate 90 degrees (choose direction)
+        pdftk "$PAGE" cat 1-endleft output "$TMP/rot-$BASENAME" # rotats left
+        # pdftk "$PAGE" cat 1-endright output "$TMP/rot-$BASENAME" # rotates right
+        
+        ROTATED="$ROTATED $TMP/rot-$BASENAME"
+    else
+        ROTATED="$ROTATED $PAGE"
+    fi
+done
+
+# Merge pages back together
+pdftk $ROTATED cat output "$OUTPUT"
+
+rm -rf "$TMP"
+
+echo "Created: $OUTPUT"
