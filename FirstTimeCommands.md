@@ -56,14 +56,20 @@ sudo blkid # get the uuid of the drive
 
 ### gives something like -> we want the "UUID" (not "PARTUUID")
 ### /dev/sda1: LABEL="kubernetes-data" UUID="05520912-6cfa-4185-8f26-8d00f54fcaa4" BLOCK_SIZE="4096" TYPE="ext4" PARTUUID="6f1f1002-03f3-4561-935c-e2d788bcdaf7"
+### /dev/sdb1: LABEL="pi-data-backup" UUID="0a569030-6399-47ed-972d-d51f7dc5c0fe" BLOCK_SIZE="4096" TYPE="ext4" PARTUUID="a84dd232-75d6-a245-9ec5-64b35e8f3f8b"
 
 sudo mkdir /kubernetes-data
 sudo chmod 000 /kubernetes-data # make mountpoint folder itself unwritable!! (in case drice is missing later)
+
+sudo mkdir /pi-data-backup
+sudo chmod 000 /pi-data-backup
+
 sudo nano /etc/fstab
 
 # add this line to the bottom (we want boot to fail if it is missing)
 
 UUID=05520912-6cfa-4185-8f26-8d00f54fcaa4  /kubernetes-data  ext4  defaults,noatime,x-systemd.automount,nofail    0  2
+UUID=0a569030-6399-47ed-972d-d51f7dc5c0fe  /pi-data-backup  ext4  defaults,noatime,x-systemd.automount,nofail    0  2
 
 # test config
 sudo mount -a
@@ -76,6 +82,9 @@ sudo mount -a
 
 sudo chown root:root /kubernetes-data
 sudo chmod 755 /kubernetes-data
+
+sudo chown root:root /pi-data-backup
+sudo chmod 755 /pi-data-backup
 ```
 
 ## Test speed of a disk
@@ -150,10 +159,15 @@ r 41.7 MB/s
 
 ```cmd
 lsusb  # get id
+
+## Bus 002 Device 005: ID 152d:0578 JMicron Technology Corp. / JMicron USA Technology Corp. JMS578 SATA 6Gb/s  ## USB-C SATA Adapter with 3.1 USBC Converter
+## Bus 002 Device 006: ID 2109:0715 VIA Labs, Inc. VL817 SATA Adaptor ## this https://forum-raspberrypi.de/forum/thread/47876-magische-usb-sata-adapter-und-wo-sie-zu-finden-sind say that this https://www.amazon.de/gp/product/B07NYC6LKB performs good without quirks. This holds main kubernetes data at the moment
+
 sudo nano /boot/firmware/cmdline.txt
 
 # add to last line (must stay as one line!!):
 # set id from step before
+# (the USB adapter that needed this was https://www.amazon.de/dp/B0FGRTW9BR?ref=ppx_yo2ov_dt_b_fed_asin_title but is broke already and is apparently shit as it needs quirks)
 
 usb-storage.quirks=7825:a2a4:u
 ```
