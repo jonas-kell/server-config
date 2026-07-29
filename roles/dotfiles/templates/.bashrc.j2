@@ -146,6 +146,11 @@ esac
 # Kubernetes Browser Login (Mathezirkel Kubernetes uses this)
 export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
 
+# Rocq-prover (opam) (#TODO installation for rocq)
+if command -v opam >/dev/null 2>&1; then
+  eval "$(opam env)"
+fi
+
 # Aliases:
 alias sail='[ -f sail ] && bash sail || bash vendor/bin/sail'
 alias dcu='docker compose up'
