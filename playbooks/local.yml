@@ -32,16 +32,12 @@
             # !! switches:
             # dotfiles_set_bashrc: true
             # dotfiles_install_kubernetes_clients: true
-            # dotfiles_gnome_extensions: true
             # dotfiles_opinionated_apps: true
-            # dotfiles_displaylink_compatibility: true
             # dotfiles_install_and_configure_docker: true
             # dotfiles_terminal_and_global_shortcuts: true
             # dotfiles_install_nvm_node: true
             # dotfiles_pdf_tools_xournalpp: true
             # dotfiles_install_nextcloud_desktop: true
-            # dotfiles_logiops_driver: true
-            # dotfiles_skip_logiops_driver_compilation: false # for rapid config application
             # dotfiles_solaar_driver: true
             # dotfiles_ckb_keyboard_driver: true
             # dotfiles_drive_offline_sync: true
@@ -51,7 +47,12 @@
             # dotfiles_install_signal: true
             # dotfiles_install_tmux: true
             # dotfiles_install_wifiman: true
+
+            # ! deprecated
+            # dotfiles_gnome_extensions: true
+            # dotfiles_displaylink_compatibility: true
+            # dotfiles_skip_logiops_driver_compilation: false # for rapid config application
+            # dotfiles_logiops_driver: true
 # ---
 
-# TODO: conversion to wayland/sway
 # TODO: (maybe CUDA/CUDNN)

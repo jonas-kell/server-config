@@ -2,6 +2,7 @@
 - name: Install System level packages
   ansible.builtin.package:
       name:
+          #   - minecraft-launcher
           - inkscape
           - simplescreenrecorder
           - audacity
@@ -9,11 +10,9 @@
           - wget
           - texlive-full
           - kdenlive
-          - minecraft-launcher
           - ncat
           - rpi-imager
           - wireshark
-          - localsend
           - firefox
       state: present
       update_cache: true
@@ -22,6 +21,7 @@
 - name: Define Flatpak list
   ansible.builtin.set_fact:
       dotfiles_flatpak_installs:
+          - name: org.localsend.localsend_app
           - name: com.discordapp.Discord
           - name: com.github.arminstraub.krop
           - name: com.github.hluk.copyq
