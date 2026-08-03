@@ -126,6 +126,9 @@ rm benchfile
 SATA to 3.0 Adapter https://www.amazon.de/dp/B0FGRTW9BR?ref=ppx_yo2ov_dt_b_fed_asin_title
 SATA to USBC 3.1 Adapter https://www.amazon.de/dp/B07KP9YK7T?ref=ppx_yo2ov_dt_b_fed_asin_title&th=1
 
+Afterwards switched for this one: https://www.amazon.de/gp/product/B07NYC6LKB
+
+
 USB 3.0 Adapter PI
 w 174 MB/s
 r 31,1 MB/s - 270 MB/s - 319 MB/s (sometimes fast, sometimes slow)
@@ -156,6 +159,11 @@ r 41.7 MB/s
  -->
 
 ## Switch to more stable USB driver (UAS -> usb-storage)
+
+Necessary for ONLY incompatible USB-Sata adapters. 
+[List of compatible adapters](https://forum-raspberrypi.de/forum/thread/47876-magische-usb-sata-adapter-und-wo-sie-zu-finden-sind/)
+
+I now currently use [This one](https://www.amazon.de/gp/product/B07NYC6LKB) successfully.
 
 ```cmd
 lsusb  # get id
