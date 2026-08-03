@@ -1,18 +1,50 @@
 ---
-- name: Ensure software-properties-common is installed
+# sudo rm -f /etc/apt/sources.list.d/solaar-unifying.list
+# sudo rm -f /etc/apt/sources.list.d/ppa_solaar_unifying_stable_jammy.list
+# sudo rm -f /var/lib/apt/lists/*solaar*
+# sudo rm -f /etc/apt/keyrings/solaar.gpg
+# sudo rm -f /etc/apt/keyrings/solaar.asc
+# sudo add-apt-repository --remove ppa:solaar-unifying/stable
+# sudo apt-key del 643FF34AF9151DC814DD3A1B2303D595EE907473
+# sudo apt update
+
+- name: Ensure required packages are installed
   ansible.builtin.apt:
-      name: software-properties-common
+      name:
+          - software-properties-common
+          - wget
+          - apt-transport-https
       state: present
       update_cache: true
-      cache_valid_time: 1800
+      # cache_valid_time: 1800 # as we possibly cleared lists in above commands
 
-- name: Add solaar-unifying PPA
+- name: Ensure apt keyrings directory exists
+  ansible.builtin.file:
+      path: /etc/apt/keyrings
+      state: directory
+      mode: "0755"
+
+- name: Download Solaar PPA signing key
+  ansible.builtin.get_url:
+      url: "https://keyserver.ubuntu.com/pks/lookup?op=get&search=0x643FF34AF9151DC814DD3A1B2303D595EE907473"
+      dest: /tmp/solaar.asc
+      mode: "0644"
+
+- name: Convert Solaar key to keyring format
+  ansible.builtin.command:
+      cmd: gpg --dearmor --yes -o /etc/apt/keyrings/solaar.gpg /tmp/solaar.asc
+  args:
+      creates: /etc/apt/keyrings/solaar.gpg
+
+- name: Add Solaar PPA repository
   ansible.builtin.apt_repository:
-      repo: ppa:solaar-unifying/stable
+      repo: "deb [signed-by=/etc/apt/keyrings/solaar.gpg] https://ppa.launchpadcontent.net/solaar-unifying/stable/ubuntu {{ ansible_facts.distribution_release }} main"
+      filename: solaar-unifying
       state: present
-      update_cache: true
+      update_cache: false
 
-- name: Install solaar
+- name: Install Solaar
   ansible.builtin.apt:
       name: solaar
       state: present
+      update_cache: true

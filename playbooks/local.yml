@@ -28,8 +28,7 @@
       - role: dotfiles
         vars:
             dotfiles_profile_name: "jonas"
-            dotfiles_device_type: "desktop"
-            dotfiles_skip_logiops_driver_compilation: false # for rapid config application
+            dotfiles_device_type: "laptop"
             # !! switches:
             # dotfiles_set_bashrc: true
             # dotfiles_install_kubernetes_clients: true
@@ -42,6 +41,7 @@
             # dotfiles_pdf_tools_xournalpp: true
             # dotfiles_install_nextcloud_desktop: true
             # dotfiles_logiops_driver: true
+            # dotfiles_skip_logiops_driver_compilation: false # for rapid config application
             # dotfiles_solaar_driver: true
             # dotfiles_ckb_keyboard_driver: true
             # dotfiles_drive_offline_sync: true
@@ -54,4 +54,4 @@
 # ---
 
 # TODO: conversion to wayland/sway
-# TODO: (maybge CUDA/CUDNN)
+# TODO: (maybe CUDA/CUDNN)
