@@ -169,7 +169,7 @@ ansible-playbook playbooks/unifi_ipv6_firewall_config.yml
 Install a local Linux System (tested on and designed for Pop-Os at the moment).
 This Repository doubles as my personal dotfiles repository.
 
-The files live in the [dotfiels role](./roles/dotfiles/).
+The files live in the [dotfiles role](./roles/dotfiles/).
 
 ```cmd
 ansible-playbook playbooks/local.yml --ask-become-pass
