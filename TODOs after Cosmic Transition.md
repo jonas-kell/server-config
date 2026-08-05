@@ -2,6 +2,7 @@
 
 - mounts / favourites in file manager
 - store the config toml files repeatable
+- get Wifiman working
 
 https://github.com/cosmic-utils
 
