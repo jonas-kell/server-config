@@ -38,7 +38,9 @@
 
 - name: Add Solaar PPA repository
   ansible.builtin.apt_repository:
-      repo: "deb [signed-by=/etc/apt/keyrings/solaar.gpg] https://ppa.launchpadcontent.net/solaar-unifying/stable/ubuntu {{ ansible_facts.distribution_release }} main"
+      repo: >-
+          deb [signed-by=/etc/apt/keyrings/solaar.gpg]
+          https://ppa.launchpadcontent.net/solaar-unifying/stable/ubuntu {{ ansible_facts.distribution_release }} main
       filename: solaar-unifying
       state: present
       update_cache: false

@@ -23,6 +23,10 @@
   when: dotfiles_install_and_configure_docker
   ansible.builtin.include_tasks: "{{ role_path }}/tasks/docker.yml"
 
+- name: Docker onlyamd64 architecture (removes warning)
+  when: dotfiles_docker_amd_64_only
+  ansible.builtin.include_tasks: "{{ role_path }}/tasks/docker-rewrite.yml"
+
 - name: Install Terminal and set global shortcuts
   when: dotfiles_terminal_and_global_shortcuts
   ansible.builtin.include_tasks: "{{ role_path }}/tasks/terminator.yml"

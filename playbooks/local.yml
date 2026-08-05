@@ -1,4 +1,4 @@
-# Installs a local system to my preferences
+# Installs a local system to my preferences (originally designed for PopOS jammy with gnome, currently to use with PopOS noble)
 ---
 - name: Local Installation
   hosts: localhost
@@ -34,6 +34,7 @@
             # dotfiles_install_kubernetes_clients: true
             # dotfiles_opinionated_apps: true
             # dotfiles_install_and_configure_docker: true
+            # dotfiles_docker_amd_64_only: true
             # dotfiles_terminal_and_global_shortcuts: true
             # dotfiles_install_nvm_node: true
             # dotfiles_pdf_tools_xournalpp: true
@@ -48,7 +49,7 @@
             # dotfiles_install_tmux: true
             # dotfiles_install_wifiman: true
 
-            # ! deprecated
+            # ! deprecated (was for PopOS jammy)
             # dotfiles_gnome_extensions: true
             # dotfiles_displaylink_compatibility: true
             # dotfiles_skip_logiops_driver_compilation: false # for rapid config application

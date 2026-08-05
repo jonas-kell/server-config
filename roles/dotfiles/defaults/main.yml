@@ -5,6 +5,7 @@ dotfiles_opinionated_apps: false
 dotfiles_install_kubernetes_clients: false
 dotfiles_displaylink_compatibility: false
 dotfiles_install_and_configure_docker: false
+dotfiles_docker_amd_64_only: false
 dotfiles_terminal_and_global_shortcuts: false
 dotfiles_install_nvm_node: false
 dotfiles_pdf_tools_xournalpp: false
