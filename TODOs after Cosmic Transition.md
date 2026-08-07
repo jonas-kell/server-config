@@ -35,3 +35,15 @@ Clear gnome online accounts links -> non working cloud integrations
 rm -rf ~/.config/goa-1.0
 
 Google drive rclone shortcut just keeps working and can be reused (Applications->right-click->pin)
+
+<!--  -->
+
+sudo apt-get remove gnome-system-monitor
+sudo apt-get install cosmic-monitor
+
+<!--  -->
+
+Show battery percentage!
+
+touch ~/.config/cosmic/com.system76.CosmicAppletBattery/v1/show_percentage
+echo true > ~/.config/cosmic/com.system76.CosmicAppletBattery/v1/show_percentage
