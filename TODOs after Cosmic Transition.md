@@ -47,3 +47,13 @@ Show battery percentage!
 
 touch ~/.config/cosmic/com.system76.CosmicAppletBattery/v1/show_percentage
 echo true > ~/.config/cosmic/com.system76.CosmicAppletBattery/v1/show_percentage
+
+<!--  -->
+
+Auto rotate screen
+
+sudo apt install iio-sensor-proxy wlr-randr
+
+https://github.com/armaaar/cosmic-applet-rotation/releases/tag/v0.1.0
+
+sudo dpkg -i cosmic-applet-rotation_0.1.0_amd64.deb
