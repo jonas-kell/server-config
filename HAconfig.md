@@ -7,12 +7,9 @@
     - Ctrl + F5 reload the page (new certificate -> del browser cache)
 
 ```yml
-#! /homeassistant/configuration.yaml
-
-# ssl
-http:
-  ssl_certificate: /ssl/fullchain.pem
-  ssl_key: /ssl/privkey.pem
+# -> this has been migrated out of the config.yaml to  "Settings > System > Network"
+ssl_certificate_path: /ssl/fullchain.pem
+ssl_key_path: /ssl/privkey.pem
 ```
 
 - Additional file-sessings and OS access:
