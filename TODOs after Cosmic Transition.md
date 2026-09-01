@@ -159,6 +159,6 @@ sudo cp -r /home/jonas/.var/app/app.eduroam.geteduroam/data/geteduroam/ca /etc/n
 sudo chmod 755 /etc/netplan/eduroam-ca
 sudo chmod 644 /etc/netplan/eduroam-ca/*
 
-sudo chmod 600 /etc/netplan/01-eduroam.yaml
+sudo chmod 400 /etc/netplan/01-eduroam.yaml
 sudo netplan apply
 ```
