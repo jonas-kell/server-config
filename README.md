@@ -87,50 +87,7 @@ generate the patch
 copy the file, add .orig to name
 change the function
 
-    def get_spec_url(self, version: str) -> str:
-        application = self.get_name()
-        spec_url = f"{OPENAPI_SPEC_BASE_URL}/{application}/v{version}/integration.json"
-
-        # Check if the remote spec exists.
-        try:
-            with httpx.Client() as c:
-                resp = c.head(spec_url)
-                if resp.status_code == 200:
-                    return spec_url
-        except Exception:
-            pass
-
-        self.module.warn(f"Spec for version {version} not found, falling back to latest available version.")
-
-        versions_endpoint = f"{DEV_PORTAL_BASE_URL}/v1/api-docs?application={application}"
-        resp = self.rt.call(versions_endpoint)
-
-        data = resp.json().get("data", [])
-
-        if isinstance(data, dict):
-            versions_data = data.get("versions", [])
-        else:
-            versions_data = data
-
-        available_versions = [
-            v.get("version").lstrip("v")
-            for v in versions_data
-            if isinstance(v, dict) and "version" in v
-        ]
-
-        # Find the closest version (<= requested version)
-        closest_version = None
-        for v in sorted(available_versions, reverse=True):
-            if v <= version:
-                closest_version = v
-                break
-
-        if not closest_version and available_versions:
-            closest_version = available_versions[-1]
-
-        version = closest_version
-
-        return f"{OPENAPI_SPEC_BASE_URL}/{application}/v{version}/integration.json"
+  ....
 
 cd ./collections/ansible_collections/ubiquiti/unifi_api
 diff -u plugins/module_utils/base_module.py.orig plugins/module_utils/base_module.py > ../../../patches/fix-unifi-spec-url.patch
