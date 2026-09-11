@@ -125,7 +125,8 @@ vethab2f933        ethernet  unmanaged               --
 
 nmcli connection delete "6e9f8193-5b84-4f60-ac87-26fcdafd0bb7" -> depending of the uuid of the generated eduroam connection
 
-sudo nano /etc/netplan/01-eduroam.yaml
+sudo mkdir /etc/netplan-storage/
+sudo nano /etc/netplan-storage/01-eduroam.yaml
 
 ```cmd
 network:
@@ -159,6 +160,7 @@ sudo cp -r /home/jonas/.var/app/app.eduroam.geteduroam/data/geteduroam/ca /etc/n
 sudo chmod 755 /etc/netplan/eduroam-ca
 sudo chmod 644 /etc/netplan/eduroam-ca/*
 
+sudo cp /etc/netplan-storage/01-eduroam.yaml /etc/netplan/01-eduroam.yaml
 sudo chmod 400 /etc/netplan/01-eduroam.yaml
 sudo netplan apply
 ```
