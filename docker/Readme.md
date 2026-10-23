@@ -31,6 +31,6 @@ cd docker/nextcloud-reexport
 
 docker buildx build \
   --platform linux/amd64,linux/arm64 \
-  -t kellehorreur/nextcloud:32.0.15-fpm \
+  -t kellehorreur/nextcloud:33.0.10-fpm \
   --push .
 ```
