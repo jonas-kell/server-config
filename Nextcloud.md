@@ -18,6 +18,7 @@ kubectl exec -n nextcloud $NEXTCLOUD_POD -- su -s /bin/sh www-data -c "php occ m
 
 kubectl exec -n nextcloud $NEXTCLOUD_POD -- su -s /bin/sh www-data -c "php occ upgrade"
 kubectl exec -n nextcloud $NEXTCLOUD_POD -- su -s /bin/sh www-data -c "php occ maintenance:repair"
+kubectl exec -n nextcloud $NEXTCLOUD_POD -- su -s /bin/sh www-data -c "php occ maintenance:repair --include-expensive"
 kubectl exec -n nextcloud $NEXTCLOUD_POD -- su -s /bin/sh www-data -c "php occ files:scan --all"
 
 kubectl exec -n nextcloud $NEXTCLOUD_POD -- su -s /bin/sh www-data -c "php occ db:add-missing-columns"
