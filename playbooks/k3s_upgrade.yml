@@ -1,0 +1,5 @@
+---
+- name: Import kube cluster playbook
+  # `k3s_version` field needs to be updated in the inventory
+  ansible.builtin.import_playbook: "./../collections/ansible_collections/k3s/orchestration/playbooks/upgrade.yml"
+# ---
