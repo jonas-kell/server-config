@@ -4,6 +4,8 @@
   gather_facts: false
   become: false
 
+  # Run this again, to upgrade flux!!
+
   vars:
       repo_url: "{{ repo_url_override | default('ssh://git@github.com/jonas-kell/server-config.git') }}"
       branch: "{{ branch_override | default('master') }}"
@@ -29,6 +31,10 @@
             dest: "{{ temp_key_path }}"
             mode: "0600"
         no_log: true
+
+        # This might fail with "clone failure: unable to clone" ->
+        # https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/githubs-ssh-key-fingerprints
+        # Might change if locally your machine doesn't trust github
 
       - name: Run flux bootstrap with deploy key
         ansible.builtin.command:

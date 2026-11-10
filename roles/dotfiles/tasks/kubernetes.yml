@@ -20,7 +20,7 @@
   ansible.builtin.include_role:
       name: geerlingguy.helm
   vars:
-      helm_version: "v4.1.1"
+      helm_version: "v4.3.1"
 
 - name: Generate helm completion script
   ansible.builtin.command: helm completion bash
