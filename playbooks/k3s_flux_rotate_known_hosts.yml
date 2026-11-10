@@ -31,7 +31,6 @@
         no_log: true
 
         # kubectl -n flux-system delete secret flux-system
-        # kubectl -n flux-system delete gitrepositories.source.toolkit.fluxcd.io flux-system
 
       - name: Run flux create secret to regenerate the known hosts data
         ansible.builtin.command:

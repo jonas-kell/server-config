@@ -33,8 +33,19 @@
         no_log: true
 
         # This might fail with "clone failure: unable to clone" ->
+
         # https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/githubs-ssh-key-fingerprints
         # Might change if locally your machine doesn't trust github
+
+        # Also possibly there is a configuration in  "~/.ssh/config"
+        # ssh -G github.com | grep -E '^(hostname|port) '
+        # must not be anything else than github.com with port 22
+
+        # In my case, this was the following (makes ssh over port 443, in case the port 22 is blocked on some wifi/network)
+        # Host github.com
+        #    HostName ssh.github.com
+        #    Port 443
+        #    User git
 
       - name: Run flux bootstrap with deploy key
         ansible.builtin.command:
