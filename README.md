@@ -14,12 +14,12 @@ This is also my automatically deployed dotfiles repository (see below)
 
 - Ionos
   - [VPS 4 4 120](./Ionosconfig.md)
-    - Ubuntu 24.04
+    - Ubuntu 26.04
     - `root@ionosserver.kellehorreur.de`
 - Local
   - Raspberry Pi 4B, 8GB
     - 64 GB SD card
-    - Ubuntu 24.04
+    - Ubuntu 26.04
     - `pi@piserver.kellehorreur.de`
   - Raspberry Pi 4B, 4GB
     - 64 GB SD card
