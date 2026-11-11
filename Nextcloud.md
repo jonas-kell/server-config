@@ -113,3 +113,31 @@ For how to do this, see [this documentation](./docker/Readme.md)
   - Enable the app `External storage support`
   - Disable the app `AppAPI` ([see](https://apps.nextcloud.com/apps/app_api))
     - TODO maybe in the future fix it so that it can be used
+
+## Bugs
+
+Combination of Ubuntu 26.04 and k3s Postgresql: [Issue](https://github.com/containerd/containerd/pull/14487#issuecomment-6546999621)
+
+```cmd
+│ 2026-11-11 13:58:27.038 GMT [138] FATAL:  the database system is starting up                                                                                     │
+│ 2026-11-11 13:58:28.688 GMT [145] FATAL:  the database system is starting up                                                                                     │
+│ 2026-11-11 13:58:37.041 GMT [152] FATAL:  the database system is starting up                                                                                     │
+│ 2026-11-11 13:58:38.693 GMT [159] FATAL:  the database system is starting up                                                                                     │
+│ 2026-11-11 13:58:39.286 GMT [95] FATAL:  could not signal for checkpoint: Permission denied                                                                      │
+│ 2026-11-11 13:58:39.293 GMT [1] LOG:  startup process (PID 95) exited with exit code 1                                                                           │
+│ 2026-11-11 13:58:39.293 GMT [1] LOG:  aborting startup due to startup process failure                                                                            │
+│ 2026-11-11 13:58:39.295 GMT [1] LOG:  database system is shut down
+```
+
+Temporary Solution:
+
+```cmd
+sysctl kernel.apparmor_restrict_unprivileged_unconfined
+# gives:     kernel.apparmor_restrict_unprivileged_unconfined = 1
+
+# Temporarily deactivate this (non-restart-permanent):
+sudo sysctl -w kernel.apparmor_restrict_unprivileged_unconfined=0
+
+# Reset the behavior:
+sudo sysctl -w kernel.apparmor_restrict_unprivileged_unconfined=1
+```
