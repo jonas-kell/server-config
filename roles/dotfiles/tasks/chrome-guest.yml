@@ -1,0 +1,22 @@
+- name: Ensure chrome extra config directory exists
+  ansible.builtin.file:
+      path: /home/{{ dotfiles_profile_name }}/.chrome-extra
+      state: directory
+      # owner: "{{ dotfiles_profile_name }}"
+      # group: "{{ dotfiles_profile_name }}"
+      mode: "0755"
+  become: false
+
+- name: Place logo in invoking user's home directory
+  ansible.builtin.copy:
+      src: incognito.png
+      dest: "/home/{{ dotfiles_profile_name }}/.chrome-extra/incognito.png"
+      mode: "0644"
+  become: false
+
+- name: Place desktop file in invoking user's desktop files folder
+  ansible.builtin.template:
+      src: chrome-guest.desktop.j2
+      dest: "~/.local/share/applications/chrome-guest.desktop"
+      mode: "0644"
+  become: false

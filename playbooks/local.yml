@@ -44,6 +44,7 @@
             # dotfiles_drive_offline_sync: true
             # dotfiles_install_vscode: true
             # dotfiles_install_chrome: true
+            # dotfiles_chrome_guest_shortcut: true
             # dotfiles_python_apt_ppa: true
             # dotfiles_install_signal: true
             # dotfiles_install_tmux: true

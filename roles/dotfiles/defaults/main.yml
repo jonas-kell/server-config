@@ -16,6 +16,7 @@ dotfiles_ckb_keyboard_driver: false
 dotfiles_drive_offline_sync: false
 dotfiles_install_vscode: false
 dotfiles_install_chrome: false
+dotfiles_chrome_guest_shortcut: false
 dotfiles_python_apt_ppa: false
 dotfiles_install_signal: false
 dotfiles_install_tmux: false

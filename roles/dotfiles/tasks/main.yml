@@ -67,6 +67,10 @@
   when: dotfiles_install_chrome
   ansible.builtin.include_tasks: "{{ role_path }}/tasks/chrome.yml"
 
+- name: Chrome guest profile shortcut
+  when: dotfiles_chrome_guest_shortcut
+  ansible.builtin.include_tasks: "{{ role_path }}/tasks/chrome-guest.yml"
+
 - name: Python apt ppa
   when: dotfiles_python_apt_ppa
   ansible.builtin.include_tasks: "{{ role_path }}/tasks/python.yml"
