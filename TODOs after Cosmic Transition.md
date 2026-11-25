@@ -1,7 +1,24 @@
 # TODO: not set up after cosmic transition
 
+## Cosmic Settings
+
+```cmd
+mkdir -p ~/ConfigBackups
+
+# Backup
+tar -czf - -C "$HOME" .config/cosmic | \
+gpg --symmetric --cipher-algo AES256 \
+    --output ~/ConfigBackups/cosmic-settings-$(date +%F).tar.gz.gpg
+
+
+# Restore
+gpg --decrypt ~/ConfigBackups/cosmic-settings-yyyy-mm-dd.tar.gz.gpg | \
+tar -xzf - -C "$HOME"
+```
+
+## Rest
+
 - mounts / favourites in file manager
-- store the config toml files repeatable
 - get Wifiman working
 
 https://github.com/cosmic-utils
