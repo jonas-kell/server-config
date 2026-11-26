@@ -14,6 +14,7 @@
           - rpi-imager
           - wireshark
           - firefox
+          - copyq
       state: present
       update_cache: true
       cache_valid_time: 1800
@@ -24,7 +25,7 @@
           - name: org.localsend.localsend_app
           - name: com.discordapp.Discord
           - name: com.github.arminstraub.krop
-          - name: com.github.hluk.copyq
+          #   - name: com.github.hluk.copyq # moved to system install, to get the command, to allow for the global shortcut under wayland
           - name: com.spotify.Client
           - name: org.gimp.GIMP
           - name: org.mozilla.Thunderbird
